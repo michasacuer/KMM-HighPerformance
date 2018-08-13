@@ -10,6 +10,19 @@ namespace KMM_HighPerformance.ViewModels
 {
     class Alghoritm
     {
+
+        private Bitmap CreateNonIndexedImage(Bitmap bmp)
+        {
+            Bitmap newBmp = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+
+            using (Graphics graphics = Graphics.FromImage(newBmp))
+            {
+                graphics.DrawImage(bmp, 0, 0);
+            }
+
+            return newBmp;
+        }
+
         private int OtsuValue(Bitmap tempBmp)
         {
             int x;
@@ -75,8 +88,9 @@ namespace KMM_HighPerformance.ViewModels
             return threshold;
         }
 
-        private Bitmap BinarizationLowPerformance(Bitmap tempBmp,  Bitmap newImage)
+        private Bitmap BinarizationLowPerformance(Bitmap tempBmp)
         {
+            Bitmap newBmp = CreateNonIndexedImage(tempBmp);
 
             int threshold = OtsuValue(tempBmp);
 
@@ -100,11 +114,38 @@ namespace KMM_HighPerformance.ViewModels
                     }
 
                     Color newColor = Color.FromArgb(pixelValue);
-                    newImage.SetPixel(x, y, newColor);
+                    newBmp.SetPixel(x, y, newColor);
                 }
             }
 
-            return newImage;
+            return newBmp;
+        }
+
+        private Bitmap BinarizationHighPerformance(Bitmap tempBmp)
+        {
+
+            int threshold = OtsuValue(tempBmp);
+
+            unsafe
+            {
+                BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
+                byte* ptr = (byte*)bmpData.Scan0;
+
+                int height = tempBmp.Height;
+                int width = tempBmp.Width;
+                Parallel.For(0, height, y =>
+                {
+                    byte* offset = ptr + (y * bmpData.Stride);
+                    for(int x = 0; x < width; x++)
+                    {
+                        offset[x] = offset[x] < threshold ? Byte.MinValue : Byte.MaxValue;
+                    }
+                });
+
+                tempBmp.UnlockBits(bmpData);
+            }
+
+            return tempBmp;
         }
 
 
