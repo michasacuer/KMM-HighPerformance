@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using KMM_HighPerformance.ViewModels;
 
 namespace KMM_HighPerformance
 {
@@ -22,6 +23,7 @@ namespace KMM_HighPerformance
         public WindowView()
         {
             InitializeComponent();
+            this.DataContext = new ViewModel();
         }
     }
 }
