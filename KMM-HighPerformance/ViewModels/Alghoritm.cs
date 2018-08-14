@@ -126,20 +126,32 @@ namespace KMM_HighPerformance.ViewModels
 
             int threshold = OtsuValue(tempBmp);
 
+            int pixelBPP = Image.GetPixelFormatSize(tempBmp.PixelFormat) / 8;
+
             unsafe
             {
-                BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
-                byte* ptr = (byte*)bmpData.Scan0;
+                BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), ImageLockMode.ReadWrite, tempBmp.PixelFormat);
+
+                byte* ptr = (byte*)bmpData.Scan0; //addres of first line
 
                 int height = tempBmp.Height;
-                int width = tempBmp.Width;
+                int width = tempBmp.Width * pixelBPP;
+
                 Parallel.For(0, height, y =>
                 {
-                    byte* offset = ptr + (y * bmpData.Stride);
-                    for(int x = 0; x < width; x++)
+                    byte* offset = ptr + (y * bmpData.Stride); //set row
+                    for(int x = 0; x < width; x = x + pixelBPP)
                     {
-                        offset[x] = offset[x] < threshold ? Byte.MinValue : Byte.MaxValue;
+                        offset[x] = offset[x] > threshold ? Byte.MinValue : Byte.MaxValue;
+                        offset[x + 1] = offset[x + 1] > threshold ? Byte.MinValue : Byte.MaxValue;
+                        offset[x + 2] = offset[x + 2] > threshold ? Byte.MinValue : Byte.MaxValue;
+
+                        if (pixelBPP == 4)
+                        {
+                            offset[x + 3] = 255;
+                        }
                     }
+
                 });
 
                 tempBmp.UnlockBits(bmpData);
