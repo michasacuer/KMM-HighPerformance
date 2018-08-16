@@ -10,14 +10,17 @@ namespace KMM_HighPerformance.Models
 {
     class Alghoritm
     {
-        public Bitmap tempBmp;
-
-        Alghoritm(string filepath)
+        static public void LowPerformance(Bitmap bmp)
         {
-            tempBmp = new Bitmap(filepath);
+            bmp = BinarizationLowPerformance(bmp);
         }
 
-        private Bitmap CreateNonIndexedImage(Bitmap bmp)
+        static public void HighPerformance(Bitmap bmp)
+        {
+            bmp = BinarizationHighPerformance(bmp);
+        }
+
+        static private Bitmap CreateNonIndexedImage(Bitmap bmp)
         {
             Bitmap newBmp = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
 
@@ -29,7 +32,7 @@ namespace KMM_HighPerformance.Models
             return newBmp;
         }
 
-        private int OtsuValue(Bitmap tempBmp)
+        static private int OtsuValue(Bitmap tempBmp)
         {
             int x;
             int y;
@@ -94,7 +97,7 @@ namespace KMM_HighPerformance.Models
             return threshold;
         }
 
-        private Bitmap BinarizationLowPerformance(Bitmap tempBmp)
+        static private Bitmap BinarizationLowPerformance(Bitmap tempBmp)
         {
             Bitmap newBmp = CreateNonIndexedImage(tempBmp);
 
@@ -127,7 +130,7 @@ namespace KMM_HighPerformance.Models
             return newBmp;
         }
 
-        private Bitmap BinarizationHighPerformance(Bitmap tempBmp)
+        static private Bitmap BinarizationHighPerformance(Bitmap tempBmp)
         {
 
             int threshold = OtsuValue(tempBmp);

@@ -62,7 +62,7 @@
     </Compile>
     <Compile Include="Models\Alghoritm.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
-    <Compile Include="WindowView.xaml.cs">
+    <Compile Include="View\WindowView.xaml.cs">
       <DependentUpon>WindowView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -94,7 +94,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="WindowView.xaml">
+    <Page Include="View\WindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
