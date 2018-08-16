@@ -29,8 +29,6 @@ namespace KMM_HighPerformance.ViewModels
                 highPerformanceBitmap = new Bitmap(filepath);
             }
 
-
-
         }
 
         public string DisplayedImage

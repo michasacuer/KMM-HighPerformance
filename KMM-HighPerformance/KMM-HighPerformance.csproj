@@ -60,7 +60,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Alghoritm.cs" />
+    <Compile Include="Models\Algorithm.cs" />
+    <Compile Include="Models\BitmapConversion.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="View\WindowView.xaml.cs">
       <DependentUpon>WindowView.xaml</DependentUpon>
