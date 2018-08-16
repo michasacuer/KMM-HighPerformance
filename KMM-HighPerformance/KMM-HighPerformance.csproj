@@ -60,7 +60,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\Alghoritm.cs" />
+    <Compile Include="Models\Alghoritm.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="WindowView.xaml.cs">
       <DependentUpon>WindowView.xaml</DependentUpon>
@@ -92,9 +92,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="WindowView.xaml">
       <SubType>Designer</SubType>

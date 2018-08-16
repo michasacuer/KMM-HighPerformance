@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace KMM_HighPerformance.ViewModels
+namespace KMM_HighPerformance.Models
 {
     class Alghoritm
     {
+        public Bitmap tempBmp;
+
+        Alghoritm(string filepath)
+        {
+            tempBmp = new Bitmap(filepath);
+        }
 
         private Bitmap CreateNonIndexedImage(Bitmap bmp)
         {
