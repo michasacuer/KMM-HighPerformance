@@ -8,17 +8,8 @@ using System.Drawing.Imaging;
 
 namespace KMM_HighPerformance.Models
 {
-    class Algorithm
+    class Binarization
     {
-        static public void LowPerformance(Bitmap bmp)
-        {
-            bmp = BinarizationLowPerformance(bmp);
-        }
-
-        static public void HighPerformance(Bitmap bmp)
-        {
-            bmp = BinarizationHighPerformance(bmp);
-        }
 
         static private int OtsuValue(Bitmap tempBmp)
         {
@@ -85,7 +76,7 @@ namespace KMM_HighPerformance.Models
             return threshold;
         }
 
-        static private Bitmap BinarizationLowPerformance(Bitmap tempBmp)
+        static public Bitmap LowPerformance(Bitmap tempBmp)
         {
             Bitmap newBmp = BitmapConversion.CreateNonIndexedImage(tempBmp);
 
@@ -118,7 +109,7 @@ namespace KMM_HighPerformance.Models
             return newBmp;
         }
 
-        static private Bitmap BinarizationHighPerformance(Bitmap tempBmp)
+        static public Bitmap HighPerformance(Bitmap tempBmp)
         {
 
             int threshold = OtsuValue(tempBmp);
@@ -157,14 +148,5 @@ namespace KMM_HighPerformance.Models
             return tempBmp;
         }
 
-        static private Bitmap KMMLowPerforamnce(Bitmap tempBmp)
-        {
-            return tempBmp;
-        }
-
-        static private Bitmap KMMHighPerformance(Bitmap tempBmp)
-        {
-            return tempBmp;
-        }
     }
 }
