@@ -38,10 +38,10 @@ namespace KMM_HighPerformance.Models
                                 { 32, 16, 8 } // of this pixel
                               };
 
-        static public BitmapImage Init(Bitmap bmp)
+        static public BitmapImage Init(Bitmap bmp, Bitmap newImage)
         {
 
-            Bitmap newImage = Binarization.LowPerformance(bmp);
+            bmp = newImage;
 
             int compareSize = 3; //size of compare table
             int x, y;
@@ -49,8 +49,8 @@ namespace KMM_HighPerformance.Models
             int[,] pixelArray = new int[bmp.Height, bmp.Width]; // one record on this array = one pixel
             int N = 2;
 
-            for (y = 1; y < newImage.Height; y++)
-                for (x = 1; x < newImage.Width; x++)
+            for (y = 1; y < bmp.Height; y++)
+                for (x = 1; x < bmp.Width; x++)
                 {
                     tempPixel = bmp.GetPixel(x, y);
 
@@ -89,7 +89,7 @@ namespace KMM_HighPerformance.Models
                     }
                     N++;
                 }
-
+                
                 N = 2;
             }
 
@@ -168,6 +168,7 @@ namespace KMM_HighPerformance.Models
                     }
                 }
             }
+
             if (check == 2 || check == 3 || check == 4)
             {
                 if (deleteTable.Contains(sum))
@@ -197,6 +198,7 @@ namespace KMM_HighPerformance.Models
                     }
                 }
             }
+
             if (deleteTable.Contains(sum))
             {
                 deletion++;

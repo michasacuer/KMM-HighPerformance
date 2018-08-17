@@ -76,32 +76,31 @@ namespace KMM_HighPerformance.Models
             return threshold;
         }
 
-        static public Bitmap LowPerformance(Bitmap tempBmp)
+        static public Bitmap LowPerformance(Bitmap tempBmp, Bitmap newBmp)
         {
-            Bitmap newBmp = BitmapConversion.CreateNonIndexedImage(tempBmp);
 
             int threshold = OtsuValue(tempBmp);
 
-            int pixelValue;
+            int[] pixelValue = new int[tempBmp.Width + 1];
 
             for (int y = 0; y < tempBmp.Height; y++)
             {
                 for(int x = 0; x < tempBmp.Width; x++)
                 {
                     Color color = tempBmp.GetPixel(x, y);
-                    pixelValue = (color.R + color.G + color.B) / 3;
+                    pixelValue[x] = (color.R + color.G + color.B) / 3;
 
-                    if(pixelValue < threshold)
+                    if(pixelValue[x] < threshold)
                     {
-                        pixelValue = 0;
+                        pixelValue[x] = 0;
                     }
 
                     else
                     {
-                        pixelValue = 255;
+                        pixelValue[x] = 255;
                     }
 
-                    Color newColor = Color.FromArgb(pixelValue);
+                    Color newColor = Color.FromArgb(pixelValue[x], pixelValue[x], pixelValue[x]);
                     newBmp.SetPixel(x, y, newColor);
                 }
             }
@@ -130,9 +129,9 @@ namespace KMM_HighPerformance.Models
                     byte* offset = ptr + (y * bmpData.Stride); //set row
                     for(int x = 0; x < width; x = x + pixelBPP)
                     {
-                        offset[x] = offset[x] > threshold ? Byte.MinValue : Byte.MaxValue;
-                        offset[x + 1] = offset[x + 1] > threshold ? Byte.MinValue : Byte.MaxValue;
-                        offset[x + 2] = offset[x + 2] > threshold ? Byte.MinValue : Byte.MaxValue;
+                        offset[x] = offset[x] > threshold ? Byte.MaxValue : Byte.MinValue;
+                        offset[x + 1] = offset[x + 1] > threshold ? Byte.MaxValue : Byte.MinValue;
+                        offset[x + 2] = offset[x + 2] > threshold ? Byte.MaxValue : Byte.MinValue;
 
                         if (pixelBPP == 4)
                         {

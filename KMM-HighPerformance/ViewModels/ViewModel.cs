@@ -13,9 +13,8 @@ namespace KMM_HighPerformance.ViewModels
     class ViewModel
     {
         public string filepath { get; set; }
-        public string filepathLowPerformance { get; set; }
-        public string filepathHighPerformance { get; set; }
         public BitmapImage lowPerformance { get; set; }
+        Bitmap newImage;
 
         public ViewModel()
         {
@@ -27,11 +26,8 @@ namespace KMM_HighPerformance.ViewModels
             if (openPicture.ShowDialog() == true) 
             {
                 filepath = openPicture.FileName;
+                newImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(filepath));
 
-                filepathLowPerformance = filepath;
-
-                //lowPerformance = KMMLowPerformance.Init(new Bitmap(filepathLowPerformance));
-                //highPerformanceBitmap = new Bitmap(filepath);
             }
 
         }
@@ -41,9 +37,20 @@ namespace KMM_HighPerformance.ViewModels
             get { return filepath; }
         }
 
+        public BitmapImage DisplayedBinarizeLPImage
+        {
+            get { return BitmapConversion.Bitmap2BitmapImage(Binarization.LowPerformance(new Bitmap(filepath), newImage)); }
+        }
+
+        public BitmapImage DisplayedBinarizeHPImage
+        {
+            get { return BitmapConversion.Bitmap2BitmapImage(Binarization.HighPerformance(new Bitmap(filepath))); }
+        }
+
+
         public BitmapImage DisplayedLowPerformanceImage
         {
-            get { return KMMLowPerformance.Init(new Bitmap(filepath)); }
+            get { return KMMLowPerformance.Init(new Bitmap(filepath), newImage); }
         }
 
     }
