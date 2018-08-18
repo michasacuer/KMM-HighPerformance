@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMM_HighPerformance"
         mc:Ignorable="d"
-        Title="WindowView" Height="900" Width="1280">
+        Title="WindowView" Height="900" Width="1280" Activated="Window_Activated">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -28,14 +28,23 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <!-- Row 1-->
-        <Image Source="{Binding DisplayedImage}" Grid.Column="1"  HorizontalAlignment="Left" Height="300" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2"/>
-        <Image Grid.Column="3" Source="{Binding DisplayedBinarizeLPImage}" HorizontalAlignment="Left" Height="300" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2"/>
-        <Image Grid.Column="5" Source ="{Binding DisplayedLowPerformanceImage}" HorizontalAlignment="Left" Height="300" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2"/>
+        <Image Source="{Binding DisplayedImage}" Grid.Column="1"  HorizontalAlignment="Left" Height="300" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2" Margin="0,28,0,0"/>
+        <Image Grid.Column="3" Source="{Binding DisplayedBinarizeLPImage}" HorizontalAlignment="Left" Height="300" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2" Margin="0,28,0,0"/>
+        <Image Grid.Column="5" Source ="{Binding DisplayedLowPerformanceImage}" HorizontalAlignment="Left" Height="300" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2" Margin="0,28,0,0"/>
+        <Label Content="{Binding DisplayedLPTime}" Grid.Column="6" HorizontalAlignment="Left" Margin="126,38,-55,0" Grid.Row="2" VerticalAlignment="Top" Width="154" Height="28" Grid.ColumnSpan="2"/>
+        <Label Content="Time Elapsed (ms):" Grid.Column="6" HorizontalAlignment="Left" Margin="10,38,0,0" Grid.Row="2" VerticalAlignment="Top" Width="154" Height="28"/>
+        <Label Content="Input Image:" Grid.Column="1" HorizontalAlignment="Left" Margin="97,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="154" Height="28" Grid.ColumnSpan="2"/>
+        <Label Content="Binarization" Grid.Column="3" HorizontalAlignment="Left" Margin="90,0,0,0" VerticalAlignment="Top" Width="154" Height="28" Grid.Row="1"/>
+        <Label Content="KMM:" Grid.Column="5" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Top" Width="154" Height="28" Grid.Row="1"/>
 
         <!-- Row 2-->
-        <Image Source="{Binding DisplayedImage}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300"/>
-        <Image Source="{Binding DisplayedBinarizeHPImage}" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300"/>
-        <Image Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300"/>
+        <Image Source="{Binding DisplayedImage}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Margin="0,28,0,0"/>
+        <Image Source="{Binding DisplayedBinarizeHPImage}" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Margin="0,28,0,0"/>
+        <Image Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Margin="0,28,0,0"/>
+        <Label Content="{Binding DisplayedHPTime}" Grid.Column="6" HorizontalAlignment="Left" Margin="126,140,-55,0" Grid.Row="3" VerticalAlignment="Top" Width="154" Height="28" Grid.ColumnSpan="2"/>
+        <Label Content="Time Elapsed (ms):" Grid.Column="6" HorizontalAlignment="Left" Margin="10,140,0,0" Grid.Row="3" VerticalAlignment="Top" Width="154" Height="28"/>
+        <Button Content="Close" Grid.Column="6" HorizontalAlignment="Left" Margin="91,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Click="Button_Click"/>
+
 
 
 

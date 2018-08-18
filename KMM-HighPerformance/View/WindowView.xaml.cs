@@ -14,19 +14,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using KMM_HighPerformance.ViewModels;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace KMM_HighPerformance.View
 {
-    /// <summary>
-    /// Interaction logic for WindowView.xaml
-    /// </summary>
+    
     public partial class WindowView : Window
     {
         public WindowView()
         {
             this.DataContext = new ViewModel();
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
             InitializeComponent();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

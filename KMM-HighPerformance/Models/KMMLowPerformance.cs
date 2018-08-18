@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,10 @@ namespace KMM_HighPerformance.Models
 {
     class KMMLowPerformance
     {
-
+        static long timeElapsed;
         static int deletion = 1;
+        static public long TimeElapsed() => timeElapsed;
+
         static List<int> deleteTable = new List<int>(){
 
                                             3, 5, 7, 12, 13, 14, 15, 20,
@@ -40,8 +43,7 @@ namespace KMM_HighPerformance.Models
 
         static public BitmapImage Init(Bitmap bmp, Bitmap newImage)
         {
-
-            bmp = newImage;
+            var stopwatch = Stopwatch.StartNew();
 
             int compareSize = 3; //size of compare table
             int x, y;
@@ -104,8 +106,11 @@ namespace KMM_HighPerformance.Models
                 }
             }
 
+            timeElapsed = stopwatch.ElapsedMilliseconds;
+
             return BitmapConversion.Bitmap2BitmapImage(newImage);
         }
+
 
         static private int FindPixelsValue(int[,] pixelArray, int compareSize, int x, int y)
         {

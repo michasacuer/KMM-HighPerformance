@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace KMM_HighPerformance.Models
 {
     class Binarization
     {
+        static long timeElapsed;
+        static public long TimeElapsed() => timeElapsed;
 
         static private int OtsuValue(Bitmap tempBmp)
         {
@@ -78,6 +81,7 @@ namespace KMM_HighPerformance.Models
 
         static public Bitmap LowPerformance(Bitmap tempBmp, Bitmap newBmp)
         {
+            var stopwatch = Stopwatch.StartNew();
 
             int threshold = OtsuValue(tempBmp);
 
@@ -105,14 +109,16 @@ namespace KMM_HighPerformance.Models
                 }
             }
 
+            timeElapsed = stopwatch.ElapsedMilliseconds;
             return newBmp;
         }
 
         static public Bitmap HighPerformance(Bitmap tempBmp)
         {
+            timeElapsed = 0;
+            var stopwatch = Stopwatch.StartNew();
 
             int threshold = OtsuValue(tempBmp);
-
             int pixelBPP = Image.GetPixelFormatSize(tempBmp.PixelFormat) / 8;
 
             unsafe
@@ -129,23 +135,27 @@ namespace KMM_HighPerformance.Models
                     byte* offset = ptr + (y * bmpData.Stride); //set row
                     for(int x = 0; x < width; x = x + pixelBPP)
                     {
-                        offset[x] = offset[x] > threshold ? Byte.MaxValue : Byte.MinValue;
-                        offset[x + 1] = offset[x + 1] > threshold ? Byte.MaxValue : Byte.MinValue;
-                        offset[x + 2] = offset[x + 2] > threshold ? Byte.MaxValue : Byte.MinValue;
+
+                        int value = (offset[x] + offset[x + 1] + offset[x + 2]) / 3 > threshold ? Byte.MaxValue : Byte.MinValue;
+                        offset[x] = (byte)value;
+                        offset[x + 1] = (byte)value;
+                        offset[x + 2] = (byte)value;
 
                         if (pixelBPP == 4)
                         {
                             offset[x + 3] = 255;
                         }
-                    }
 
+                    }
                 });
 
                 tempBmp.UnlockBits(bmpData);
             }
 
+            timeElapsed = stopwatch.ElapsedMilliseconds;
             return tempBmp;
         }
+
 
     }
 }
