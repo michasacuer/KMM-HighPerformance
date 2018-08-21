@@ -11,19 +11,22 @@ namespace KMM_HighPerformance.Models
     {
 
         //work in progress
-        static public void GetCPU()
+        static public string GetCPU()
         {
-            //var mbs = new ManagementObjectSearcher("Select ProcessorID From Win32_processor");
-            //var mbsList = mbs.Get();
-            //
-            //foreach (ManagementObject mo in mbsList)
-            //{
-            //    var cpuid = mo["ProcessorID"].ToString();
-            //
-            //}
+            string cpuName =" ";
+            var mbs = new ManagementObjectSearcher("Select * From Win32_processor");
+            var mbsList = mbs.Get();
+            
+            foreach (ManagementObject mo in mbsList)
+            {
+                var cpuid = mo["Name"].ToString();
+            }
 
-
+            return cpuName;
         }
+
+
+
 
     }
 }

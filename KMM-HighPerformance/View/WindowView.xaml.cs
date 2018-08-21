@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using KMM_HighPerformance.ViewModels;
+using KMM_HighPerformance.Models;
 using Microsoft.Win32;
 using System.Threading;
 
@@ -29,6 +30,7 @@ namespace KMM_HighPerformance.View
         private void Window_Activated(object sender, EventArgs e)
         {
             InitializeComponent();
+            label.Content = GetHardwareInfo.GetCPU();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
