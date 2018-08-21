@@ -95,10 +95,10 @@ namespace KMM_HighPerformance.ViewModels
             }
 
             var task1 = Task.Run(() => InitializeLP());
-            task1.Wait();
-
+            //task1.Wait();
             var task2 = Task.Run(() => InitializeHP());
-            task2.Wait();
+            //task2.Wait();
+            Task.WaitAll(task1, task2);
         }
 
         public string DisplayedImage

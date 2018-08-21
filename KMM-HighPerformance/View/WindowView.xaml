@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMM_HighPerformance"
         mc:Ignorable="d"
-        Title="WindowView" Height="900" Width="1280" Activated="Window_Activated">
+        Title="KMM - Michał Szewczak" Height="900" Width="1280" Activated="Window_Activated">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>

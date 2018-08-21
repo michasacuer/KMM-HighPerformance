@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Models\Binarization.cs" />
     <Compile Include="Models\BitmapConversion.cs" />
+    <Compile Include="Models\GetPCInfo.cs" />
     <Compile Include="Models\KMMHighPerformance.cs" />
     <Compile Include="Models\KMMLowPerformance.cs" />
     <Compile Include="Models\Measure.cs" />
