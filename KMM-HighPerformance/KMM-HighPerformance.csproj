@@ -64,6 +64,7 @@
     <Compile Include="Models\BitmapConversion.cs" />
     <Compile Include="Models\KMMHighPerformance.cs" />
     <Compile Include="Models\KMMLowPerformance.cs" />
+    <Compile Include="Models\Measure.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="View\WindowView.xaml.cs">
       <DependentUpon>WindowView.xaml</DependentUpon>

@@ -11,8 +11,9 @@ namespace KMM_HighPerformance.Models
 {
     class Binarization
     {
-        static long timeElapsed;
-        static public long TimeElapsed() => timeElapsed;
+
+        //static long timeElapsed;
+        //static public long TimeElapsed() => timeElapsed;
 
         static private int OtsuValue(Bitmap tempBmp)
         {
@@ -79,7 +80,7 @@ namespace KMM_HighPerformance.Models
             return threshold;
         }
 
-        static public Bitmap LowPerformance(Bitmap tempBmp, Bitmap newBmp)
+        static public Bitmap LowPerformance(Bitmap tempBmp, Bitmap newBmp, Measure measure)
         {
             var stopwatch = Stopwatch.StartNew();
 
@@ -109,13 +110,13 @@ namespace KMM_HighPerformance.Models
                 }
             }
 
-            timeElapsed = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
             return newBmp;
         }
 
-        static public Bitmap HighPerformance(Bitmap tempBmp)
+        static public Bitmap HighPerformance(Bitmap tempBmp, Measure measure)
         {
-            timeElapsed = 0;
+            measure.timeElapsed = 0;
             var stopwatch = Stopwatch.StartNew();
 
             int threshold = OtsuValue(tempBmp);
@@ -152,7 +153,7 @@ namespace KMM_HighPerformance.Models
                 tempBmp.UnlockBits(bmpData);
             }
 
-            timeElapsed = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
             return tempBmp;
         }
 

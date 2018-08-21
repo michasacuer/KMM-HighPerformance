@@ -11,10 +11,8 @@ namespace KMM_HighPerformance.Models
 {
     class KMMLowPerformance
     {
-        static long timeElapsed;
-        static int deletion = 1;
-        static public long TimeElapsed() => timeElapsed;
 
+        static int deletion = 1;
         static List<int> deleteTable = new List<int>(){
 
                                             3, 5, 7, 12, 13, 14, 15, 20,
@@ -41,8 +39,9 @@ namespace KMM_HighPerformance.Models
                                 { 32, 16, 8 } // of this pixel
                               };
 
-        static public BitmapImage Init(Bitmap bmp, Bitmap newImage)
+        static public BitmapImage Init(Bitmap bmp, Bitmap newImage, Measure measure)
         {
+
             var stopwatch = Stopwatch.StartNew();
 
             int compareSize = 3; //size of compare table
@@ -106,7 +105,7 @@ namespace KMM_HighPerformance.Models
                 }
             }
 
-            timeElapsed = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
 
             return BitmapConversion.Bitmap2BitmapImage(newImage);
         }
