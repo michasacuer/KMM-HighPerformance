@@ -11,7 +11,7 @@ namespace KMM_HighPerformance.Models
     {
 
         //work in progress
-        static public string GetCPU()
+        static public string GetCPUName()
         {
             string cpuName =" ";
             var mbs = new ManagementObjectSearcher("Select * From Win32_processor");
@@ -19,7 +19,7 @@ namespace KMM_HighPerformance.Models
             
             foreach (ManagementObject mo in mbsList)
             {
-                var cpuid = mo["Name"].ToString();
+                cpuName = mo["Name"].ToString();
             }
 
             return cpuName;

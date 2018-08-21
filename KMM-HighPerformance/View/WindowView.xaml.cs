@@ -30,7 +30,6 @@ namespace KMM_HighPerformance.View
         private void Window_Activated(object sender, EventArgs e)
         {
             InitializeComponent();
-            label.Content = GetHardwareInfo.GetCPU();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

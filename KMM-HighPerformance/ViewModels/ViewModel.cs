@@ -24,7 +24,7 @@ namespace KMM_HighPerformance.ViewModels
         }
 
         public string filepath { get; set; }
-
+        
         Bitmap binarizeLPImage { get; set; }
         Bitmap binarizeHPImage { get; set; }
 
@@ -96,14 +96,22 @@ namespace KMM_HighPerformance.ViewModels
 
             var task1 = Task.Run(() => InitializeLP());
             //task1.Wait();
+
             var task2 = Task.Run(() => InitializeHP());
             //task2.Wait();
+
             Task.WaitAll(task1, task2);
+
         }
 
         public string DisplayedImage
         {
             get { return filepath; }
+        }
+
+        public string CpuName
+        {
+            get { return GetHardwareInfo.GetCPUName(); }
         }
 
         public BitmapImage DisplayedBinarizeLPImage
