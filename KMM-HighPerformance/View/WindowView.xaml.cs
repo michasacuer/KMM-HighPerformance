@@ -1,21 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using KMM_HighPerformance.ViewModels;
-using KMM_HighPerformance.Models;
-using Microsoft.Win32;
-using System.Threading;
 
 namespace KMM_HighPerformance.View
 {
@@ -24,11 +8,7 @@ namespace KMM_HighPerformance.View
     {
         public WindowView()
         {
-            this.DataContext = new ViewModel();
-        }
-
-        private void Window_Activated(object sender, EventArgs e)
-        {
+            this.DataContext = new WindowViewModel();
             InitializeComponent();
         }
 

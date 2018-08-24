@@ -13,33 +13,10 @@ using Microsoft.Win32;
 
 namespace KMM_HighPerformance.ViewModels 
 {
-    class ViewModel : INotifyPropertyChanged
+    class WindowViewModel : INotifyPropertyChanged
     {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(string propertyName)
+        public WindowViewModel()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public string filepath { get; set; }
-        
-        Bitmap binarizeLPImage { get; set; }
-        Bitmap binarizeHPImage { get; set; }
-
-        BitmapImage binarizeLPImageView { get; set; }
-        BitmapImage binarizeHPImageView { get; set; }
-
-        BitmapImage kMMLP { get; set; }
-        BitmapImage kMMHP { get; set; }
-
-        long timeElapsedLP { get; set; }
-        long timeElapsedHP { get; set; }
-
-        public ViewModel()
-        {
-
             OpenFileDialog openPicture = new OpenFileDialog();
             openPicture.Filter = "Image files|*.bmp;*.jpg;*.gif;*.png;*.tif|All files|*.*";
             openPicture.FilterIndex = 1;
@@ -52,25 +29,10 @@ namespace KMM_HighPerformance.ViewModels
                 binarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(filepath));
                 binarizeHPImage = new Bitmap(filepath);
                 kMMLP = BitmapConversion.Bitmap2BitmapImage(new Bitmap(filepath));
-
-                //var lowPerformanceTasks = Task.Factory.StartNew(() => binarizeLPImage = Binarization.LowPerformance(new Bitmap(filepath), binarizeLPImage))
-                //                                      .ContinueWith((prevTask) => kMMLP = await KMMLowPerformance.Init(new Bitmap(filepath), binarizeLPImage))
-                //                                      .ContinueWith((prevTask) => timeElapsedLP = Binarization.TimeElapsed() + KMMLowPerformance.TimeElapsed());
-                //
-                //lowPerformanceTasks.Wait();
-                //
-                //var highPerformanceTasks = Task.Factory.StartNew(() => binarizeHPImage = Binarization.HighPerformance(new Bitmap(filepath)))
-                //                                       .ContinueWith((prevTask) => timeElapsedHP = Binarization.TimeElapsed());
-                //
-                //highPerformanceTasks.Wait();
-
-
-
             }
 
             async Task InitializeLP()
             {
-
                 Measure measureLP = new Measure();
 
                 binarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(filepath), binarizeLPImage, measureLP));
@@ -78,20 +40,17 @@ namespace KMM_HighPerformance.ViewModels
 
                 kMMLP = await Task.Run(() => KMMLowPerformance.Init(new Bitmap(filepath), binarizeLPImage, measureLP));
 
-                timeElapsedLP = measureLP.TimeElapsed() + measureLP.TimeElapsed();
-                
+                timeElapsedLP = measureLP.TimeElapsed() + measureLP.TimeElapsed();                
             }
 
             async Task InitializeHP()
             {
-
                 Measure measureHP = new Measure();
 
                 binarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(filepath), measureHP));
                 binarizeHPImageView = BitmapConversion.Bitmap2BitmapImage(binarizeHPImage);
 
                 timeElapsedHP = measureHP.TimeElapsed();
-
             }
 
             var task1 = Task.Run(() => InitializeLP());
@@ -101,7 +60,13 @@ namespace KMM_HighPerformance.ViewModels
             //task2.Wait();
 
             Task.WaitAll(task1, task2);
+        }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public string DisplayedImage
@@ -150,6 +115,22 @@ namespace KMM_HighPerformance.ViewModels
 
             set { timeElapsedHP = value; NotifyPropertyChanged(nameof(timeElapsedHP)); }
         }
+
+        public string filepath { get; set; }
+        
+        Bitmap binarizeLPImage { get; set; }
+        Bitmap binarizeHPImage { get; set; }
+
+        BitmapImage binarizeLPImageView { get; set; }
+        BitmapImage binarizeHPImageView { get; set; }
+
+        BitmapImage kMMLP { get; set; }
+        BitmapImage kMMHP { get; set; }
+
+        long timeElapsedLP { get; set; }
+        long timeElapsedHP { get; set; }
+
+
 
     }
 }
