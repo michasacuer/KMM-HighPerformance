@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMM_HighPerformance"
         mc:Ignorable="d"
-        Title="KMM - Michał Szewczak" Height="900" Width="1280" Activated="Window_Activated">
+        Title="KMM - Michał Szewczak" Height="900" Width="1280">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -40,10 +40,11 @@
         <!-- Row 2-->
         <Image Source="{Binding DisplayedImage}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Margin="0,28,0,0"/>
         <Image Source="{Binding DisplayedBinarizeHPImage}" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Margin="0,28,0,0"/>
-        <Image Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Margin="0,28,0,0"/>
+        <Image Source="{Binding DisplayedHighPerformanceImage}" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="300" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" Width="300" Margin="0,28,0,0"/>
         <Label Content="{Binding DisplayedHPTime}" Grid.Column="6" HorizontalAlignment="Left" Margin="126,140,-55,0" Grid.Row="3" VerticalAlignment="Top" Width="154" Height="28" Grid.ColumnSpan="2"/>
         <Label Content="Time Elapsed (ms):" Grid.Column="6" HorizontalAlignment="Left" Margin="10,140,0,0" Grid.Row="3" VerticalAlignment="Top" Width="154" Height="28"/>
         <Button Content="Close" Grid.Column="6" HorizontalAlignment="Left" Margin="91,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Click="Button_Click"/>
+        <Button Content="New image" Grid.Column="5" HorizontalAlignment="Left" Margin="241,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Grid.ColumnSpan="2"/>
         <Label Content="{Binding CpuName}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="5" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="342" Height="47"/>
 
 

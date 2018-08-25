@@ -50,6 +50,8 @@ namespace KMM_HighPerformance.ViewModels
                 binarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(filepath), measureHP));
                 binarizeHPImageView = BitmapConversion.Bitmap2BitmapImage(binarizeHPImage);
 
+                kMMHP = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(binarizeHPImage, measureHP)));
+
                 timeElapsedHP = measureHP.TimeElapsed();
             }
 
@@ -100,6 +102,13 @@ namespace KMM_HighPerformance.ViewModels
             get { return kMMLP; }
 
             set { kMMLP = value; NotifyPropertyChanged(nameof(kMMLP)); }
+        }
+
+        public BitmapImage DisplayedHighPerformanceImage
+        {
+            get { return kMMHP; }
+
+            set { kMMHP = value; NotifyPropertyChanged(nameof(kMMHP)); }
         }
 
         public long DisplayedLPTime
