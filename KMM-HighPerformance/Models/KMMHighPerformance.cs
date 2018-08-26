@@ -17,7 +17,7 @@ namespace KMM_HighPerformance.Models
 
             //var stopwatch = Stopwatch.StartNew();
 
-            int pixelBPP = Image.GetPixelFormatSize(tempBmp.PixelFormat) / 8;
+            tempBmp = BitmapConversion.Create8bppGreyscaleImage(tempBmp);
 
             unsafe
             {
@@ -26,18 +26,16 @@ namespace KMM_HighPerformance.Models
                 byte* ptr = (byte*)bmpData.Scan0; //addres of first line
 
                 int height = tempBmp.Height;
-                int width = tempBmp.Width * pixelBPP;
+                int width = tempBmp.Width;
 
                 Parallel.For(0, height, y =>
                 {
                     byte* offset = ptr + (y * bmpData.Stride); //set row
-                    for (int x = 0; x < width; x = x + pixelBPP)
+                    for (int x = 0; x < width; x++)
                     {
 
-                        int value = (offset[x] + offset[x + 1] + offset[x + 2]) / 3 == 255 ? one : zero;
+                        int value = (offset[x]) == 255 ? one : zero;
                         offset[x] = (byte)value;
-                        offset[x + 1] = (byte)value;
-                        offset[x + 2] = (byte)value;
 
                     }
                 });

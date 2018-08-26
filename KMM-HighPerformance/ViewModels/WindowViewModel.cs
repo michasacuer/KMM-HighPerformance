@@ -27,7 +27,6 @@ namespace KMM_HighPerformance.ViewModels
 
                 Bitmap bmp = new Bitmap(filepath);
                 binarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(filepath));
-                binarizeHPImage = new Bitmap(filepath);
                 kMMLP = BitmapConversion.Bitmap2BitmapImage(new Bitmap(filepath));
             }
 

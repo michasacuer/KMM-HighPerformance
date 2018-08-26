@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Accord.Imaging.Filters;
 
 namespace KMM_HighPerformance.Models
 {
@@ -28,6 +29,8 @@ namespace KMM_HighPerformance.Models
             }
         }
 
+        static public Bitmap Create8bppGreyscaleImage(Bitmap bitmap) => Grayscale.CommonAlgorithms.BT709.Apply(bitmap);
+        
         static public Bitmap CreateNonIndexedImage(Bitmap bitmap)
         {
             Bitmap newBmp = new Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
@@ -39,6 +42,7 @@ namespace KMM_HighPerformance.Models
 
             return newBmp;
         }
+
 
 
     }
