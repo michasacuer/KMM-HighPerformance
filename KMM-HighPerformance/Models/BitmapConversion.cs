@@ -28,9 +28,7 @@ namespace KMM_HighPerformance.Models
                 return bitmapImage;
             }
         }
-
-        static public Bitmap Create8bppGreyscaleImage(Bitmap bitmap) => Grayscale.CommonAlgorithms.BT709.Apply(bitmap);
-        
+ 
         static public Bitmap CreateNonIndexedImage(Bitmap bitmap)
         {
             Bitmap newBmp = new Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
@@ -43,6 +41,7 @@ namespace KMM_HighPerformance.Models
             return newBmp;
         }
 
+        static public Bitmap Create8bppGreyscaleImage(Bitmap bitmap) => Grayscale.CommonAlgorithms.BT709.Apply(bitmap);
 
 
     }

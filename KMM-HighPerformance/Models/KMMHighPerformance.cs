@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace KMM_HighPerformance.Models
 {
@@ -15,7 +16,11 @@ namespace KMM_HighPerformance.Models
         static public Bitmap Init(Bitmap tempBmp, Measure measure)
         {
 
-            //var stopwatch = Stopwatch.StartNew();
+            int checkStick = 0; //sticked zeros             0
+            int checkClose = 0; //zeros looking like = 0 : pix : 0
+                                //                          0
+
+            var stopwatch = Stopwatch.StartNew();
 
             tempBmp = BitmapConversion.Create8bppGreyscaleImage(tempBmp);
 
@@ -24,26 +29,57 @@ namespace KMM_HighPerformance.Models
                 BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), ImageLockMode.ReadWrite, tempBmp.PixelFormat);
 
                 byte* ptr = (byte*)bmpData.Scan0; //addres of first line
+                
+
+                int bytes = bmpData.Stride * tempBmp.Height;
+                byte[] pixels = new byte[bytes];
+                byte[] pixelsCopy = new byte[bytes];
+
+                Marshal.Copy((IntPtr)ptr, pixels, 0, bytes);
+                Marshal.Copy((IntPtr)ptr, pixelsCopy, 0, bytes);
 
                 int height = tempBmp.Height;
                 int width = tempBmp.Width;
 
-                Parallel.For(0, height, y =>
+                Parallel.For(0, height, y => //seting 1 and 0
                 {
-                    byte* offset = ptr + (y * bmpData.Stride); //set row
+                    int offset = y * bmpData.Stride; //row
                     for (int x = 0; x < width; x++)
                     {
 
-                        int value = (offset[x]) == 255 ? one : zero;
-                        offset[x] = (byte)value;
+                        int positionOfPixel = x + offset;
+                        if(pixels[positionOfPixel] == one && x > 0 && x < width 
+                                                          && y > 0 && y < height)
+                        {
+                            pixelsCopy[positionOfPixel] = pixels[positionOfPixel - 1]      == zero ? two : 
+                            pixels[positionOfPixel + 1]                                    == zero ? two : 
+                            pixels[positionOfPixel - bmpData.Stride]                       == zero ? two :
+                            pixels[positionOfPixel + bmpData.Stride]                       == zero ? two :
+                            pixels[positionOfPixel - bmpData.Stride + 1]                   == zero ? two :
+                            pixels[positionOfPixel + bmpData.Stride - 1]                   == zero ? two :
+                            pixels[positionOfPixel - bmpData.Stride - 1]                   == zero ? two :
+                            pixels[positionOfPixel - bmpData.Stride + 1]                   == zero ? two : zero;
+                        }
 
                     }
                 });
 
+                //Parallel.For(0, height, y => //setting 2s
+                //{
+                //    byte* offset = ptr + (y * bmpData.Stride); //set row
+                //    for (int x = 0; x < width; x++)
+                //    {
+                //
+                //        
+                //
+                //    }
+                //});
+
+                Marshal.Copy(pixelsCopy, 0, (IntPtr)ptr, bytes);
                 tempBmp.UnlockBits(bmpData);
             }
 
-            //measure.timeElapsed = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
             return tempBmp;
         }
 
@@ -69,13 +105,15 @@ namespace KMM_HighPerformance.Models
                                             };
 
         static int[,] compareTable = {
+
                                 { 128, 1, 2 },
                                 { 64, 0, 4 }, // 0 is a middle pixel, the rest are weights for the neighbourhood
                                 { 32, 16, 8 } // of this pixel
+
                               };
 
-        static byte zero = byte.MinValue;
-        static byte one = byte.MaxValue;
+        static byte zero = byte.MaxValue;
+        static byte one = byte.MinValue;
         static byte two = 32;
         static byte three = 64;
         static byte four = 128;

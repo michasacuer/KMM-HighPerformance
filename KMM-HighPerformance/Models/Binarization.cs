@@ -14,9 +14,8 @@ namespace KMM_HighPerformance.Models
     {
         static public Bitmap LowPerformance(Bitmap tempBmp, Bitmap newBmp, Measure measure)
         {
-            var stopwatch = Stopwatch.StartNew();
-
-            int threshold = OtsuValue(tempBmp);
+            var stopwatch = Stopwatch.StartNew(); //start measure time
+            int threshold = OtsuValue(tempBmp); //calculate threshold by otsu value
 
             int[] pixelValue = new int[tempBmp.Width + 1];
 

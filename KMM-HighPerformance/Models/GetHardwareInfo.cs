@@ -10,7 +10,7 @@ namespace KMM_HighPerformance.Models
     class GetHardwareInfo
     {
 
-        //work in progress
+        //work in progress, class for getting hardware info as PC's CPU, GPU etc. 
         static public string GetCPUName()
         {
             string cpuName =" ";
