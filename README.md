@@ -7,6 +7,7 @@ Main functionality works perfect on 32bpp images
 
 # TODO:
 - exceptions 
+- remove some things from ViewModel and move it to Models
 - add another image method 
 - saving images
 - more hardware info
