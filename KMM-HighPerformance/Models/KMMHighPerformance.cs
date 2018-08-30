@@ -235,8 +235,8 @@ namespace KMM_HighPerformance.Models
         static byte two = 32;
         static byte three = 64;
 
-        static bool CheckStickZeros(List<byte> list) => list.Contains(zero) ? true : false;
-        static bool CheckCloseZeros(List<byte> list) => list.Contains(zero) ? true : false;
+        static bool CheckStickZeros(List<byte> list) => list.Contains(zero);
+        static bool CheckCloseZeros(List<byte> list) => list.Contains(zero);
 
     }
 }
