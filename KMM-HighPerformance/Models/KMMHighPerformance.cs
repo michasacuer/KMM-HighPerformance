@@ -110,7 +110,6 @@ namespace KMM_HighPerformance.Models
                                 stickPixels.Add(pixels[positionOfPixel - bmpData.Stride]);
                                 stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
                                 stickPixels.Add(pixels[positionOfPixel - 1]);
-                                stickPixels.Add(pixels[positionOfPixel]);
                                 stickPixels.Add(pixels[positionOfPixel + 1]);
                                 stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
                                 stickPixels.Add(pixels[positionOfPixel + bmpData.Stride]);
@@ -141,13 +140,20 @@ namespace KMM_HighPerformance.Models
 
                     while (N <= 3) //deleting 2 and 3s
                     {
+                        var value = two;
+
+                        if(N == 3)
+                        {
+                            value = three;
+                        }
+
                         Parallel.For(0, height, y => 
                         {
                             int offset = y * bmpData.Stride; //set row
                             for (int x = 0; x < width; x++)
                             {
                                 int positionOfPixel = x + offset;
-                                if (pixels[positionOfPixel] == N)
+                                if (pixelsCopy[positionOfPixel] == value)
                                 {
                                     int summary = 0;
 
@@ -157,7 +163,6 @@ namespace KMM_HighPerformance.Models
                                     stickPixels.Add(pixels[positionOfPixel - bmpData.Stride]);
                                     stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
                                     stickPixels.Add(pixels[positionOfPixel - 1]);
-                                    stickPixels.Add(pixels[positionOfPixel]);
                                     stickPixels.Add(pixels[positionOfPixel + 1]);
                                     stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
                                     stickPixels.Add(pixels[positionOfPixel + bmpData.Stride]);
@@ -176,6 +181,12 @@ namespace KMM_HighPerformance.Models
                                          pixelsCopy[positionOfPixel] = zero;
                                          deletion++;
                                     }
+
+                                    else
+                                    {
+                                        pixelsCopy[positionOfPixel] = one;
+                                    }
+                                    pixels = pixelsCopy;
                                 }
                             }   
                         });
@@ -216,7 +227,7 @@ namespace KMM_HighPerformance.Models
         static List<int> compareList= new List<int>(){
 
                                 128, 1,  2,
-                                64,  0,  4, // 0 is a middle pixel, the rest are weights for the neighbourhood
+                                64,  4, // 0 is a middle pixel, the rest are weights for the neighbourhood
                                 32,  16, 8  // of this pixel
 
                               };
