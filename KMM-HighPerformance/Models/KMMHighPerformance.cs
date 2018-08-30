@@ -16,9 +16,9 @@ namespace KMM_HighPerformance.Models
         static public Bitmap Init(Bitmap tempBmp, Measure measure)
         {
 
-            int checkStick = 0; //sticked zeros             0
-            int checkClose = 0; //zeros looking like = 0 : pix : 0
-                                //                          0
+            bool checkStick;                                  //sticked zeros             0
+            bool checkClose;                                  //zeros looking like = 0 : pix : 0
+            //                                                                                 0
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -40,52 +40,72 @@ namespace KMM_HighPerformance.Models
                 int height = tempBmp.Height;
                 int width = tempBmp.Width;
 
-                Parallel.For(0, height-1, y => //seting 2s
+                Parallel.For(0, height-1, y => //seting 2s and 3s
                 {
                     int offset = y * bmpData.Stride; //row
                     for (int x = 0; x < width-1; x++)
                     {
-
                         int positionOfPixel = x + offset;
                         if(pixels[positionOfPixel] == one && x > 0 && x < width 
                                                           && y > 0 && y < height)
                         {
-                            pixelsCopy[positionOfPixel] = pixels[positionOfPixel - 1]      == zero ? two : 
-                            pixels[positionOfPixel + 1]                                    == zero ? two : 
-                            pixels[positionOfPixel - bmpData.Stride]                       == zero ? two :
-                            pixels[positionOfPixel + bmpData.Stride]                       == zero ? two :
-                            pixels[positionOfPixel - bmpData.Stride + 1]                   == zero ? two :
-                            pixels[positionOfPixel + bmpData.Stride - 1]                   == zero ? two :
-                            pixels[positionOfPixel - bmpData.Stride - 1]                   == zero ? two :
-                            pixels[positionOfPixel - bmpData.Stride + 1]                   == zero ? two : one;
+                            List<byte> stickPixels = new List<byte>();             
+                            List<byte> closePixels = new List<byte>();
+                            var currentPixel = pixelsCopy[positionOfPixel];
 
-                            if(pixelsCopy[positionOfPixel] == two)
+                            var stick1 = pixels[positionOfPixel - bmpData.Stride + 1];
+                            var stick2 = pixels[positionOfPixel + bmpData.Stride - 1];
+                            var stick3 = pixels[positionOfPixel - bmpData.Stride + 1];
+                            var stick4 = pixels[positionOfPixel - bmpData.Stride + 1];
+                            stickPixels.Add(stick1);
+                            stickPixels.Add(stick2);
+                            stickPixels.Add(stick3);
+                            stickPixels.Add(stick4);
+
+                            var close1 = pixels[positionOfPixel + 1];
+                            var close2 = pixels[positionOfPixel - 1];
+                            var close3 = pixels[positionOfPixel + bmpData.Stride];
+                            var close4 = pixels[positionOfPixel - bmpData.Stride];
+                            closePixels.Add(close1);
+                            closePixels.Add(close2);
+                            closePixels.Add(close3);
+                            closePixels.Add(close4);
+
+                            checkClose = CheckClose(closePixels);
+                            checkStick = CheckStick(stickPixels);
+
+                            if (checkStick == true && checkClose == false)
                             {
-
+                                currentPixel = three;
                             }
-                        }
 
+                            else
+                            {
+                                currentPixel = two;
+                            }
+
+                            if(checkStick == false && checkClose == false)
+                            {
+                                currentPixel = one;
+                            }
+
+                            pixelsCopy[positionOfPixel] = currentPixel;
+
+                        }
                     }
                 });
 
-                Parallel.For(0, height, y => //setting 3s
+                Parallel.For(0, height, y => 
                 {
                     int offset = y * bmpData.Stride; //set row
                     for (int x = 0; x < width; x++)
                     {
-
                         int positionOfPixel = x + offset;
                         if (pixels[positionOfPixel] == two && x > 0 && x < width
                                                           && y > 0 && y < height)
                         {
-                            pixelsCopy[positionOfPixel] = pixels[positionOfPixel - 1] == zero ? two : one;
-
 
                         }
-
-
-
-
                     }
                 });
 
@@ -132,5 +152,7 @@ namespace KMM_HighPerformance.Models
         static byte three = 64;
         static byte four = 128;
 
+        static bool CheckStick(List<byte> list) => list.Contains(zero) ? true : false;
+        static bool CheckClose(List<byte> list) => list.Contains(zero) ? true : false;
     }
 }
