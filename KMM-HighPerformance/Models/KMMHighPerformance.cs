@@ -42,11 +42,13 @@ namespace KMM_HighPerformance.Models
 
                 while (deletion != 0)
                 {
+                    int N = 2;
+                    deletion = 0;
 
                     Parallel.For(0, height - 1, y => //seting 2s and 3s
                     {
                         int offset = y * bmpData.Stride; //row
-                    for (int x = 0; x < width - 1; x++)
+                        for (int x = 0; x < width - 1; x++)
                         {
                             int positionOfPixel = x + offset;
                             if (pixels[positionOfPixel] == one && x > 0 && x < width
@@ -86,7 +88,6 @@ namespace KMM_HighPerformance.Models
                                 }
 
                                 pixelsCopy[positionOfPixel] = currentPixel;
-
                             }
                         }
                     });
@@ -94,7 +95,7 @@ namespace KMM_HighPerformance.Models
                     Parallel.For(0, height, y => //looking for 4s and deleting all
                     {
                         int offset = y * bmpData.Stride; //set row
-                    for (int x = 0; x < width; x++)
+                        for (int x = 0; x < width; x++)
                         {
                             int positionOfPixel = x + offset;
                             if (pixelsCopy[positionOfPixel] == two && x > 0 && x < width
@@ -136,7 +137,50 @@ namespace KMM_HighPerformance.Models
                         }
                     });
 
+                    pixels = pixelsCopy;
 
+                    while (N <= 3) //deleting 2 and 3s
+                    {
+                        Parallel.For(0, height, y => 
+                        {
+                            int offset = y * bmpData.Stride; //set row
+                            for (int x = 0; x < width; x++)
+                            {
+                                int positionOfPixel = x + offset;
+                                if (pixels[positionOfPixel] == N)
+                                {
+                                    int summary = 0;
+
+                                    List<byte> stickPixels = new List<byte>();
+
+                                    stickPixels.Add(pixels[positionOfPixel - bmpData.Stride - 1]);
+                                    stickPixels.Add(pixels[positionOfPixel - bmpData.Stride]);
+                                    stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
+                                    stickPixels.Add(pixels[positionOfPixel - 1]);
+                                    stickPixels.Add(pixels[positionOfPixel]);
+                                    stickPixels.Add(pixels[positionOfPixel + 1]);
+                                    stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
+                                    stickPixels.Add(pixels[positionOfPixel + bmpData.Stride]);
+                                    stickPixels.Add(pixels[positionOfPixel + bmpData.Stride + 1]);
+
+                                    for (int i = 0; i < stickPixels.Count; i++)
+                                    {
+                                        if (stickPixels[i] == one || stickPixels[i] == two || stickPixels[i] == three)
+                                        {
+                                            summary += compareList[i];
+                                        }
+                                    }
+
+                                    if (deleteList.Contains(summary))
+                                    {
+                                         pixelsCopy[positionOfPixel] = zero;
+                                         deletion++;
+                                    }
+                                }
+                            }   
+                        });
+                        N++;
+                    }
                     pixels = pixelsCopy;
                 }
 
