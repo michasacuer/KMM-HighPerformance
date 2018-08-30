@@ -18,7 +18,7 @@ namespace KMM_HighPerformance.Models
 
             bool checkStick;                                  //sticked zeros             0
             bool checkClose;                                  //zeros looking like = 0 : pix : 0
-            //                                                                                 0
+                                                              //                          0
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -40,74 +40,105 @@ namespace KMM_HighPerformance.Models
                 int height = tempBmp.Height;
                 int width = tempBmp.Width;
 
-                Parallel.For(0, height-1, y => //seting 2s and 3s
+                while (deletion != 0)
                 {
-                    int offset = y * bmpData.Stride; //row
-                    for (int x = 0; x < width-1; x++)
+
+                    Parallel.For(0, height - 1, y => //seting 2s and 3s
                     {
-                        int positionOfPixel = x + offset;
-                        if(pixels[positionOfPixel] == one && x > 0 && x < width 
-                                                          && y > 0 && y < height)
+                        int offset = y * bmpData.Stride; //row
+                    for (int x = 0; x < width - 1; x++)
                         {
-                            List<byte> stickPixels = new List<byte>();             
-                            List<byte> closePixels = new List<byte>();
-                            var currentPixel = pixelsCopy[positionOfPixel];
-
-                            var stick1 = pixels[positionOfPixel - bmpData.Stride + 1];
-                            var stick2 = pixels[positionOfPixel + bmpData.Stride - 1];
-                            var stick3 = pixels[positionOfPixel - bmpData.Stride + 1];
-                            var stick4 = pixels[positionOfPixel - bmpData.Stride + 1];
-                            stickPixels.Add(stick1);
-                            stickPixels.Add(stick2);
-                            stickPixels.Add(stick3);
-                            stickPixels.Add(stick4);
-
-                            var close1 = pixels[positionOfPixel + 1];
-                            var close2 = pixels[positionOfPixel - 1];
-                            var close3 = pixels[positionOfPixel + bmpData.Stride];
-                            var close4 = pixels[positionOfPixel - bmpData.Stride];
-                            closePixels.Add(close1);
-                            closePixels.Add(close2);
-                            closePixels.Add(close3);
-                            closePixels.Add(close4);
-
-                            checkClose = CheckClose(closePixels);
-                            checkStick = CheckStick(stickPixels);
-
-                            if (checkStick == true && checkClose == false)
+                            int positionOfPixel = x + offset;
+                            if (pixels[positionOfPixel] == one && x > 0 && x < width
+                                                              && y > 0 && y < height)
                             {
-                                currentPixel = three;
+                                List<byte> stickPixels = new List<byte>();
+                                List<byte> closePixels = new List<byte>();
+
+                                var currentPixel = pixelsCopy[positionOfPixel];
+
+                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
+                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
+                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
+                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
+
+                                closePixels.Add(pixels[positionOfPixel + 1]);
+                                closePixels.Add(pixels[positionOfPixel - 1]);
+                                closePixels.Add(pixels[positionOfPixel + bmpData.Stride]);
+                                closePixels.Add(pixels[positionOfPixel - bmpData.Stride]);
+
+                                checkClose = CheckCloseZeros(closePixels);
+                                checkStick = CheckStickZeros(stickPixels);
+
+                                if (checkStick == true && checkClose == false)
+                                {
+                                    currentPixel = three;
+                                }
+
+                                else
+                                {
+                                    currentPixel = two;
+                                }
+
+                                if (checkStick == false && checkClose == false)
+                                {
+                                    currentPixel = one;
+                                }
+
+                                pixelsCopy[positionOfPixel] = currentPixel;
+
                             }
-
-                            else
-                            {
-                                currentPixel = two;
-                            }
-
-                            if(checkStick == false && checkClose == false)
-                            {
-                                currentPixel = one;
-                            }
-
-                            pixelsCopy[positionOfPixel] = currentPixel;
-
                         }
-                    }
-                });
+                    });
 
-                Parallel.For(0, height, y => 
-                {
-                    int offset = y * bmpData.Stride; //set row
+                    Parallel.For(0, height, y => //looking for 4s and deleting all
+                    {
+                        int offset = y * bmpData.Stride; //set row
                     for (int x = 0; x < width; x++)
-                    {
-                        int positionOfPixel = x + offset;
-                        if (pixels[positionOfPixel] == two && x > 0 && x < width
-                                                          && y > 0 && y < height)
                         {
+                            int positionOfPixel = x + offset;
+                            if (pixelsCopy[positionOfPixel] == two && x > 0 && x < width
+                                                              && y > 0 && y < height)
+                            {
+                                int counter = 0;
+                                int summary = 0;
 
+                                List<byte> stickPixels = new List<byte>();
+
+                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride - 1]);
+                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride]);
+                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
+                                stickPixels.Add(pixels[positionOfPixel - 1]);
+                                stickPixels.Add(pixels[positionOfPixel]);
+                                stickPixels.Add(pixels[positionOfPixel + 1]);
+                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
+                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride]);
+                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride + 1]);
+
+                                for (int i = 0; i < stickPixels.Count; i++)
+                                {
+                                    if (stickPixels[i] == one)
+                                    {
+                                        counter++;
+                                        summary += compareList[i];
+                                    }
+                                }
+
+                                if (counter == 2 || counter == 3 || counter == 4)
+                                {
+                                    if (deleteList.Contains(summary))
+                                    {
+                                        pixelsCopy[positionOfPixel] = zero;
+                                        deletion++;
+                                    }
+                                }
+                            }
                         }
-                    }
-                });
+                    });
+
+
+                    pixels = pixelsCopy;
+                }
 
                 Marshal.Copy(pixelsCopy, 0, (IntPtr)ptr, bytes);
                 tempBmp.UnlockBits(bmpData);
@@ -118,7 +149,7 @@ namespace KMM_HighPerformance.Models
         }
 
         static int deletion = 1;
-        static List<int> deleteTable = new List<int>(){
+        static List<int> deleteList = new List<int>(){
 
                                             3, 5, 7, 12, 13, 14, 15, 20,
                                             21, 22, 23, 28, 29, 30, 31, 48,
@@ -138,11 +169,11 @@ namespace KMM_HighPerformance.Models
 
                                             };
 
-        static int[,] compareTable = {
+        static List<int> compareList= new List<int>(){
 
-                                { 128, 1, 2 },
-                                { 64, 0, 4 }, // 0 is a middle pixel, the rest are weights for the neighbourhood
-                                { 32, 16, 8 } // of this pixel
+                                128, 1,  2,
+                                64,  0,  4, // 0 is a middle pixel, the rest are weights for the neighbourhood
+                                32,  16, 8  // of this pixel
 
                               };
 
@@ -152,7 +183,8 @@ namespace KMM_HighPerformance.Models
         static byte three = 64;
         static byte four = 128;
 
-        static bool CheckStick(List<byte> list) => list.Contains(zero) ? true : false;
-        static bool CheckClose(List<byte> list) => list.Contains(zero) ? true : false;
+        static bool CheckStickZeros(List<byte> list) => list.Contains(zero) ? true : false;
+        static bool CheckCloseZeros(List<byte> list) => list.Contains(zero) ? true : false;
+
     }
 }
