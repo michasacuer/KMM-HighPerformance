@@ -33,6 +33,7 @@ namespace KMM_HighPerformance.Models
 
                 int height = tempBmp.Height;
                 int width = tempBmp.Width;
+                int deletion = 1;
 
                 while (deletion != 0)
                 {
@@ -51,40 +52,27 @@ namespace KMM_HighPerformance.Models
                                 bool checkStick;                                  //sticked zeros             0
                                 bool checkClose;                                  //zeros looking like = 0 : pix : 0
                                                                                   //                          0
-                                List<byte> stickPixels = new List<byte>();
-                                List<byte> closePixels = new List<byte>();
+                                List<byte> stickPixels = new List<byte>(4)
+                                {
+                                    pixels[positionOfPixel - bmpData.Stride + 1],
+                                    pixels[positionOfPixel - bmpData.Stride - 1],
+                                    pixels[positionOfPixel + bmpData.Stride - 1],
+                                    pixels[positionOfPixel + bmpData.Stride + 1]
+                                };
 
-                                var currentPixel = pixels[positionOfPixel];
-
-                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
-                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride - 1]);
-                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
-                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride + 1]);
-
-                                closePixels.Add(pixels[positionOfPixel + 1]);
-                                closePixels.Add(pixels[positionOfPixel - 1]);
-                                closePixels.Add(pixels[positionOfPixel + bmpData.Stride]);
-                                closePixels.Add(pixels[positionOfPixel - bmpData.Stride]);
+                                List<byte> closePixels = new List<byte>(4)
+                                {
+                                    pixels[positionOfPixel + 1],
+                                    pixels[positionOfPixel - 1],
+                                    pixels[positionOfPixel + bmpData.Stride],
+                                    pixels[positionOfPixel - bmpData.Stride]
+                                };
 
                                 checkClose = CheckCloseZeros(closePixels);
                                 checkStick = CheckStickZeros(stickPixels);
 
-                                if (checkStick == true && checkClose == false)
-                                {
-                                    currentPixel = three;
-                                }
-
-                                else
-                                {
-                                    currentPixel = two;
-                                }
-
-                                if (checkStick == false && checkClose == false)
-                                {
-                                    currentPixel = one;
-                                }
-
-                                pixelsCopy[positionOfPixel] = currentPixel;
+                                pixelsCopy[positionOfPixel] = checkStick == true && checkClose == false ? three :
+                                                              checkStick == false && checkClose == false ? one : two;
                             }
                         }
                     });
@@ -103,16 +91,17 @@ namespace KMM_HighPerformance.Models
                                 int counter = 0;
                                 int summary = 0;
 
-                                List<byte> stickPixels = new List<byte>();
-
-                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride - 1]);
-                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride]);
-                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
-                                stickPixels.Add(pixels[positionOfPixel - 1]);
-                                stickPixels.Add(pixels[positionOfPixel + 1]);
-                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
-                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride]);
-                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride + 1]);
+                                List<byte> stickPixels = new List<byte>(8)
+                                {
+                                    pixels[positionOfPixel - bmpData.Stride - 1],
+                                    pixels[positionOfPixel - bmpData.Stride],
+                                    pixels[positionOfPixel - bmpData.Stride + 1],
+                                    pixels[positionOfPixel - 1],
+                                    pixels[positionOfPixel + 1],
+                                    pixels[positionOfPixel + bmpData.Stride - 1],
+                                    pixels[positionOfPixel + bmpData.Stride],
+                                    pixels[positionOfPixel + bmpData.Stride + 1]
+                                };
 
                                 for (int i = 0; i < stickPixels.Count; i++)
                                 {
@@ -156,16 +145,17 @@ namespace KMM_HighPerformance.Models
                                 {
                                     int summary = 0;
 
-                                    List<byte> stickPixels = new List<byte>();
-
-                                    stickPixels.Add(pixels[positionOfPixel - bmpData.Stride - 1]);
-                                    stickPixels.Add(pixels[positionOfPixel - bmpData.Stride]);
-                                    stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
-                                    stickPixels.Add(pixels[positionOfPixel - 1]);
-                                    stickPixels.Add(pixels[positionOfPixel + 1]);
-                                    stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
-                                    stickPixels.Add(pixels[positionOfPixel + bmpData.Stride]);
-                                    stickPixels.Add(pixels[positionOfPixel + bmpData.Stride + 1]);
+                                    List<byte> stickPixels = new List<byte>(8)
+                                    {
+                                        pixels[positionOfPixel - bmpData.Stride - 1],
+                                        pixels[positionOfPixel - bmpData.Stride],
+                                        pixels[positionOfPixel - bmpData.Stride + 1],
+                                        pixels[positionOfPixel - 1],
+                                        pixels[positionOfPixel + 1],
+                                        pixels[positionOfPixel + bmpData.Stride - 1],
+                                        pixels[positionOfPixel + bmpData.Stride],
+                                        pixels[positionOfPixel + bmpData.Stride + 1]
+                                    };
 
                                     for (int i = 0; i < stickPixels.Count; i++)
                                     {
@@ -201,7 +191,6 @@ namespace KMM_HighPerformance.Models
             return tempBmp;
         }
 
-        static int deletion = 1;
         static List<int> deleteList = new List<int>(){
 
                                             3, 5, 7, 12, 13, 14, 15, 20,
@@ -225,18 +214,17 @@ namespace KMM_HighPerformance.Models
         static List<int> compareList= new List<int>(){
 
                                 128, 1,  2,
-                                64,  4, // 0 is a middle pixel, the rest are weights for the neighbourhood
+                                64,  4,     // 0 is a middle pixel, the rest are weights for the neighbourhood
                                 32,  16, 8  // of this pixel
 
                               };
 
-        static byte zero = byte.MaxValue;
-        static byte one = byte.MinValue;
-        static byte two = 32;
-        static byte three = 64;
+        const byte zero = byte.MaxValue;
+        const byte one = byte.MinValue;
+        const byte two = 32;
+        const byte three = 64;
 
         static bool CheckStickZeros(List<byte> list) => list.Contains(zero);
         static bool CheckCloseZeros(List<byte> list) => list.Contains(zero);
-
     }
 }
