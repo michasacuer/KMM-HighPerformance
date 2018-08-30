@@ -6,7 +6,10 @@ Main functionality works perfect on 32bpp images
 ![My image](https://github.com/michasacuer/KMM-HighPerformance/blob/master/KMM-HighPerformance/Presentation.PNG)
 
 # TODO:
-- exceptions, add another image, saving images, more hardware info
+- exceptions 
+- add another image method 
+- saving images
+- more hardware info
 
 # Block Diagram
 ![My image](https://github.com/michasacuer/KMM-HighPerformance/blob/master/KMM-HighPerformance/kmm.PNG)
