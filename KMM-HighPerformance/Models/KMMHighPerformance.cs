@@ -30,7 +30,6 @@ namespace KMM_HighPerformance.Models
 
                 byte* ptr = (byte*)bmpData.Scan0; //addres of first line
                 
-
                 int bytes = bmpData.Stride * tempBmp.Height;
                 byte[] pixels = new byte[bytes];
                 byte[] pixelsCopy = new byte[bytes];
@@ -41,10 +40,10 @@ namespace KMM_HighPerformance.Models
                 int height = tempBmp.Height;
                 int width = tempBmp.Width;
 
-                Parallel.For(0, height, y => //seting 1 and 0
+                Parallel.For(0, height-1, y => //seting 2s
                 {
                     int offset = y * bmpData.Stride; //row
-                    for (int x = 0; x < width; x++)
+                    for (int x = 0; x < width-1; x++)
                     {
 
                         int positionOfPixel = x + offset;
@@ -58,22 +57,37 @@ namespace KMM_HighPerformance.Models
                             pixels[positionOfPixel - bmpData.Stride + 1]                   == zero ? two :
                             pixels[positionOfPixel + bmpData.Stride - 1]                   == zero ? two :
                             pixels[positionOfPixel - bmpData.Stride - 1]                   == zero ? two :
-                            pixels[positionOfPixel - bmpData.Stride + 1]                   == zero ? two : zero;
+                            pixels[positionOfPixel - bmpData.Stride + 1]                   == zero ? two : one;
+
+                            if(pixelsCopy[positionOfPixel] == two)
+                            {
+
+                            }
                         }
 
                     }
                 });
 
-                //Parallel.For(0, height, y => //setting 2s
-                //{
-                //    byte* offset = ptr + (y * bmpData.Stride); //set row
-                //    for (int x = 0; x < width; x++)
-                //    {
-                //
-                //        
-                //
-                //    }
-                //});
+                Parallel.For(0, height, y => //setting 3s
+                {
+                    int offset = y * bmpData.Stride; //set row
+                    for (int x = 0; x < width; x++)
+                    {
+
+                        int positionOfPixel = x + offset;
+                        if (pixels[positionOfPixel] == two && x > 0 && x < width
+                                                          && y > 0 && y < height)
+                        {
+                            pixelsCopy[positionOfPixel] = pixels[positionOfPixel - 1] == zero ? two : one;
+
+
+                        }
+
+
+
+
+                    }
+                });
 
                 Marshal.Copy(pixelsCopy, 0, (IntPtr)ptr, bytes);
                 tempBmp.UnlockBits(bmpData);
