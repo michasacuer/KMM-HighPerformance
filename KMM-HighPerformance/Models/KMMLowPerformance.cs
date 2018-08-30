@@ -13,7 +13,6 @@ namespace KMM_HighPerformance.Models
     {
         static public BitmapImage Init(Bitmap bmp, Bitmap newImage, Measure measure)
         {
-
             var stopwatch = Stopwatch.StartNew();
 
             int compareSize = 3; //size of compare table
@@ -77,7 +76,7 @@ namespace KMM_HighPerformance.Models
                 }
             }
 
-            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
+            measure.SumTimeElapsed(stopwatch.ElapsedMilliseconds);
 
             return BitmapConversion.Bitmap2BitmapImage(newImage);
         }

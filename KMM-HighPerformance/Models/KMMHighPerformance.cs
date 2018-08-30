@@ -12,14 +12,8 @@ namespace KMM_HighPerformance.Models
 {
     class KMMHighPerformance
     {
-
         static public Bitmap Init(Bitmap tempBmp, Measure measure)
         {
-
-            bool checkStick;                                  //sticked zeros             0
-            bool checkClose;                                  //zeros looking like = 0 : pix : 0
-                                                              //                          0
-
             var stopwatch = Stopwatch.StartNew();
 
             tempBmp = BitmapConversion.Create8bppGreyscaleImage(tempBmp);
@@ -52,17 +46,20 @@ namespace KMM_HighPerformance.Models
                         {
                             int positionOfPixel = x + offset;
                             if (pixels[positionOfPixel] == one && x > 0 && x < width
-                                                              && y > 0 && y < height)
+                                                               && y > 0 && y < height)
                             {
+                                bool checkStick;                                  //sticked zeros             0
+                                bool checkClose;                                  //zeros looking like = 0 : pix : 0
+                                                                                  //                          0
                                 List<byte> stickPixels = new List<byte>();
                                 List<byte> closePixels = new List<byte>();
 
-                                var currentPixel = pixelsCopy[positionOfPixel];
+                                var currentPixel = pixels[positionOfPixel];
 
                                 stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
+                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride - 1]);
                                 stickPixels.Add(pixels[positionOfPixel + bmpData.Stride - 1]);
-                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
-                                stickPixels.Add(pixels[positionOfPixel - bmpData.Stride + 1]);
+                                stickPixels.Add(pixels[positionOfPixel + bmpData.Stride + 1]);
 
                                 closePixels.Add(pixels[positionOfPixel + 1]);
                                 closePixels.Add(pixels[positionOfPixel - 1]);
@@ -92,14 +89,16 @@ namespace KMM_HighPerformance.Models
                         }
                     });
 
+                    pixels = pixelsCopy;
+
                     Parallel.For(0, height, y => //looking for 4s and deleting all
                     {
                         int offset = y * bmpData.Stride; //set row
                         for (int x = 0; x < width; x++)
                         {
                             int positionOfPixel = x + offset;
-                            if (pixelsCopy[positionOfPixel] == two && x > 0 && x < width
-                                                              && y > 0 && y < height)
+                            if (pixels[positionOfPixel] == two && x > 0 && x < width
+                                                               && y > 0 && y < height)
                             {
                                 int counter = 0;
                                 int summary = 0;
@@ -117,7 +116,7 @@ namespace KMM_HighPerformance.Models
 
                                 for (int i = 0; i < stickPixels.Count; i++)
                                 {
-                                    if (stickPixels[i] == one)
+                                    if (stickPixels[i] == one || stickPixels[i] == two || stickPixels[i] == three)
                                     {
                                         counter++;
                                         summary += compareList[i];
@@ -153,7 +152,7 @@ namespace KMM_HighPerformance.Models
                             for (int x = 0; x < width; x++)
                             {
                                 int positionOfPixel = x + offset;
-                                if (pixelsCopy[positionOfPixel] == value)
+                                if (pixels[positionOfPixel] == value)
                                 {
                                     int summary = 0;
 
@@ -186,7 +185,6 @@ namespace KMM_HighPerformance.Models
                                     {
                                         pixelsCopy[positionOfPixel] = one;
                                     }
-                                    pixels = pixelsCopy;
                                 }
                             }   
                         });
@@ -195,11 +193,11 @@ namespace KMM_HighPerformance.Models
                     pixels = pixelsCopy;
                 }
 
-                Marshal.Copy(pixelsCopy, 0, (IntPtr)ptr, bytes);
+                Marshal.Copy(pixels, 0, (IntPtr)ptr, bytes);
                 tempBmp.UnlockBits(bmpData);
             }
 
-            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
+            measure.SumTimeElapsed(stopwatch.ElapsedMilliseconds);
             return tempBmp;
         }
 
@@ -236,7 +234,6 @@ namespace KMM_HighPerformance.Models
         static byte one = byte.MinValue;
         static byte two = 32;
         static byte three = 64;
-        static byte four = 128;
 
         static bool CheckStickZeros(List<byte> list) => list.Contains(zero) ? true : false;
         static bool CheckCloseZeros(List<byte> list) => list.Contains(zero) ? true : false;

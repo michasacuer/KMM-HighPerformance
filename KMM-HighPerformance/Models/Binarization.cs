@@ -67,7 +67,6 @@ namespace KMM_HighPerformance.Models
                     byte* offset = ptr + (y * bmpData.Stride); //set row
                     for(int x = 0; x < width; x = x + pixelBPP)
                     {
-
                         int value = (offset[x] + offset[x + 1] + offset[x + 2]) / 3 > threshold ? Byte.MaxValue : Byte.MinValue;
                         offset[x] = (byte)value;
                         offset[x + 1] = (byte)value;
@@ -77,7 +76,6 @@ namespace KMM_HighPerformance.Models
                         {
                             offset[x + 3] = 255;
                         }
-
                     }
                 });
 
