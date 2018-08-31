@@ -23,7 +23,7 @@ namespace KMM_HighPerformance.Models
             for (y = 1; y < bmp.Height; y++)
                 for (x = 1; x < bmp.Width; x++)
                 {
-                    tempPixel = bmp.GetPixel(x, y);
+                    tempPixel = newImage.GetPixel(x, y);
                     if (tempPixel.R < 100) //if color of pixel is black = 1
                         pixelArray[y, x] = 1;
                     else

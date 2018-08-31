@@ -134,6 +134,15 @@
   <ItemGroup>
     <Resource Include="ExampleImages\2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ExampleImages\3.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ExampleImages\4.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ExampleImages\5.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
