@@ -10,6 +10,7 @@ Implementation of KMM alghoritm - thining images. Main functionality works perfe
 - remove some things from ViewModel and move it to Models
 - Crossing Number (looking for minutiaes in fingerprint images)  
 - saving images
+- make another comparision with EmguCV (OpenCV wrapper for C#)
 - more hardware info as GPU, memory etc
 
 # Block Diagram
