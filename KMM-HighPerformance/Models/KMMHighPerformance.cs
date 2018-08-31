@@ -21,15 +21,13 @@ namespace KMM_HighPerformance.Models
             unsafe
             {
                 BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), ImageLockMode.ReadWrite, tempBmp.PixelFormat);
-
-                byte* ptr = (byte*)bmpData.Scan0; //addres of first line
                 
                 int bytes = bmpData.Stride * tempBmp.Height;
                 byte[] pixels = new byte[bytes];
                 byte[] pixelsCopy = new byte[bytes];
 
-                Marshal.Copy((IntPtr)ptr, pixels, 0, bytes);
-                Marshal.Copy((IntPtr)ptr, pixelsCopy, 0, bytes);
+                Marshal.Copy(bmpData.Scan0, pixels, 0, bytes);
+                Marshal.Copy(bmpData.Scan0, pixelsCopy, 0, bytes);
 
                 int height = tempBmp.Height;
                 int width = tempBmp.Width;
@@ -49,9 +47,9 @@ namespace KMM_HighPerformance.Models
                             if (pixels[positionOfPixel] == one && x > 0 && x < width
                                                                && y > 0 && y < height)
                             {
-                                bool checkStick;                                  //sticked zeros             0
-                                bool checkClose;                                  //zeros looking like = 0 : pix : 0
-                                                                                  //                          0
+                                bool checkStick;                                  //Stick =    zeros to corners          0
+                                bool checkClose;                                  //Close=     zeros looking like = 0 : pix : 0
+                                                                                  //                                     0
                                 List<byte> stickPixels = new List<byte>(4)
                                 {
                                     pixels[positionOfPixel - bmpData.Stride + 1],
@@ -71,7 +69,7 @@ namespace KMM_HighPerformance.Models
                                 checkClose = CheckCloseZeros(closePixels);
                                 checkStick = CheckStickZeros(stickPixels);
 
-                                pixelsCopy[positionOfPixel] = checkStick == true && checkClose == false ? three :
+                                pixelsCopy[positionOfPixel] = checkStick == true  && checkClose == false ? three :
                                                               checkStick == false && checkClose == false ? one : two;
                             }
                         }
@@ -128,13 +126,8 @@ namespace KMM_HighPerformance.Models
 
                     while (N <= 3) //deleting 2 and 3s
                     {
-                        var value = two;
-
-                        if(N == 3)
-                        {
-                            value = three;
-                        }
-
+                        var value = N == 2 ? two : three;
+                      
                         Parallel.For(0, height, y => 
                         {
                             int offset = y * bmpData.Stride; //set row
@@ -183,15 +176,14 @@ namespace KMM_HighPerformance.Models
                     pixels = pixelsCopy;
                 }
 
-                Marshal.Copy(pixels, 0, (IntPtr)ptr, bytes);
+                Marshal.Copy(pixels, 0, bmpData.Scan0, bytes);
                 tempBmp.UnlockBits(bmpData);
             }
-
             measure.SumTimeElapsed(stopwatch.ElapsedMilliseconds);
             return tempBmp;
         }
 
-        static List<int> deleteList = new List<int>(){
+        readonly static List<int> deleteList = new List<int>(){
 
                                             3, 5, 7, 12, 13, 14, 15, 20,
                                             21, 22, 23, 28, 29, 30, 31, 48,
@@ -211,11 +203,11 @@ namespace KMM_HighPerformance.Models
 
                                             };
 
-        static List<int> compareList= new List<int>(){
+        readonly static List<int> compareList= new List<int>(){
 
                                 128, 1,  2,
-                                64,  4,     // 0 is a middle pixel, the rest are weights for the neighbourhood
-                                32,  16, 8  // of this pixel
+                                64,  4,     // i deleted middle 0, we dont need this
+                                32,  16, 8  
 
                               };
 

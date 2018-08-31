@@ -14,7 +14,6 @@ namespace KMM_HighPerformance.Models
         static public BitmapImage Init(Bitmap bmp, Bitmap newImage, Measure measure)
         {
             var stopwatch = Stopwatch.StartNew();
-
             int compareSize = 3; //size of compare table
             int x, y;
             Color tempPixel;
@@ -25,7 +24,6 @@ namespace KMM_HighPerformance.Models
                 for (x = 1; x < bmp.Width; x++)
                 {
                     tempPixel = bmp.GetPixel(x, y);
-
                     if (tempPixel.R < 100) //if color of pixel is black = 1
                         pixelArray[y, x] = 1;
                     else
@@ -60,8 +58,7 @@ namespace KMM_HighPerformance.Models
                         //deleting all "2" and "3" with neighbourhood compare to deleteTable
                     }
                     N++;
-                }
-                
+                }  
                 N = 2;
             }
 
@@ -77,7 +74,6 @@ namespace KMM_HighPerformance.Models
             }
 
             measure.SumTimeElapsed(stopwatch.ElapsedMilliseconds);
-
             return BitmapConversion.Bitmap2BitmapImage(newImage);
         }
 
@@ -128,7 +124,6 @@ namespace KMM_HighPerformance.Models
             {
                 for (maskX = 0; maskX < compareSize; maskX++)
                 {
-
                     if (maskX == 1 && maskY == 1)
                         continue;
 
@@ -162,7 +157,6 @@ namespace KMM_HighPerformance.Models
             {
                 for (maskX = 0; maskX < compareSize; maskX++)
                 {
-
                     yArray = (y + maskY - 1);
                     xArray = (x + maskX - 1);
 
@@ -207,6 +201,5 @@ namespace KMM_HighPerformance.Models
                                 { 64, 0, 4 }, // 0 is a middle pixel, the rest are weights for the neighbourhood
                                 { 32, 16, 8 } // of this pixel
                               };
-
     }
 }

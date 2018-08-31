@@ -19,8 +19,9 @@ namespace KMM_HighPerformance.ViewModels
         public WindowViewModel()
         {
             OpenFileDialog openPicture = new OpenFileDialog();
-            openPicture.Filter = "Image files|*.bmp;*.jpg;*.gif;*.png;*.tif|All files|*.*";
+            openPicture.Filter = "Image files|*.bmp;*.jpg;*.gif;*.png;*.tif";
             openPicture.FilterIndex = 1;
+            openPicture.InitialDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\ExampleImages")); //note, that i can only use it in development!
 
             if (openPicture.ShowDialog() == true) 
             {
@@ -96,7 +97,6 @@ namespace KMM_HighPerformance.ViewModels
             set { binarizeHPImageView = value; NotifyPropertyChanged(nameof(binarizeHPImageView)); }
         }
 
-
         public BitmapImage DisplayedLowPerformanceImage
         {
             get { return kMMLP; }
@@ -138,8 +138,5 @@ namespace KMM_HighPerformance.ViewModels
 
         long timeElapsedLP { get; set; }
         long timeElapsedHP { get; set; }
-
-
-
     }
 }

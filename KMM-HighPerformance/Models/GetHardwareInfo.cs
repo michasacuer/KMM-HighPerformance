@@ -14,12 +14,12 @@ namespace KMM_HighPerformance.Models
         static public string GetCPUName()
         {
             string cpuName =" ";
-            var mbs = new ManagementObjectSearcher("Select * From Win32_processor");
-            var mbsList = mbs.Get();
+            var searcher = new ManagementObjectSearcher("Select * From Win32_processor");
+            var searcherList = searcher.Get();
             
-            foreach (ManagementObject mo in mbsList)
+            foreach (ManagementObject item in searcherList)
             {
-                cpuName = mo["Name"].ToString();
+                cpuName = item["Name"].ToString();
             }
 
             return cpuName;

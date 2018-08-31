@@ -16,7 +16,6 @@ namespace KMM_HighPerformance.Models
         {
             var stopwatch = Stopwatch.StartNew(); //start measure time
             int threshold = OtsuValue(tempBmp); //calculate threshold by otsu value
-
             int[] pixelValue = new int[tempBmp.Width + 1];
 
             for (int y = 0; y < tempBmp.Height; y++)
@@ -103,7 +102,6 @@ namespace KMM_HighPerformance.Models
             }
 
             int total = tempBmp.Height * tempBmp.Width;
-
             float summary = 0;
 
             for(int i = 0; i< 256; i++)
@@ -145,11 +143,8 @@ namespace KMM_HighPerformance.Models
                     max = between;
                     threshold = i;
                 }
-  
             }
-
             return threshold;
         }
-
     }
 }
