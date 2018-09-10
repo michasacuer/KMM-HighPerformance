@@ -3,14 +3,15 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
-
+using System.Windows.Media.Imaging;
 
 namespace KMM_HighPerformance.Models
 {
     class Binarization
     {
-        static public Bitmap LowPerformance(Bitmap tempBmp, Bitmap newBmp, Measure measure)
+        static public BitmapImage LowPerformance(Bitmap tempBmp, Bitmap newBmp, Measure measure)
         {
+
             var stopwatch = Stopwatch.StartNew(); //start measure time
             int threshold = OtsuValue(tempBmp); //calculate threshold by otsu value
             int[] pixelValue = new int[tempBmp.Width + 1];
@@ -38,7 +39,7 @@ namespace KMM_HighPerformance.Models
             }
 
             measure.timeElapsed = stopwatch.ElapsedMilliseconds;
-            return newBmp;
+            return BitmapConversion.Bitmap2BitmapImage(newBmp);
         }
 
         static public Bitmap HighPerformance(Bitmap tempBmp, Measure measure)

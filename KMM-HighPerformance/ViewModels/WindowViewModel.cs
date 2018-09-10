@@ -12,51 +12,47 @@ namespace KMM_HighPerformance.ViewModels
         public WindowViewModel()
         {
             canExecute = true;
-
         }
 
-        public void GetImage()
+        public ICommand NewImageCommand //command for button click
         {
-            filepath = Pictures.GetNewImage();
-            DisplayedImage = filepath;
+            get
+            {
+                return newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImageAndInitKMM(), canExecute));
+            }
+        }
 
-            async Task InitializeLP()
+        public void GetImageAndInitKMM()
+        {
+            DisplayedImage = Pictures.GetNewImage(); //image given as input to app
+
+            async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
                 Measure measureLP = new Measure();
 
                 binarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(filepath));
-                binarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(filepath), binarizeLPImage, measureLP));
-                binarizeLPImageView = BitmapConversion.Bitmap2BitmapImage(binarizeLPImage);
-                DisplayedBinarizeLPImage = binarizeLPImageView;
+                DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(filepath), binarizeLPImage, measureLP)); 
+                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(new Bitmap(filepath), binarizeLPImage, measureLP));
 
-                kMMLP = BitmapConversion.Bitmap2BitmapImage(new Bitmap(filepath));
-                kMMLP = await Task.Run(() => KMMLowPerformance.Init(new Bitmap(filepath), binarizeLPImage, measureLP));
-                DisplayedLowPerformanceImage = kMMLP;
-
-                timeElapsedLP = measureLP.TimeElapsed();
-                DisplayedLPTime = timeElapsedLP;
+                DisplayedLPTime = measureLP.TimeElapsed();
             }
 
-            async Task InitializeHP()
+            async Task InitializeHP() //initialize methods with lockbits, marshall copy
             {
                 Measure measureHP = new Measure();
 
                 binarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(filepath), measureHP));
-                binarizeHPImageView = BitmapConversion.Bitmap2BitmapImage(binarizeHPImage);
-                DisplayedBinarizeHPImage = binarizeHPImageView;
+                DisplayedBinarizeHPImage = BitmapConversion.Bitmap2BitmapImage(binarizeHPImage);
+                DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(binarizeHPImage, measureHP)));
 
-                kMMHP = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(binarizeHPImage, measureHP)));
-                DisplayedHighPerformanceImage = kMMHP;
-
-                timeElapsedHP = measureHP.TimeElapsed();
-                DisplayedHPTime = timeElapsedHP;
-
+                DisplayedHPTime = measureHP.TimeElapsed();
             }
 
             var task1 = Task.Run(() => InitializeLP());
             var task2 = Task.Run(() => InitializeHP());
             Task.WaitAll(task1, task2);
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,7 +61,7 @@ namespace KMM_HighPerformance.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string DisplayedImage
+        public string DisplayedImage //displaying image given as input
         {
             get { return filepath; }
             set { filepath = value; NotifyPropertyChanged(nameof(DisplayedImage)); }
@@ -76,7 +72,7 @@ namespace KMM_HighPerformance.ViewModels
             get { return GetHardwareInfo.GetCPUName(); }
         }
 
-        public BitmapImage DisplayedBinarizeLPImage
+        public BitmapImage DisplayedBinarizeLPImage //displaying image from filepath after binarization with Get/Set pixel
         {
             get { return binarizeLPImageView; }
 
@@ -84,35 +80,35 @@ namespace KMM_HighPerformance.ViewModels
 
         }
 
-        public BitmapImage DisplayedBinarizeHPImage
+        public BitmapImage DisplayedBinarizeHPImage //displaying image from filepath after binarization with lockbits
         {
             get { return binarizeHPImageView; }
 
             set { binarizeHPImageView = value; NotifyPropertyChanged(nameof(DisplayedBinarizeHPImage)); }
         }
 
-        public BitmapImage DisplayedLowPerformanceImage
+        public BitmapImage DisplayedLowPerformanceImage //displaying image from filepath after kmm with Get/Set pixel
         {
             get { return kMMLP; }
 
             set { kMMLP = value; NotifyPropertyChanged(nameof(DisplayedLowPerformanceImage)); }
         }
 
-        public BitmapImage DisplayedHighPerformanceImage
+        public BitmapImage DisplayedHighPerformanceImage //displaying image from filepath after kmm with lockbits
         {
             get { return kMMHP; }
 
             set { kMMHP = value; NotifyPropertyChanged(nameof(DisplayedHighPerformanceImage)); }
         }
 
-        public long DisplayedLPTime
+        public long DisplayedLPTime //displaying elapsed time of `LowPerformance` methods
         {
             get { return timeElapsedLP; }
 
             set { timeElapsedLP = value; NotifyPropertyChanged(nameof(DisplayedLPTime)); }
         }
 
-        public long DisplayedHPTime
+        public long DisplayedHPTime //displaying elapsed time of `HighPerformance` methods
         {
             get { return timeElapsedHP; }
 
@@ -121,29 +117,20 @@ namespace KMM_HighPerformance.ViewModels
 
         public string filepath { get; set; }
 
+        private Bitmap binarizeLPImage { get; set; }
+        private Bitmap binarizeHPImage { get; set; }
 
-        Bitmap binarizeLPImage { get; set; }
-        Bitmap binarizeHPImage { get; set; }
+        private BitmapImage binarizeLPImageView { get; set; }
+        private BitmapImage binarizeHPImageView { get; set; }
 
-        BitmapImage binarizeLPImageView { get; set; }
-        BitmapImage binarizeHPImageView { get; set; }
+        private BitmapImage kMMLP { get; set; }
+        private BitmapImage kMMHP { get; set; }
 
-        BitmapImage kMMLP { get; set; }
-        BitmapImage kMMHP { get; set; }
+        private long timeElapsedLP { get; set; }
+        private long timeElapsedHP { get; set; }
 
-        long timeElapsedLP { get; set; }
-        long timeElapsedHP { get; set; }
-
-        bool canExecute;
-        ICommand newImageCommand;
-
-        public ICommand NewImageCommand
-        {
-            get
-            {
-                return newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImage(), canExecute));
-            }
-        }
-        
+        private bool canExecute;
+        private ICommand newImageCommand;
+  
     }
 }
