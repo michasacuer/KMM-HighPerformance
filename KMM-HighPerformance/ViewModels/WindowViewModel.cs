@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using KMM_HighPerformance.Models;
-using Microsoft.Win32;
 
 namespace KMM_HighPerformance.ViewModels 
 {
@@ -19,22 +11,20 @@ namespace KMM_HighPerformance.ViewModels
         public WindowViewModel()
         {
 
-            string filepath = Pictures.GetNewImage();
-
-            Bitmap bmp = new Bitmap(filepath);
-            binarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(filepath));
-            kMMLP = BitmapConversion.Bitmap2BitmapImage(new Bitmap(filepath));
+            filepath = Pictures.GetNewImage();
 
             async Task InitializeLP()
             {
                 Measure measureLP = new Measure();
 
+                binarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(filepath));
                 binarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(filepath), binarizeLPImage, measureLP));
                 binarizeLPImageView = BitmapConversion.Bitmap2BitmapImage(binarizeLPImage);
 
+                kMMLP = BitmapConversion.Bitmap2BitmapImage(new Bitmap(filepath));
                 kMMLP = await Task.Run(() => KMMLowPerformance.Init(new Bitmap(filepath), binarizeLPImage, measureLP));
 
-                timeElapsedLP = measureLP.TimeElapsed() + measureLP.TimeElapsed();                
+                timeElapsedLP = measureLP.TimeElapsed();               
             }
 
             async Task InitializeHP()
@@ -50,10 +40,7 @@ namespace KMM_HighPerformance.ViewModels
             }
 
             var task1 = Task.Run(() => InitializeLP());
-            //task1.Wait();
-
             var task2 = Task.Run(() => InitializeHP());
-            //task2.Wait();
 
             Task.WaitAll(task1, task2);
         }
