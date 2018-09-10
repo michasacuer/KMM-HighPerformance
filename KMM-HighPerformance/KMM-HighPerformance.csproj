@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Models\Binarization.cs" />
     <Compile Include="Models\BitmapConversion.cs" />
+    <Compile Include="Models\Pictures.cs" />
     <Compile Include="Models\GetHardwareInfo.cs" />
     <Compile Include="Models\KMMHighPerformance.cs" />
     <Compile Include="Models\KMMLowPerformance.cs" />
