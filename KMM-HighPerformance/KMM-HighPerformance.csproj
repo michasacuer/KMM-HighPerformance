@@ -78,6 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Models\Binarization.cs" />
     <Compile Include="Models\BitmapConversion.cs" />
     <Compile Include="Models\Pictures.cs" />

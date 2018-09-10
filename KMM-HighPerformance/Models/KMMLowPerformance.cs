@@ -26,6 +26,7 @@ namespace KMM_HighPerformance.Models
                         pixelArray[y, x] = 0; //if color of pixel is white = 0
                 }
 
+            deletion = 1;
             while (deletion != 0)
             {
                 deletion = 0;

@@ -44,7 +44,7 @@
         <Label Content="{Binding DisplayedHPTime}" Grid.Column="6" HorizontalAlignment="Left" Margin="107,123,-36,0" Grid.Row="3" VerticalAlignment="Top" Width="154" Height="28" Grid.ColumnSpan="2"/>
         <Label Content="High Performance (lockbits)&#xD;&#xA;Time Elapsed (ms):" Grid.Column="6" HorizontalAlignment="Left" Margin="0,106,0,0" Grid.Row="3" VerticalAlignment="Top" Width="185" Height="61"/>
         <Button Content="Close" Grid.Column="6" HorizontalAlignment="Left" Margin="91,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Click="Button_Click"/>
-        <Button Content="New image" Grid.Column="5" HorizontalAlignment="Left" Margin="241,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Grid.ColumnSpan="2"/>
+        <Button Command="{Binding NewImageCommand}" Content="New image" Grid.Column="5" HorizontalAlignment="Left" Margin="241,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Grid.ColumnSpan="2"/>
         <Label Content="{Binding CpuName}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="5" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="342" Height="47"/>
 
     </Grid>
