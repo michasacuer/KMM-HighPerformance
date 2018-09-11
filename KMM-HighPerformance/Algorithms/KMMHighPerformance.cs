@@ -4,10 +4,13 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using KMM_HighPerformance.Models;
+using KMM_HighPerformance.Conversions;
+using KMM_HighPerformance.MeasureTime;
 
-namespace KMM_HighPerformance.Models
+namespace KMM_HighPerformance.Algorithms
 {
-    class KMMHighPerformance
+    static class KMMHighPerformance
     {
         static public Bitmap Init(Bitmap tempBmp, Measure measure)
         {

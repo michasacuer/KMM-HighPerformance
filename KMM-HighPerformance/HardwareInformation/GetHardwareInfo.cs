@@ -1,8 +1,8 @@
 ﻿using System.Management;
 
-namespace KMM_HighPerformance.Models
+namespace KMM_HighPerformance.HardwareInformation
 {
-    class GetHardwareInfo
+    static class GetHardwareInfo
     {
 
         //work in progress, class for getting hardware info as PC's CPU, GPU etc. 

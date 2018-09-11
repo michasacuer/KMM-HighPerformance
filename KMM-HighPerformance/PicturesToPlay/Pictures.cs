@@ -4,10 +4,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
+using KMM_HighPerformance.Conversions;
 
-namespace KMM_HighPerformance.Models
+namespace KMM_HighPerformance.PicturesToPlay
 {
-    class Pictures
+    static class Pictures
     {
         static public string GetNewImageFilepath()
         {

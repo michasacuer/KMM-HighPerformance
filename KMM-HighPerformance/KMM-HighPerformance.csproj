@@ -80,13 +80,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\CommandHandler.cs" />
-    <Compile Include="Models\Binarization.cs" />
-    <Compile Include="Models\BitmapConversion.cs" />
-    <Compile Include="Models\Pictures.cs" />
-    <Compile Include="Models\GetHardwareInfo.cs" />
-    <Compile Include="Models\KMMHighPerformance.cs" />
-    <Compile Include="Models\KMMLowPerformance.cs" />
-    <Compile Include="Models\Measure.cs" />
+    <Compile Include="Algorithms\Binarization.cs" />
+    <Compile Include="Conversions\BitmapConversion.cs" />
+    <Compile Include="Models\Bitmaps.cs" />
+    <Compile Include="PicturesToPlay\Pictures.cs" />
+    <Compile Include="HardwareInformation\GetHardwareInfo.cs" />
+    <Compile Include="Algorithms\KMMHighPerformance.cs" />
+    <Compile Include="Algorithms\KMMLowPerformance.cs" />
+    <Compile Include="MeasureTime\Measure.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="View\WindowView.xaml.cs">
       <DependentUpon>WindowView.xaml</DependentUpon>
@@ -146,6 +147,7 @@
   <ItemGroup>
     <Resource Include="ExampleImages\5.PNG" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -2,10 +2,13 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media.Imaging;
+using KMM_HighPerformance.Models;
+using KMM_HighPerformance.Conversions;
+using KMM_HighPerformance.MeasureTime;
 
-namespace KMM_HighPerformance.Models
+namespace KMM_HighPerformance.Algorithms
 {
-    class KMMLowPerformance
+    static class KMMLowPerformance
     {
         static public BitmapImage Init(Bitmap newImage, Measure measure)
         {

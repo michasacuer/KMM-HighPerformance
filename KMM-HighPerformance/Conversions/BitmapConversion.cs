@@ -4,9 +4,9 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using Accord.Imaging.Filters;
 
-namespace KMM_HighPerformance.Models
+namespace KMM_HighPerformance.Conversions
 {
-    class BitmapConversion
+    static class BitmapConversion
     {
         static public Bitmap Create8bppGreyscaleImage(Bitmap bitmap) => Grayscale.CommonAlgorithms.BT709.Apply(bitmap);
 

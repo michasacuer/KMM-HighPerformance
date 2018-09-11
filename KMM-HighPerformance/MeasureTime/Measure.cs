@@ -1,4 +1,4 @@
-﻿namespace KMM_HighPerformance.Models
+﻿namespace KMM_HighPerformance.MeasureTime
 {
     class Measure //class for getting elapsed time for each insatnce of binarization, algorithm etc
     {
