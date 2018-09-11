@@ -80,14 +80,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\CommandHandler.cs" />
-    <Compile Include="Algorithms\Binarization.cs" />
-    <Compile Include="Conversions\BitmapConversion.cs" />
+    <Compile Include="Functions\Algorithms\ApplyKMM.cs" />
+    <Compile Include="Functions\Algorithms\Binarization.cs" />
+    <Compile Include="Functions\Conversions\BitmapConversion.cs" />
     <Compile Include="Models\Bitmaps.cs" />
     <Compile Include="PicturesToPlay\Pictures.cs" />
-    <Compile Include="HardwareInformation\GetHardwareInfo.cs" />
-    <Compile Include="Algorithms\KMMHighPerformance.cs" />
-    <Compile Include="Algorithms\KMMLowPerformance.cs" />
-    <Compile Include="MeasureTime\Measure.cs" />
+    <Compile Include="Functions\HardwareInformation\GetHardwareInfo.cs" />
+    <Compile Include="Functions\Algorithms\KMMHighPerformance.cs" />
+    <Compile Include="Functions\Algorithms\KMMLowPerformance.cs" />
+    <Compile Include="Functions\MeasureTime\Measure.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="View\WindowView.xaml.cs">
       <DependentUpon>WindowView.xaml</DependentUpon>
