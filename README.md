@@ -6,8 +6,8 @@ Implementation of KMM alghoritm - thining images. Main functionality works perfe
 
 # TODO:
 
-~~add another image method (on button click, now its only "view" thing)~~ **DONE 10.09.2018**
-~~saving images~~ **DONE 11.09.2018**
+~~- add another image method (on button click, now its only "view" thing)~~ **DONE 10.09.2018**__
+~~- saving images~~ **DONE 11.09.2018**__
 - exceptions 
 - remove some things from ViewModel and move it to Models
 - Crossing Number (looking for minutiaes in fingerprint images)  
