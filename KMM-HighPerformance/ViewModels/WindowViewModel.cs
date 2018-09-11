@@ -44,7 +44,7 @@ namespace KMM_HighPerformance.ViewModels
             }
         }
 
-        public void SaveImageToFile() => Pictures.SaveImageToFile(Bitmaps.kMMHP);
+        public void SaveImageToFile() => Pictures.SaveImageToFile(Bitmaps.KMMHP);
         public void GetImageFilepath() => DisplayedImage = Pictures.GetNewImageFilepath();
 
         public void ApplyKMMToNewImage()
@@ -54,9 +54,9 @@ namespace KMM_HighPerformance.ViewModels
             {
                 Measure measureLP = new Measure();
 
-                Bitmaps.binarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.filepath));
-                DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.filepath), Bitmaps.binarizeLPImage, measureLP)); 
-                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(Bitmaps.binarizeLPImage, measureLP));
+                Bitmaps.BinarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
+                DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath), Bitmaps.BinarizeLPImage, measureLP)); 
+                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(Bitmaps.BinarizeLPImage, measureLP));
 
                 DisplayedLPTime = measureLP.TimeElapsed();
             }
@@ -65,9 +65,9 @@ namespace KMM_HighPerformance.ViewModels
             {
                 Measure measureHP = new Measure();
 
-                Bitmaps.binarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.filepath), measureHP));
-                DisplayedBinarizeHPImage = BitmapConversion.Bitmap2BitmapImage(Bitmaps.binarizeHPImage);
-                DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(Bitmaps.binarizeHPImage, measureHP)));
+                Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath), measureHP));
+                DisplayedBinarizeHPImage = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
+                DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(Bitmaps.BinarizeHPImage, measureHP)));
 
                 DisplayedHPTime = measureHP.TimeElapsed();
             }
@@ -97,8 +97,8 @@ namespace KMM_HighPerformance.ViewModels
 
         public string DisplayedImage //displaying image given as input
         {
-            get { return Bitmaps.filepath; }
-            set { Bitmaps.filepath = value; NotifyPropertyChanged(nameof(DisplayedImage)); }
+            get { return Bitmaps.Filepath; }
+            set { Bitmaps.Filepath = value; NotifyPropertyChanged(nameof(DisplayedImage)); }
         }
 
         public string CpuName
@@ -108,44 +108,44 @@ namespace KMM_HighPerformance.ViewModels
 
         public BitmapImage DisplayedBinarizeLPImage //displaying image from filepath after binarization with Get/Set pixel
         {
-            get { return Bitmaps.binarizeLPImageView; }
+            get { return Bitmaps.BinarizeLPImageView; }
 
-            set { Bitmaps.binarizeLPImageView = value; NotifyPropertyChanged(nameof(DisplayedBinarizeLPImage)); }
+            set { Bitmaps.BinarizeLPImageView = value; NotifyPropertyChanged(nameof(DisplayedBinarizeLPImage)); }
         }
 
         public BitmapImage DisplayedBinarizeHPImage //displaying image from filepath after binarization with lockbits
         {
-            get { return Bitmaps.binarizeHPImageView; }
+            get { return Bitmaps.BinarizeHPImageView; }
 
-            set { Bitmaps.binarizeHPImageView = value; NotifyPropertyChanged(nameof(DisplayedBinarizeHPImage)); }
+            set { Bitmaps.BinarizeHPImageView = value; NotifyPropertyChanged(nameof(DisplayedBinarizeHPImage)); }
         }
 
         public BitmapImage DisplayedLowPerformanceImage //displaying image from filepath after kmm with Get/Set pixel
         {
-            get { return Bitmaps.kMMLP; }
+            get { return Bitmaps.KMMLP; }
 
-            set { Bitmaps.kMMLP = value; NotifyPropertyChanged(nameof(DisplayedLowPerformanceImage)); }
+            set { Bitmaps.KMMLP = value; NotifyPropertyChanged(nameof(DisplayedLowPerformanceImage)); }
         }
 
         public BitmapImage DisplayedHighPerformanceImage //displaying image from filepath after kmm with lockbits
         {
-            get { return Bitmaps.kMMHP; }
+            get { return Bitmaps.KMMHP; }
 
-            set { Bitmaps.kMMHP = value; NotifyPropertyChanged(nameof(DisplayedHighPerformanceImage)); }
+            set { Bitmaps.KMMHP = value; NotifyPropertyChanged(nameof(DisplayedHighPerformanceImage)); }
         }
 
         public long DisplayedLPTime //displaying elapsed time of `LowPerformance` methods
         {
-            get { return Bitmaps.timeElapsedLP; }
+            get { return Bitmaps.TimeElapsedLP; }
 
-            set { Bitmaps.timeElapsedLP = value; NotifyPropertyChanged(nameof(DisplayedLPTime)); }
+            set { Bitmaps.TimeElapsedLP = value; NotifyPropertyChanged(nameof(DisplayedLPTime)); }
         }
 
         public long DisplayedHPTime //displaying elapsed time of `HighPerformance` methods
         {
-            get { return Bitmaps.timeElapsedHP; }
+            get { return Bitmaps.TimeElapsedHP; }
 
-            set { Bitmaps.timeElapsedHP = value; NotifyPropertyChanged(nameof(DisplayedHPTime)); }
+            set { Bitmaps.TimeElapsedHP = value; NotifyPropertyChanged(nameof(DisplayedHPTime)); }
         }
 
         private bool canExecute;
