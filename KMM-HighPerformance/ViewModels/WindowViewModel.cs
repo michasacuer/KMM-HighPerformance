@@ -19,7 +19,7 @@ namespace KMM_HighPerformance.ViewModels
         {
             get
             {
-                return newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImage(), canExecute));
+                return newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImageFilepath(), canExecute));
             }
         }
 
@@ -35,14 +35,14 @@ namespace KMM_HighPerformance.ViewModels
         {
             get
             {
-                return applyKMMCommand ?? (applyKMMCommand = new Commands.CommandHandler(() => ApplyKMM(), canExecute));
+                return applyKMMCommand ?? (applyKMMCommand = new Commands.CommandHandler(() => ApplyKMMToNewImage(), canExecute));
             }
         }
 
         public void SaveImageToFile() => Pictures.SaveImageToFile(kMMHP);
-        public void GetImage() => DisplayedImage = Pictures.GetNewImageFilepath();
+        public void GetImageFilepath() => DisplayedImage = Pictures.GetNewImageFilepath();
 
-        public void ApplyKMM()
+        public void ApplyKMMToNewImage()
         {
 
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
@@ -107,7 +107,6 @@ namespace KMM_HighPerformance.ViewModels
             get { return binarizeLPImageView; }
 
             set { binarizeLPImageView = value; NotifyPropertyChanged(nameof(DisplayedBinarizeLPImage)); }
-
         }
 
         public BitmapImage DisplayedBinarizeHPImage //displaying image from filepath after binarization with lockbits
