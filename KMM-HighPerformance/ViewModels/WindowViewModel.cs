@@ -40,7 +40,7 @@ namespace KMM_HighPerformance.ViewModels
 
                 binarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(filepath));
                 DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(filepath), binarizeLPImage, measureLP)); 
-                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(new Bitmap(filepath), binarizeLPImage, measureLP));
+                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(binarizeLPImage, measureLP));
 
                 DisplayedLPTime = measureLP.TimeElapsed();
             }

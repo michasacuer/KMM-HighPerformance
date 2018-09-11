@@ -7,17 +7,17 @@ namespace KMM_HighPerformance.Models
 {
     class KMMLowPerformance
     {
-        static public BitmapImage Init(Bitmap bmp, Bitmap newImage, Measure measure)
+        static public BitmapImage Init(Bitmap newImage, Measure measure)
         {
             var stopwatch = Stopwatch.StartNew();
             int compareSize = 3; //size of compare table
             int x, y;
             Color tempPixel;
-            int[,] pixelArray = new int[bmp.Height, bmp.Width]; // one record on this array = one pixel
+            int[,] pixelArray = new int[newImage.Height, newImage.Width]; // one record on this array = one pixel
             int N = 2;
 
-            for (y = 1; y < bmp.Height; y++)
-                for (x = 1; x < bmp.Width; x++)
+            for (y = 1; y < newImage.Height; y++)
+                for (x = 1; x < newImage.Width; x++)
                 {
                     tempPixel = newImage.GetPixel(x, y);
                     if (tempPixel.R < 100) //if color of pixel is black = 1
@@ -31,25 +31,25 @@ namespace KMM_HighPerformance.Models
             {
                 deletion = 0;
 
-                for (y = 1; y < bmp.Height - 1; y++)
+                for (y = 1; y < newImage.Height - 1; y++)
                 {
-                    for (x = 1; x < bmp.Width - 1; x++)
+                    for (x = 1; x < newImage.Width - 1; x++)
                         if (pixelArray[y, x] == 1)
                             pixelArray[y, x] = FindPixelsValue(pixelArray, compareSize, x, y); //we are looking edges of image here
                 }
 
-                for (y = 1; y < bmp.Height - 1; y++)
+                for (y = 1; y < newImage.Height - 1; y++)
                 {
-                    for (x = 1; x < bmp.Width - 1; x++)
+                    for (x = 1; x < newImage.Width - 1; x++)
                         if (pixelArray[y, x] == 2)
                             pixelArray[y, x] = CheckNeighbourhood(pixelArray, compareSize, x, y); //we are looking "4" here
                 }
 
                 while (N <= 3)
                 {
-                    for (y = 0; y < bmp.Height - 1; y++)
+                    for (y = 0; y < newImage.Height - 1; y++)
                     {
-                        for (x = 0; x < bmp.Width - 1; x++)
+                        for (x = 0; x < newImage.Width - 1; x++)
                             if (pixelArray[y, x] == N)
                                 pixelArray[y, x] = CheckNeighbourhoodToDelete(pixelArray, compareSize, x, y);
                         //deleting all "2" and "3" with neighbourhood compare to deleteTable
@@ -59,9 +59,9 @@ namespace KMM_HighPerformance.Models
                 N = 2;
             }
 
-            for (y = 0; y < bmp.Height - 1; y++)
+            for (y = 0; y < newImage.Height - 1; y++)
             {
-                for (x = 0; x < bmp.Width - 1; x++)
+                for (x = 0; x < newImage.Width - 1; x++)
                 {
                     if (pixelArray[y, x] == 1)
                         newImage.SetPixel(x, y, Color.Black); //printing new bitmap
