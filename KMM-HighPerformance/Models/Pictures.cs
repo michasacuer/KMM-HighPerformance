@@ -1,12 +1,15 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Drawing;
 using System.IO;
+using System.Windows.Media.Imaging;
+using System.Drawing.Imaging;
 
 namespace KMM_HighPerformance.Models
 {
     class Pictures
     {
-        static public string GetNewImage()
+        static public string GetNewImageFilepath()
         {
             string filepath = "";
             OpenFileDialog openPicture = new OpenFileDialog();
@@ -20,6 +23,20 @@ namespace KMM_HighPerformance.Models
             }
 
             return filepath;
+        }
+
+        static public void SaveImageToFile(BitmapImage image)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "PNG Image|*.png";
+            saveFileDialog1.ShowDialog();
+
+            if(saveFileDialog1.FileName != "")
+            {
+                Bitmap bmp = BitmapConversion.BitmapImage2Bitmap(image);
+                Image toSave = bmp;
+                toSave.Save(saveFileDialog1.FileName, ImageFormat.Png);
+            }
         }
 
     }

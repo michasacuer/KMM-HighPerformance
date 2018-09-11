@@ -22,9 +22,17 @@ namespace KMM_HighPerformance.ViewModels
             }
         }
 
+        public ICommand SaveImageCommand //command for button click
+        {
+            get
+            {
+                return saveImageCommand ?? (saveImageCommand = new Commands.CommandHandler(() => SaveImageToFile(), canExecute));
+            }
+        }
+
         public void GetImageAndInitKMM()
         {
-            DisplayedImage = Pictures.GetNewImage(); //image given as input to app
+            DisplayedImage = Pictures.GetNewImageFilepath(); //image given as input to app
 
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
@@ -52,6 +60,8 @@ namespace KMM_HighPerformance.ViewModels
             var task2 = Task.Run(() => InitializeHP());
             Task.WaitAll(task1, task2);
         }
+
+        public void SaveImageToFile() => Pictures.SaveImageToFile(kMMHP);
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -131,6 +141,7 @@ namespace KMM_HighPerformance.ViewModels
 
         private bool canExecute;
         private ICommand newImageCommand;
-  
+        private ICommand saveImageCommand;
+
     }
 }
