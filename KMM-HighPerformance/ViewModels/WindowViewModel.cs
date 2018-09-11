@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using KMM_HighPerformance.Models;
+using System;
 
 namespace KMM_HighPerformance.ViewModels 
 {
@@ -18,7 +19,7 @@ namespace KMM_HighPerformance.ViewModels
         {
             get
             {
-                return newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImageAndInitKMM(), canExecute));
+                return newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImage(), canExecute));
             }
         }
 
@@ -30,9 +31,19 @@ namespace KMM_HighPerformance.ViewModels
             }
         }
 
-        public void GetImageAndInitKMM()
+        public ICommand ApplyKMMCommand //command for button click
         {
-            DisplayedImage = Pictures.GetNewImageFilepath(); //image given as input to app
+            get
+            {
+                return applyKMMCommand ?? (applyKMMCommand = new Commands.CommandHandler(() => ApplyKMM(), canExecute));
+            }
+        }
+
+        public void SaveImageToFile() => Pictures.SaveImageToFile(kMMHP);
+        public void GetImage() => DisplayedImage = Pictures.GetNewImageFilepath();
+
+        public void ApplyKMM()
+        {
 
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
@@ -56,12 +67,21 @@ namespace KMM_HighPerformance.ViewModels
                 DisplayedHPTime = measureHP.TimeElapsed();
             }
 
-            var task1 = Task.Run(() => InitializeLP());
-            var task2 = Task.Run(() => InitializeHP());
-            Task.WaitAll(task1, task2);
-        }
+            try
+            {
+                var task1 = Task.Run(() => InitializeLP());
+                var task2 = Task.Run(() => InitializeHP());
+                Task.WaitAll(task1, task2);
+            }
 
-        public void SaveImageToFile() => Pictures.SaveImageToFile(kMMHP);
+            catch (Exception ex)
+            {
+                if (ex is ArgumentNullException || ex is AggregateException)
+                {
+                    System.Windows.MessageBox.Show("There is no image to Apply KMM");
+                }
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -125,6 +145,11 @@ namespace KMM_HighPerformance.ViewModels
             set { timeElapsedHP = value; NotifyPropertyChanged(nameof(DisplayedHPTime)); }
         }
 
+        private bool canExecute;
+        private ICommand newImageCommand;
+        private ICommand saveImageCommand;
+        private ICommand applyKMMCommand;
+
         public string filepath { get; set; }
 
         private Bitmap binarizeLPImage { get; set; }
@@ -139,9 +164,6 @@ namespace KMM_HighPerformance.ViewModels
         private long timeElapsedLP { get; set; }
         private long timeElapsedHP { get; set; }
 
-        private bool canExecute;
-        private ICommand newImageCommand;
-        private ICommand saveImageCommand;
 
     }
 }

@@ -33,9 +33,17 @@ namespace KMM_HighPerformance.Models
 
             if(saveFileDialog1.FileName != "")
             {
-                Bitmap bmp = BitmapConversion.BitmapImage2Bitmap(image);
-                Image toSave = bmp;
-                toSave.Save(saveFileDialog1.FileName, ImageFormat.Png);
+                try
+                {
+                    Bitmap bmp = BitmapConversion.BitmapImage2Bitmap(image);
+                    Image toSave = bmp;
+                    toSave.Save(saveFileDialog1.FileName, ImageFormat.Png);
+                }
+
+                catch(ArgumentNullException ex)
+                {
+                    System.Windows.MessageBox.Show("There is no final image to save");
+                }
             }
         }
 

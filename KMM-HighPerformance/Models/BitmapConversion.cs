@@ -8,6 +8,8 @@ namespace KMM_HighPerformance.Models
 {
     class BitmapConversion
     {
+        static public Bitmap Create8bppGreyscaleImage(Bitmap bitmap) => Grayscale.CommonAlgorithms.BT709.Apply(bitmap);
+
         static public BitmapImage Bitmap2BitmapImage(Bitmap bitmap)
         {
             using (var memory = new MemoryStream())
@@ -48,9 +50,6 @@ namespace KMM_HighPerformance.Models
 
             return newBmp;
         }
-
-        static public Bitmap Create8bppGreyscaleImage(Bitmap bitmap) => Grayscale.CommonAlgorithms.BT709.Apply(bitmap);
-
 
     }
 }

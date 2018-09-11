@@ -20,7 +20,11 @@ namespace KMM_HighPerformance.Models
             return cpuName;
         }
 
-
+        static public string GetGPUName()
+        {
+            string gpuName = " ";
+            return gpuName;
+        }
 
 
     }
