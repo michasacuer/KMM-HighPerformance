@@ -50,44 +50,44 @@ namespace KMM_HighPerformance.ViewModels
 
         public void ApplyKMMToNewImage()
         {
-            //ApplyKMM.Init();
+            ApplyKMM.Init();
 
-            async Task InitializeLP() //initialize methods that use Get/Set Pixel
-            {
-                Measure measureLP = new Measure();
-            
-                Bitmaps.BinarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
-                DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath), Bitmaps.BinarizeLPImage, measureLP)); 
-                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(Bitmaps.BinarizeLPImage, measureLP));
-            
-                DisplayedLPTime = measureLP.TimeElapsed();
-            }
-            
-            async Task InitializeHP() //initialize methods with lockbits, marshall copy
-            {
-                Measure measureHP = new Measure();
-            
-                Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath), measureHP));
-                DisplayedBinarizeHPImage = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
-                DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(Bitmaps.BinarizeHPImage, measureHP)));
-            
-                DisplayedHPTime = measureHP.TimeElapsed();
-            }
-            
-            try
-            {
-                var task1 = Task.Run(() => InitializeLP());
-                var task2 = Task.Run(() => InitializeHP());
-                Task.WaitAll(task1, task2);
-            }
-            
-            catch (Exception ex)
-            {
-                if (ex is ArgumentNullException || ex is AggregateException)
-                {
-                    System.Windows.MessageBox.Show("There is no image to Apply KMM");
-                }
-            }
+            //async Task InitializeLP() //initialize methods that use Get/Set Pixel
+            //{
+            //    Measure measureLP = new Measure();
+            //
+            //    Bitmaps.BinarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
+            //    DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath), Bitmaps.BinarizeLPImage, measureLP)); 
+            //    DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(Bitmaps.BinarizeLPImage, measureLP));
+            //
+            //    DisplayedLPTime = measureLP.TimeElapsed();
+            //}
+            //
+            //async Task InitializeHP() //initialize methods with lockbits, marshall copy
+            //{
+            //    Measure measureHP = new Measure();
+            //
+            //    Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath), measureHP));
+            //    DisplayedBinarizeHPImage = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
+            //    DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(Bitmaps.BinarizeHPImage, measureHP)));
+            //
+            //    DisplayedHPTime = measureHP.TimeElapsed();
+            //}
+            //
+            //try
+            //{
+            //    var task1 = Task.Run(() => InitializeLP());
+            //    var task2 = Task.Run(() => InitializeHP());
+            //    Task.WaitAll(task1, task2);
+            //}
+            //
+            //catch (Exception ex)
+            //{
+            //    if (ex is ArgumentNullException || ex is AggregateException)
+            //    {
+            //        System.Windows.MessageBox.Show("There is no image to Apply KMM");
+            //    }
+            //}
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

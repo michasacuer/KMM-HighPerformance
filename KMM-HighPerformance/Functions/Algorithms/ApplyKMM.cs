@@ -2,17 +2,16 @@
 using KMM_HighPerformance.Conversions;
 using KMM_HighPerformance.MeasureTime;
 using KMM_HighPerformance.Models;
-using KMM_HighPerformance.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KMM_HighPerformance.Functions.Algorithms
 {
     class ApplyKMM
     {
+
+
         public static void Init()
         {
             async Task InitializeLP() //initialize methods that use Get/Set Pixel

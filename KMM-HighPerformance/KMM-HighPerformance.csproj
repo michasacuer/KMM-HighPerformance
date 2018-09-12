@@ -84,7 +84,7 @@
     <Compile Include="Functions\Algorithms\Binarization.cs" />
     <Compile Include="Functions\Conversions\BitmapConversion.cs" />
     <Compile Include="Models\Bitmaps.cs" />
-    <Compile Include="PicturesToPlay\Pictures.cs" />
+    <Compile Include="Functions\PicturesToPlay\Pictures.cs" />
     <Compile Include="Functions\HardwareInformation\GetHardwareInfo.cs" />
     <Compile Include="Functions\Algorithms\KMMHighPerformance.cs" />
     <Compile Include="Functions\Algorithms\KMMLowPerformance.cs" />
