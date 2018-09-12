@@ -2,14 +2,14 @@
 using System.Drawing;
 using System.Windows.Media.Imaging;
 using KMM_HighPerformance.Conversions;
-using KMM_HighPerformance.MeasureTime;
+using KMM_HighPerformance.Models;
 using KMM_HighPerformance.Functions.Algorithms;
 
 namespace KMM_HighPerformance.Algorithms
 {
     static class KMMLowPerformance
     {
-        static public BitmapImage Init(Bitmap newImage, Measure measure)
+        static public BitmapImage Init(Bitmap newImage, MeasureTime measure)
         {
             var stopwatch = Stopwatch.StartNew();
             int compareSize = 3; //size of compare table

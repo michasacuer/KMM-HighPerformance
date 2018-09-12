@@ -89,7 +89,7 @@
     <Compile Include="Functions\HardwareInformation\GetHardwareInfo.cs" />
     <Compile Include="Functions\Algorithms\KMMHighPerformance.cs" />
     <Compile Include="Functions\Algorithms\KMMLowPerformance.cs" />
-    <Compile Include="Functions\MeasureTime\Measure.cs" />
+    <Compile Include="Models\MeasureTime.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="View\WindowView.xaml.cs">
       <DependentUpon>WindowView.xaml</DependentUpon>

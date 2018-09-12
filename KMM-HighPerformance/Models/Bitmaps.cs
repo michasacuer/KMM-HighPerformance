@@ -1,8 +1,7 @@
-﻿using System.ComponentModel;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Media.Imaging;
 
-namespace KMM_HighPerformance.Models
+namespace KMM_HighPerformance.Models 
 {
     static class Bitmaps
     {

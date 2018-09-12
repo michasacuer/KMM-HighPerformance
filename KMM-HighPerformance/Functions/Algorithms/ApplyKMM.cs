@@ -1,6 +1,5 @@
 ﻿using KMM_HighPerformance.Algorithms;
 using KMM_HighPerformance.Conversions;
-using KMM_HighPerformance.MeasureTime;
 using KMM_HighPerformance.Models;
 using System;
 using System.Drawing;
@@ -10,12 +9,11 @@ namespace KMM_HighPerformance.Functions.Algorithms
 {
     class ApplyKMM
     {
-
         public static void Init()
         {
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
-                Measure measureLP = new Measure();
+                MeasureTime measureLP = new MeasureTime();
 
                 Bitmaps.BinarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
                 Bitmaps.BinarizeLPImageView = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath), Bitmaps.BinarizeLPImage, measureLP));
@@ -26,7 +24,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
 
             async Task InitializeHP() //initialize methods with lockbits, marshall copy
             {
-                Measure measureHP = new Measure();
+                MeasureTime measureHP = new MeasureTime();
 
                 Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath), measureHP));
                 Bitmaps.BinarizeHPImageView = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);

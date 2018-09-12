@@ -5,14 +5,14 @@ using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using KMM_HighPerformance.Conversions;
-using KMM_HighPerformance.MeasureTime;
+using KMM_HighPerformance.Models;
 using KMM_HighPerformance.Functions.Algorithms;
 
 namespace KMM_HighPerformance.Algorithms
 {
     static class KMMHighPerformance
     {
-        static public Bitmap Init(Bitmap tempBmp, Measure measure)
+        static public Bitmap Init(Bitmap tempBmp, MeasureTime measure)
         {
             var stopwatch = Stopwatch.StartNew();
 

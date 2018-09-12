@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using KMM_HighPerformance.Algorithms;
 using KMM_HighPerformance.Conversions;
-using KMM_HighPerformance.MeasureTime;
 using KMM_HighPerformance.HardwareInformation;
 using KMM_HighPerformance.PicturesToPlay;
 using KMM_HighPerformance.Models;
@@ -45,7 +44,7 @@ namespace KMM_HighPerformance.ViewModels
 
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
-                Measure measureLP = new Measure();
+                MeasureTime measureLP = new MeasureTime();
                 Bitmaps.BinarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
                 DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath),
                                                                                             Bitmaps.BinarizeLPImage, 
@@ -60,7 +59,7 @@ namespace KMM_HighPerformance.ViewModels
             
             async Task InitializeHP() //initialize methods with lockbits, marshall copy
             {
-                Measure measureHP = new Measure();
+                MeasureTime measureHP = new MeasureTime();
                 Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath),
                                                                                             measureHP)
                                                                                             );
@@ -112,7 +111,7 @@ namespace KMM_HighPerformance.ViewModels
 
             set
             {
-                Bitmaps.BinarizeLPImageView = value;
+                Bitmaps.BinarizeLPImageView = value; 
                 NotifyPropertyChanged(nameof(DisplayedBinarizeLPImage));
             }
         }
@@ -177,5 +176,6 @@ namespace KMM_HighPerformance.ViewModels
         private ICommand newImageCommand;
         private ICommand saveImageCommand;
         private ICommand applyKMMCommand;
+
     }
 }

@@ -5,13 +5,13 @@ using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using KMM_HighPerformance.Conversions;
-using KMM_HighPerformance.MeasureTime;
+using KMM_HighPerformance.Models;
 
 namespace KMM_HighPerformance.Algorithms
 {
     static class Binarization
     {
-        static public BitmapImage LowPerformance(Bitmap tempBmp, Bitmap newBmp, Measure measure)
+        static public BitmapImage LowPerformance(Bitmap tempBmp, Bitmap newBmp, MeasureTime measure)
         {
 
             var stopwatch = Stopwatch.StartNew(); //start measure time
@@ -44,7 +44,7 @@ namespace KMM_HighPerformance.Algorithms
             return BitmapConversion.Bitmap2BitmapImage(newBmp);
         }
 
-        static public Bitmap HighPerformance(Bitmap tempBmp, Measure measure)
+        static public Bitmap HighPerformance(Bitmap tempBmp, MeasureTime measure)
         {
             measure.timeElapsed = 0;
             var stopwatch = Stopwatch.StartNew();
