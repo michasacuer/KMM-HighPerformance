@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media.Imaging;
-using KMM_HighPerformance.Models;
 using KMM_HighPerformance.Conversions;
 using KMM_HighPerformance.MeasureTime;
 using KMM_HighPerformance.Functions.Algorithms;

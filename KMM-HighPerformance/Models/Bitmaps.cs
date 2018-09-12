@@ -1,11 +1,11 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Media.Imaging;
 
 namespace KMM_HighPerformance.Models
 {
     static class Bitmaps
     {
-
         static public string Filepath
         {
             get { return filepath; }

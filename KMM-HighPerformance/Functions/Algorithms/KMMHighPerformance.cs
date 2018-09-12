@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using KMM_HighPerformance.Models;
 using KMM_HighPerformance.Conversions;
 using KMM_HighPerformance.MeasureTime;
 using KMM_HighPerformance.Functions.Algorithms;
