@@ -9,7 +9,6 @@ using KMM_HighPerformance.Conversions;
 using KMM_HighPerformance.HardwareInformation;
 using KMM_HighPerformance.PicturesToPlay;
 using KMM_HighPerformance.Models;
-using KMM_HighPerformance.Functions.Algorithms;
 
 namespace KMM_HighPerformance.ViewModels 
 {
