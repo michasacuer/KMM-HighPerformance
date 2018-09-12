@@ -27,13 +27,14 @@ namespace KMM_HighPerformance.Algorithms
             int height = tempBmp.Height;
             int width = tempBmp.Width;              
 
-            int deletion = 1;
+            int deletion = 1, deletionFirst, deletionSecond;
             while (deletion != 0)
             {
                 deletion = 0;
                 pixels = HighPerformance.SetTwoThree(pixels, bmpData, height, width);
-                (deletion, pixels) = HighPerformance.FindAndDeleteFour(pixels, bmpData, height, width, deletion);
-                (deletion, pixels) = HighPerformance.DeletingTwoThree(pixels, bmpData, height, width, deletion);
+                (deletionFirst, pixels) = HighPerformance.FindAndDeleteFour(pixels, bmpData, height, width, deletion);
+                (deletionSecond, pixels) = HighPerformance.DeletingTwoThree(pixels, bmpData, height, width, deletion);
+                deletion = deletionFirst > deletionSecond ? deletionFirst : deletionSecond;
             }
 
             Marshal.Copy(pixels, 0, bmpData.Scan0, bytes);
