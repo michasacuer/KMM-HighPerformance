@@ -15,15 +15,14 @@ namespace KMM_HighPerformance.Algorithms
             var stopwatch = Stopwatch.StartNew();
             tempBmp = BitmapConversion.Create8bppGreyscaleImage(tempBmp);
 
-            BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, 
-                                                  tempBmp.Width, 
-                                                  tempBmp.Height), 
+            BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), 
                                                   ImageLockMode.ReadWrite, 
                                                   tempBmp.PixelFormat
                                                   );
             
             int bytes = bmpData.Stride * tempBmp.Height;
             byte[] pixels = new byte[bytes];
+
             Marshal.Copy(bmpData.Scan0, pixels, 0, bytes);
             int height = tempBmp.Height;
             int width = tempBmp.Width;              
