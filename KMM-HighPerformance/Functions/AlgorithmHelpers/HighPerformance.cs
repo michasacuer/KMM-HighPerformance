@@ -1,4 +1,4 @@
-﻿using KMM_HighPerformance.Functions.Algorithms;
+﻿using KMM_HighPerformance.Functions.AlgorithmsHelpers;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;

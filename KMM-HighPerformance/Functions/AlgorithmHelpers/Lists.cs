@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace KMM_HighPerformance.Functions.Algorithms
+namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
 {
     static class Lists
     {

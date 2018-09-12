@@ -5,7 +5,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace KMM_HighPerformance.Functions.Algorithms
+namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
 {
     class ApplyKMM
     {
