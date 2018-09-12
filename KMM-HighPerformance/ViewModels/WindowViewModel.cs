@@ -51,9 +51,9 @@ namespace KMM_HighPerformance.ViewModels
                                                                                             measureLP
                                                                                             )); 
 
-                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformance.Init(Bitmaps.BinarizeLPImage,
-                                                                                           measureLP
-                                                                                           ));      
+                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformanceMain.Init(Bitmaps.BinarizeLPImage,
+                                                                                               measureLP
+                                                                                               ));      
                 DisplayedLPTime = measureLP.TimeElapsed();
             }
             
@@ -65,9 +65,9 @@ namespace KMM_HighPerformance.ViewModels
                                                                                             );
 
                 DisplayedBinarizeHPImage = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
-                DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformance.Init(Bitmaps.BinarizeHPImage,
-                                                                                                         measureHP)
-                                                                                                         ));          
+                DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage,
+                                                                                                                                     measureHP)
+                                                                                                                                     ));          
                 DisplayedHPTime = measureHP.TimeElapsed();
             }
             
@@ -97,7 +97,11 @@ namespace KMM_HighPerformance.ViewModels
         public string DisplayedImage //displaying image given as input
         {
             get { return Bitmaps.Filepath; }
-            set { Bitmaps.Filepath = value; NotifyPropertyChanged(nameof(DisplayedImage)); }
+            set
+            {
+                Bitmaps.Filepath = value;
+                NotifyPropertyChanged(nameof(DisplayedImage));
+            }
         }
 
         public string CpuName
@@ -124,8 +128,7 @@ namespace KMM_HighPerformance.ViewModels
             {
                 Bitmaps.BinarizeHPImageView = value;
                 NotifyPropertyChanged(nameof(DisplayedBinarizeHPImage));
-            }
-            
+            }           
         }
 
         public BitmapImage DisplayedLowPerformanceImage //displaying image from filepath after kmm with Get/Set pixel

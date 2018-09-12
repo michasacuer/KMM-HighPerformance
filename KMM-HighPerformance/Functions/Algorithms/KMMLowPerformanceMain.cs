@@ -7,7 +7,7 @@ using KMM_HighPerformance.Functions.Algorithms;
 
 namespace KMM_HighPerformance.Algorithms
 {
-    static class KMMLowPerformance
+    static class KMMLowPerformanceMain
     {
         static public BitmapImage Init(Bitmap newImage, MeasureTime measure)
         {
