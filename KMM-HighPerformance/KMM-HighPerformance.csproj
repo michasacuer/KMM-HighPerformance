@@ -82,6 +82,7 @@
     <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Functions\Algorithms\ApplyKMM.cs" />
     <Compile Include="Functions\Algorithms\Binarization.cs" />
+    <Compile Include="Functions\Algorithms\Lists.cs" />
     <Compile Include="Functions\Conversions\BitmapConversion.cs" />
     <Compile Include="Models\Bitmaps.cs" />
     <Compile Include="Functions\PicturesToPlay\Pictures.cs" />

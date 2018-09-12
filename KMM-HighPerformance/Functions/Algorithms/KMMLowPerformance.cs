@@ -5,6 +5,7 @@ using System.Windows.Media.Imaging;
 using KMM_HighPerformance.Models;
 using KMM_HighPerformance.Conversions;
 using KMM_HighPerformance.MeasureTime;
+using KMM_HighPerformance.Functions.Algorithms;
 
 namespace KMM_HighPerformance.Algorithms
 {
@@ -140,7 +141,7 @@ namespace KMM_HighPerformance.Algorithms
 
             if (check == 2 || check == 3 || check == 4)
             {
-                if (deleteTable.Contains(sum))
+                if (Lists.deleteList.Contains(sum))
                 {
                     deletion++;
                     return 0; // we are find "4" and setting it to "0" at the same time
@@ -167,7 +168,7 @@ namespace KMM_HighPerformance.Algorithms
                 }
             }
 
-            if (deleteTable.Contains(sum))
+            if (Lists.deleteList.Contains(sum))
             {
                 deletion++;
                 return 0; //if we find pixel to delete, we are deleting it setting it to 0
@@ -176,25 +177,6 @@ namespace KMM_HighPerformance.Algorithms
         }
 
         static int deletion = 1;
-        static List<int> deleteTable = new List<int>(){
-
-                                            3, 5, 7, 12, 13, 14, 15, 20,
-                                            21, 22, 23, 28, 29, 30, 31, 48,
-                                            52, 53, 54, 55, 56, 60, 61, 62,
-                                            63, 65, 67, 69, 71, 77, 79, 80,
-                                            81, 83, 84, 85, 86, 87, 88, 89,
-                                            91, 92, 93, 94, 95, 97, 99, 101,
-                                            103, 109, 111, 112, 113, 115, 116, 117,
-                                            118, 119, 120, 121, 123, 124, 125, 126,
-                                            127, 131, 133, 135, 141, 143, 149, 151,
-                                            157, 159, 181, 183, 189, 191, 192, 193,            //deleteTable that we are looking pixels to delete
-                                            195, 197, 199, 205, 207, 208, 209, 211,
-                                            212, 213, 214, 215, 216, 217, 219, 220,
-                                            221, 222, 223, 224, 225, 227, 229, 231,
-                                            237, 239, 240, 241, 243, 244, 245, 246,
-                                            247, 248, 249, 251, 252, 253, 254, 255
-
-                                            };
 
         static int[,] compareTable = {
                                 { 128, 1, 2 },
