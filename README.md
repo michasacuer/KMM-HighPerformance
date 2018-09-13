@@ -4,6 +4,9 @@ Implementation of KMM alghoritm - thining images. Main functionality works perfe
 # Presentation
 ![My image](https://github.com/michasacuer/KMM-HighPerformance/blob/master/KMM-HighPerformance/Presentation.PNG)
 
+# Functions
+Main functions of this app are hide in `Functions -> Algorithms` and `Functions -> AlforithmHelpers` folders.
+
 # TODO:
 
 ~~- add another image method (on button click, now its only "view" thing)~~ **DONE 10.09.2018** <br />
