@@ -5,10 +5,10 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using KMM_HighPerformance.Algorithms;
-using KMM_HighPerformance.Conversions;
-using KMM_HighPerformance.HardwareInformation;
-using KMM_HighPerformance.PicturesToPlay;
+using KMM_HighPerformance.Functions.Algorithms;
+using KMM_HighPerformance.Functions.Conversions;
+using KMM_HighPerformance.Functions.HardwareInformation;
+using KMM_HighPerformance.Functions.PicturesToPlay;
 using KMM_HighPerformance.Models;
 
 namespace KMM_HighPerformance.ViewModels 

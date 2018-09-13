@@ -2,11 +2,11 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using KMM_HighPerformance.Conversions;
 using KMM_HighPerformance.Models;
 using KMM_HighPerformance.Functions.AlgorithmHelpers;
+using KMM_HighPerformance.Functions.Conversions;
 
-namespace KMM_HighPerformance.Algorithms
+namespace KMM_HighPerformance.Functions.Algorithms
 {
     class KMMHighPerformanceMain
     {
@@ -24,15 +24,19 @@ namespace KMM_HighPerformance.Algorithms
 
             Marshal.Copy(bmpData.Scan0, pixels, 0, bytes);
             int height = tempBmp.Height;
-            int width = tempBmp.Width;              
+            int width = tempBmp.Width;
 
-            int deletion = 1, deletionFirst, deletionSecond;
+            int deletion = 1;
+            int deletionFirst, deletionSecond;
+
             while (deletion != 0)
             {
                 deletion = 0;
-                pixels = HighPerformance.SetOneTwoThree(pixels, bmpData, height, width);
-                (deletionFirst, pixels) = HighPerformance.FindAndDeleteFour(pixels, bmpData, height, width, deletion);
+
+                pixels                   = HighPerformance.SetOneTwoThree(pixels, bmpData, height, width);
+                (deletionFirst, pixels)  = HighPerformance.FindAndDeleteFour(pixels, bmpData, height, width, deletion);
                 (deletionSecond, pixels) = HighPerformance.DeletingTwoThree(pixels, bmpData, height, width, deletion);
+
                 deletion = deletionFirst > deletionSecond ? deletionFirst : deletionSecond;
             }
 

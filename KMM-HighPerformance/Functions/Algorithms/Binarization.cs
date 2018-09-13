@@ -4,10 +4,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
-using KMM_HighPerformance.Conversions;
 using KMM_HighPerformance.Models;
+using KMM_HighPerformance.Functions.Conversions;
 
-namespace KMM_HighPerformance.Algorithms
+namespace KMM_HighPerformance.Functions.Algorithms
 {
     static class Binarization
     {

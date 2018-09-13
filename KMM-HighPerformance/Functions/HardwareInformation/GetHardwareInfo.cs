@@ -1,6 +1,6 @@
 ﻿using System.Management;
 
-namespace KMM_HighPerformance.HardwareInformation
+namespace KMM_HighPerformance.Functions.HardwareInformation
 {
     static class GetHardwareInfo
     {

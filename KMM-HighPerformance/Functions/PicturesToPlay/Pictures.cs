@@ -5,9 +5,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
-using KMM_HighPerformance.Conversions;
+using KMM_HighPerformance.Functions.Conversions;
 
-namespace KMM_HighPerformance.PicturesToPlay
+namespace KMM_HighPerformance.Functions.PicturesToPlay
 {
     static class Pictures
     {

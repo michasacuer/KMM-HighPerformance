@@ -1,5 +1,5 @@
-﻿using KMM_HighPerformance.Algorithms;
-using KMM_HighPerformance.Conversions;
+﻿using KMM_HighPerformance.Functions.Algorithms;
+using KMM_HighPerformance.Functions.Conversions;
 using KMM_HighPerformance.Models;
 using System;
 using System.Drawing;

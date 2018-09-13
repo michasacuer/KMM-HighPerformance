@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using Accord.Imaging.Filters;
 
-namespace KMM_HighPerformance.Conversions
+namespace KMM_HighPerformance.Functions.Conversions
 {
     static class BitmapConversion
     {
