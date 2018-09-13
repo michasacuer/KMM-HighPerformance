@@ -7,7 +7,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 {
     class HighPerformance
     {
-        public static byte[] SetTwoThree(byte[] pixels, BitmapData bmpData, int height, int width)
+        public static byte[] SetOneTwoThree(byte[] pixels, BitmapData bmpData, int height, int width)
         {
             Parallel.For(0, height - 1, y => //seting 2s and 3s
             {

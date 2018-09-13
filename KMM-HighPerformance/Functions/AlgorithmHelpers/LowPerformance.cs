@@ -9,6 +9,23 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 {
     class LowPerformance
     {
+
+        static public int[,] SetOneZero(Bitmap newImage, int[,] pixelArray)
+        {
+            for (int y = 1; y < newImage.Height; y++)
+            {
+                for (int x = 1; x < newImage.Width; x++)
+                {
+                    Color tempPixel = newImage.GetPixel(x, y);
+                    if (tempPixel.R < 100) //if color of pixel is black = 1
+                        pixelArray[y, x] = 1;
+                    else
+                        pixelArray[y, x] = 0; //if color of pixel is white = 0
+                }
+            }
+
+            return pixelArray;
+        }
         static public int[,] SetOneTwoThree(Bitmap newImage, int[,] pixelArray, int compareSize)
         {
             int yArray, xArray, maskY, maskX;

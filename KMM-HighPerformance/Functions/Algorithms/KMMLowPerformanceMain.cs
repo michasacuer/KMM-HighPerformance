@@ -18,21 +18,12 @@ namespace KMM_HighPerformance.Algorithms
             int[,] pixelArray = new int[newImage.Height, newImage.Width]; // one record on this array = one pixel
             int N = 2;
 
-            for (y = 1; y < newImage.Height; y++)
-                for (x = 1; x < newImage.Width; x++)
-                {
-                    Color tempPixel = newImage.GetPixel(x, y);
-                    if (tempPixel.R < 100) //if color of pixel is black = 1
-                        pixelArray[y, x] = 1;
-                    else
-                        pixelArray[y, x] = 0; //if color of pixel is white = 0
-                }
+            pixelArray = LowPerformance.SetOneZero(newImage, pixelArray);
 
             deletion = 1;
             while (deletion != 0)
             {
                 deletion = 0;
-
                 pixelArray = LowPerformance.SetOneTwoThree(newImage, pixelArray, compareSize);
 
                 for (y = 1; y < newImage.Height - 1; y++)
