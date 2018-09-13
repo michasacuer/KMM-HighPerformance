@@ -14,7 +14,6 @@ namespace KMM_HighPerformance.Algorithms
         {
             var stopwatch = Stopwatch.StartNew();
             tempBmp = BitmapConversion.Create8bppGreyscaleImage(tempBmp);
-
             BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), 
                                                   ImageLockMode.ReadWrite, 
                                                   tempBmp.PixelFormat

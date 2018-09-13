@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.ComponentModel;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -81,7 +82,7 @@ namespace KMM_HighPerformance.ViewModels
             {
                 if (ex is ArgumentNullException || ex is AggregateException)
                 {
-                    System.Windows.MessageBox.Show("There is no image to Apply KMM");
+                    MessageBox.Show("There is no image to Apply KMM");
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Windows;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -43,7 +44,7 @@ namespace KMM_HighPerformance.PicturesToPlay
 
                 catch(ArgumentNullException ex)
                 {
-                    System.Windows.MessageBox.Show("There is no final image to save");
+                    MessageBox.Show("There is no final image to save");
                 }
             }
         }
