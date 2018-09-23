@@ -79,6 +79,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
 
                 tempBmp.UnlockBits(bmpData);
             }
+
             stopwatch.Stop();
             measure.timeElapsedMs    = stopwatch.ElapsedMilliseconds;
             measure.timeElapsedTicks = stopwatch.ElapsedTicks;
@@ -91,7 +92,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
             int y;
             int[] histogram = new int[256];
 
-            for(y = 0; y < tempBmp.Height; y++)
+            for (y = 0; y < tempBmp.Height; y++)
             {
                 for(x = 0; x < tempBmp.Width; x++)
                 {
