@@ -2,6 +2,11 @@
 Implementation of KMM alghoritm - thining images. Main functionality works perfect on 32bpp images. Check TODO list!
 
 # Presentation
+
+### State of 23.09.2018 - much improvement on app working:
+![My image](https://github.com/michasacuer/KMM-HighPerformance/blob/master/KMM-HighPerformance/Presentation2.PNG)
+
+### Old version:
 ![My image](https://github.com/michasacuer/KMM-HighPerformance/blob/master/KMM-HighPerformance/Presentation.PNG)
 
 # Functions
