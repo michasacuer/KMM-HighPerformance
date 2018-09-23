@@ -59,6 +59,12 @@ namespace KMM_HighPerformance.Models
             set { timeElapsedHP = value; }
         }
 
+        static public long TimeElapsedHPTicks
+        {
+            get { return timeElapsedHPTicks; }
+            set { timeElapsedHPTicks = value; }
+        }
+
         static private string filepath { get; set; }
 
         static private Bitmap binarizeLPImage { get; set; }
@@ -72,5 +78,6 @@ namespace KMM_HighPerformance.Models
                 
         static private long timeElapsedLP { get; set; }
         static private long timeElapsedHP { get; set; }
+        static private long timeElapsedHPTicks { get; set; }
     }
 }

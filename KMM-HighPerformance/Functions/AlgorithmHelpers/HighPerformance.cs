@@ -120,9 +120,9 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return (deletion, pixels);
         }
 
-        private const byte zero = byte.MaxValue;
-        private const byte one = byte.MinValue;
-        private const byte two = 32;
+        private const byte zero  = byte.MaxValue;
+        private const byte one   = byte.MinValue;
+        private const byte two   = 32;
         private const byte three = 64;
 
         private static bool CheckStickZeros(List<byte> list) => list.Contains(zero);

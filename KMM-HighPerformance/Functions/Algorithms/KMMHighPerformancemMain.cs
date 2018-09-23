@@ -43,7 +43,9 @@ namespace KMM_HighPerformance.Functions.Algorithms
             Marshal.Copy(pixels, 0, bmpData.Scan0, bytes);
             tempBmp.UnlockBits(bmpData);
 
+            stopwatch.Stop();
             measure.SumTimeElapsed(stopwatch.ElapsedMilliseconds);
+            measure.SumTimeElapsedTicks(stopwatch.ElapsedTicks);
             return tempBmp;
         }
     }

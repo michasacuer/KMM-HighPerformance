@@ -14,8 +14,8 @@ namespace KMM_HighPerformance.Functions.Algorithms
         static public BitmapImage LowPerformance(Bitmap tempBmp, Bitmap newBmp, MeasureTime measure)
         {
 
-            var stopwatch = Stopwatch.StartNew(); //start measure time
             int threshold = OtsuValue(tempBmp); //calculate threshold by otsu value
+            var stopwatch = Stopwatch.StartNew(); //start measure time
             int[] pixelValue = new int[tempBmp.Width + 1];
 
             for (int y = 0; y < tempBmp.Height; y++)
@@ -40,16 +40,16 @@ namespace KMM_HighPerformance.Functions.Algorithms
                 }
             }
 
-            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsed      = stopwatch.ElapsedMilliseconds;
             return BitmapConversion.Bitmap2BitmapImage(newBmp);
         }
 
         static public Bitmap HighPerformance(Bitmap tempBmp, MeasureTime measure)
         {
+            int threshold = OtsuValue(tempBmp);
             measure.timeElapsed = 0;
             var stopwatch = Stopwatch.StartNew();
 
-            int threshold = OtsuValue(tempBmp);
             int pixelBPP = Image.GetPixelFormatSize(tempBmp.PixelFormat) / 8;
 
             unsafe
@@ -66,10 +66,10 @@ namespace KMM_HighPerformance.Functions.Algorithms
                     byte* offset = ptr + (y * bmpData.Stride); //set row
                     for(int x = 0; x < width; x = x + pixelBPP)
                     {
-                        int value = (offset[x] + offset[x + 1] + offset[x + 2]) / 3 > threshold ? Byte.MaxValue : Byte.MinValue;
-                        offset[x] = (byte)value;
-                        offset[x + 1] = (byte)value;
-                        offset[x + 2] = (byte)value;
+                        byte value = (offset[x] + offset[x + 1] + offset[x + 2]) / 3 > threshold ? Byte.MaxValue : Byte.MinValue;
+                        offset[x] = value;
+                        offset[x + 1] = value;
+                        offset[x + 2] = value;
 
                         if (pixelBPP == 4)
                         {
@@ -80,8 +80,9 @@ namespace KMM_HighPerformance.Functions.Algorithms
 
                 tempBmp.UnlockBits(bmpData);
             }
-
-            measure.timeElapsed = stopwatch.ElapsedMilliseconds;
+            stopwatch.Stop();
+            measure.timeElapsed      = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsedTicks = stopwatch.ElapsedTicks;
             return tempBmp;
         }
 

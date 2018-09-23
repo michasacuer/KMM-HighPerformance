@@ -68,7 +68,8 @@ namespace KMM_HighPerformance.ViewModels
                 DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage,
                                                                                                                                      measureHP)
                                                                                                                                      ));          
-                DisplayedHPTime = measureHP.TimeElapsed();
+                DisplayedHPTime        = measureHP.TimeElapsed();
+                DisplayedHPTimeInTicks = measureHP.TimeElapsedTicks();
             }
             
             try
@@ -172,6 +173,17 @@ namespace KMM_HighPerformance.ViewModels
             {
                 Bitmaps.TimeElapsedHP = value;
                 NotifyPropertyChanged(nameof(DisplayedHPTime));
+            }
+        }
+
+        public long DisplayedHPTimeInTicks //displaying elapsed time of `HighPerformance` methods
+        {
+            get { return Bitmaps.TimeElapsedHPTicks; }
+
+            set
+            {
+                Bitmaps.TimeElapsedHPTicks = value;
+                NotifyPropertyChanged(nameof(DisplayedHPTimeInTicks));
             }
         }
 
