@@ -23,8 +23,8 @@ namespace KMM_HighPerformance.Functions.Algorithms
             {
                 deletion = 0;
 
-                pixelArray = LowPerformance.SetOneTwoThree(newImage, pixelArray);
-                (deletionFirst, pixelArray) = LowPerformance.FindAndDeleteFour(newImage, pixelArray);
+                pixelArray                   = LowPerformance.SetOneTwoThree(newImage, pixelArray);
+                (deletionFirst, pixelArray)  = LowPerformance.FindAndDeleteFour(newImage, pixelArray);
                 (deletionSecond, pixelArray) = LowPerformance.DeletingTwoThree(newImage, pixelArray);
 
                 deletion = deletionFirst > deletionSecond ? deletionFirst : deletionSecond;

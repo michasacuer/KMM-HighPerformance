@@ -26,6 +26,5 @@ namespace KMM_HighPerformance.Functions.HardwareInformation
             return gpuName;
         }
 
-
     }
 }
