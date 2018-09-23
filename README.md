@@ -3,7 +3,7 @@ Implementation of KMM alghoritm - thining images. Main functionality works perfe
 
 # Presentation
 
-### State of 23.09.2018 - much improvement on app working:
+### State of 23.09.2018 - much improvement (look at elapsed time!)
 ![My image](https://github.com/michasacuer/KMM-HighPerformance/blob/master/KMM-HighPerformance/Presentation2.PNG)
 
 ### Old version:
