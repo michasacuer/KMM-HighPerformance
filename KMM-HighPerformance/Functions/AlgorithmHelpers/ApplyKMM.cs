@@ -19,7 +19,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
                 Bitmaps.BinarizeLPImageView = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath), Bitmaps.BinarizeLPImage, measureLP));
                 Bitmaps.KMMLP = await Task.Run(() => KMMLowPerformanceMain.Init(Bitmaps.BinarizeLPImage, measureLP));
 
-                Bitmaps.TimeElapsedLP = measureLP.TimeElapsed();
+                Bitmaps.TimeElapsedLP = measureLP.TimeElapsedMs();
             }
 
             async Task InitializeHP() //initialize methods with lockbits, marshall copy
@@ -30,7 +30,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
                 Bitmaps.BinarizeHPImageView = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
                 Bitmaps.KMMHP = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage, measureHP)));
 
-                Bitmaps.TimeElapsedHP = measureHP.TimeElapsed();
+                Bitmaps.TimeElapsedHP = measureHP.TimeElapsedMs();
             }
 
             try

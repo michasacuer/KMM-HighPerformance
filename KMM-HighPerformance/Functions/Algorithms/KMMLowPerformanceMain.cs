@@ -32,7 +32,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
 
             newImage = LowPerformance.SetImageAfterKMM(newImage, pixelArray);
 
-            measure.SumTimeElapsed(stopwatch.ElapsedMilliseconds);
+            measure.SumTimeElapsedMs(stopwatch.ElapsedMilliseconds);
             return BitmapConversion.Bitmap2BitmapImage(newImage);
         }
 

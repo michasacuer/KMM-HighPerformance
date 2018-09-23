@@ -40,14 +40,13 @@ namespace KMM_HighPerformance.Functions.Algorithms
                 }
             }
 
-            measure.timeElapsed      = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsedMs = stopwatch.ElapsedMilliseconds;
             return BitmapConversion.Bitmap2BitmapImage(newBmp);
         }
 
         static public Bitmap HighPerformance(Bitmap tempBmp, MeasureTime measure)
         {
             int threshold = OtsuValue(tempBmp);
-            measure.timeElapsed = 0;
             var stopwatch = Stopwatch.StartNew();
 
             int pixelBPP = Image.GetPixelFormatSize(tempBmp.PixelFormat) / 8;
@@ -81,7 +80,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
                 tempBmp.UnlockBits(bmpData);
             }
             stopwatch.Stop();
-            measure.timeElapsed      = stopwatch.ElapsedMilliseconds;
+            measure.timeElapsedMs    = stopwatch.ElapsedMilliseconds;
             measure.timeElapsedTicks = stopwatch.ElapsedTicks;
             return tempBmp;
         }

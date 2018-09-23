@@ -54,7 +54,7 @@ namespace KMM_HighPerformance.ViewModels
                 DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformanceMain.Init(Bitmaps.BinarizeLPImage,
                                                                                                measureLP
                                                                                                ));      
-                DisplayedLPTime = measureLP.TimeElapsed();
+                DisplayedLPTime = measureLP.TimeElapsedMs();
             }
             
             async Task InitializeHP() //initialize methods with lockbits, marshall copy
@@ -68,7 +68,7 @@ namespace KMM_HighPerformance.ViewModels
                 DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage,
                                                                                                                                      measureHP)
                                                                                                                                      ));          
-                DisplayedHPTime        = measureHP.TimeElapsed();
+                DisplayedHPTime        = measureHP.TimeElapsedMs();
                 DisplayedHPTimeInTicks = measureHP.TimeElapsedTicks();
             }
             

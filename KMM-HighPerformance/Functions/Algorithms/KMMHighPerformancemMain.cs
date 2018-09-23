@@ -44,7 +44,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
             tempBmp.UnlockBits(bmpData);
 
             stopwatch.Stop();
-            measure.SumTimeElapsed(stopwatch.ElapsedMilliseconds);
+            measure.SumTimeElapsedMs(stopwatch.ElapsedMilliseconds);
             measure.SumTimeElapsedTicks(stopwatch.ElapsedTicks);
             return tempBmp;
         }
