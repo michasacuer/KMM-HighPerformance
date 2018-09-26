@@ -138,7 +138,7 @@ namespace KMM_HighPerformance.ViewModels
 
             set
             {
-                Bitmaps.KMMLP = value;
+                Bitmaps.KMMLP = value; //funny comment
                 NotifyPropertyChanged(nameof(DisplayedLowPerformanceImage));
             }
         }
