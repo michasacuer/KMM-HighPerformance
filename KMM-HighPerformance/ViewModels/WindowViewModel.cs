@@ -97,7 +97,7 @@ namespace KMM_HighPerformance.ViewModels
 
         public string DisplayedImage //displaying image given as input
         {
-            get { return Bitmaps.Filepath; }
+            get => Bitmaps.Filepath; 
             set
             {
                 Bitmaps.Filepath = value;
@@ -107,13 +107,12 @@ namespace KMM_HighPerformance.ViewModels
 
         public string CpuName
         {
-            get { return GetHardwareInfo.GetCPUName(); }
+            get => GetHardwareInfo.GetCPUName(); 
         }
 
         public BitmapImage DisplayedBinarizeLPImage //displaying image from filepath after binarization with Get/Set pixel
         {
-            get { return Bitmaps.BinarizeLPImageView; }
-
+            get => Bitmaps.BinarizeLPImageView; 
             set
             {
                 Bitmaps.BinarizeLPImageView = value; 
@@ -123,8 +122,7 @@ namespace KMM_HighPerformance.ViewModels
 
         public BitmapImage DisplayedBinarizeHPImage //displaying image from filepath after binarization with lockbits
         {
-            get { return Bitmaps.BinarizeHPImageView; }
-
+            get => Bitmaps.BinarizeHPImageView; 
             set
             {
                 Bitmaps.BinarizeHPImageView = value;
@@ -134,8 +132,7 @@ namespace KMM_HighPerformance.ViewModels
 
         public BitmapImage DisplayedLowPerformanceImage //displaying image from filepath after kmm with Get/Set pixel
         {
-            get { return Bitmaps.KMMLP; }
-
+            get => Bitmaps.KMMLP; 
             set
             {
                 Bitmaps.KMMLP = value;
@@ -145,8 +142,7 @@ namespace KMM_HighPerformance.ViewModels
 
         public BitmapImage DisplayedHighPerformanceImage //displaying image from filepath after kmm with lockbits
         {
-            get { return Bitmaps.KMMHP; }
-
+            get => Bitmaps.KMMHP; 
             set
             {
                 Bitmaps.KMMHP = value;
@@ -156,8 +152,7 @@ namespace KMM_HighPerformance.ViewModels
 
         public long DisplayedLPTime //displaying elapsed time of `LowPerformance` methods
         {
-            get { return Bitmaps.TimeElapsedLP; }
-
+            get => Bitmaps.TimeElapsedLP; 
             set
             {
                 Bitmaps.TimeElapsedLP = value;
@@ -167,8 +162,7 @@ namespace KMM_HighPerformance.ViewModels
 
         public long DisplayedHPTime //displaying elapsed time of `HighPerformance` methods
         {
-            get { return Bitmaps.TimeElapsedHP; }
-
+            get => Bitmaps.TimeElapsedHP; 
             set
             {
                 Bitmaps.TimeElapsedHP = value;
@@ -178,8 +172,7 @@ namespace KMM_HighPerformance.ViewModels
 
         public long DisplayedHPTimeInTicks //displaying elapsed time of `HighPerformance` methods
         {
-            get { return Bitmaps.TimeElapsedHPTicks; }
-
+            get => Bitmaps.TimeElapsedHPTicks; 
             set
             {
                 Bitmaps.TimeElapsedHPTicks = value;

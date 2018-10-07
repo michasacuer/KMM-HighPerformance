@@ -13,33 +13,31 @@ namespace KMM_HighPerformance.Functions.PicturesToPlay
     {
         static public string GetNewImageFilepath()
         {
-            string filepath = "";
-            OpenFileDialog openPicture = new OpenFileDialog();
-            openPicture.Filter = "Image files|*.bmp;*.jpg;*.gif;*.png;*.tif";
-            openPicture.FilterIndex = 1;
-            openPicture.InitialDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\ExampleImages")); //note, that i can only use it in development!
-
-            if (openPicture.ShowDialog() == true)
+            OpenFileDialog openPicture = new OpenFileDialog()
             {
-                filepath = openPicture.FileName;
-            }
+                Filter = "Image files|*.bmp;*.jpg;*.gif;*.png;*.tif",
+                FilterIndex = 1,
+                //Debug Only
+                InitialDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\ExampleImages"))
+            };
 
-            return filepath;
+            return openPicture.ShowDialog() == true ? openPicture.FileName : String.Empty;
         }
 
         static public void SaveImageToFile(BitmapImage image)
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "PNG Image|*.png";
-            saveFileDialog1.ShowDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "PNG Image|*.png",
+            };
 
-            if(saveFileDialog1.FileName != "")
+            if(saveFileDialog.ShowDialog() == true && saveFileDialog.FileName != String.Empty)
             {
                 try
                 {
                     Bitmap bmp = BitmapConversion.BitmapImage2Bitmap(image);
                     Image toSave = bmp;
-                    toSave.Save(saveFileDialog1.FileName, ImageFormat.Png);
+                    toSave.Save(saveFileDialog.FileName, ImageFormat.Png);
                 }
 
                 catch(ArgumentNullException ex)

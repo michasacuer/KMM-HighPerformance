@@ -28,6 +28,8 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
                         pixels[positionOfPixel] = checkStick == true && checkClose == false ? three :
                                                   checkStick == false && checkClose == false ? one : two;
+
+                        
                     }
                 }
             });
