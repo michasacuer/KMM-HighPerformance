@@ -1,4 +1,5 @@
-﻿using System.Management;
+﻿using System;
+using System.Management;
 
 namespace KMM_HighPerformance.Functions.HardwareInformation
 {
@@ -8,7 +9,7 @@ namespace KMM_HighPerformance.Functions.HardwareInformation
         //work in progress, class for getting hardware info as PC's CPU, GPU etc. 
         static public string GetCPUName()
         {
-            string cpuName =" ";
+            string cpuName = String.Empty;
             var searcher = new ManagementObjectSearcher("Select * From Win32_processor");
             var searcherList = searcher.Get();
             
@@ -20,11 +21,11 @@ namespace KMM_HighPerformance.Functions.HardwareInformation
             return cpuName;
         }
 
-        static public string GetGPUName()
-        {
-            string gpuName = " ";
-            return gpuName;
-        }
+        //static public string GetGPUName()
+        //{
+        //    string gpuName = String.Empty;
+        //    return gpuName;
+        //}
 
     }
 }

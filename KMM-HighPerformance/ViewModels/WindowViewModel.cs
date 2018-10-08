@@ -22,17 +22,17 @@ namespace KMM_HighPerformance.ViewModels
 
         public ICommand NewImageCommand //command for button click
         {
-            get { return newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImageFilepath(), canExecute)); }
+            get => newImageCommand ?? (newImageCommand = new Commands.CommandHandler(() => GetImageFilepath(), canExecute)); 
         }
 
         public ICommand SaveImageCommand //command for button click
         {
-            get { return saveImageCommand ?? (saveImageCommand = new Commands.CommandHandler(() => SaveImageToFile(), canExecute)); }
+            get => saveImageCommand ?? (saveImageCommand = new Commands.CommandHandler(() => SaveImageToFile(), canExecute)); 
         }
 
         public ICommand ApplyKMMCommand //command for button click
         {
-            get { return applyKMMCommand ?? (applyKMMCommand = new Commands.CommandHandler(() => ApplyKMMToNewImage(), canExecute)); }         
+            get => applyKMMCommand ?? (applyKMMCommand = new Commands.CommandHandler(() => ApplyKMMToNewImage(), canExecute));          
         }
 
         public void SaveImageToFile() => Pictures.SaveImageToFile(Bitmaps.KMMHP);
@@ -54,7 +54,7 @@ namespace KMM_HighPerformance.ViewModels
                 DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformanceMain.Init(Bitmaps.BinarizeLPImage,
                                                                                                measureLP
                                                                                                ));      
-                DisplayedLPTime = measureLP.TimeElapsedMs();
+                DisplayedLPTime = measureLP.TimeElapsedMs;
             }
             
             async Task InitializeHP() //initialize methods with lockbits, marshall copy
@@ -68,8 +68,8 @@ namespace KMM_HighPerformance.ViewModels
                 DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage,
                                                                                                                                      measureHP)
                                                                                                                                      ));          
-                DisplayedHPTime        = measureHP.TimeElapsedMs();
-                DisplayedHPTimeInTicks = measureHP.TimeElapsedTicks();
+                DisplayedHPTime        = measureHP.TimeElapsedMs;
+                DisplayedHPTimeInTicks = measureHP.TimeElapsedTicks;
             }
             
             try

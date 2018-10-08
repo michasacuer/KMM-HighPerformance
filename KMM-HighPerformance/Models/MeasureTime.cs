@@ -3,13 +3,11 @@
     class MeasureTime //class for getting elapsed time for each insatnce of binarization, algorithm etc
     {
         //time elapsed in miliseconds
-        public long timeElapsedMs;
-        public long SumTimeElapsedMs(long ms) => timeElapsedMs = ms + timeElapsedMs;
-        public long TimeElapsedMs() => timeElapsedMs;
+        public long TimeElapsedMs { get; set; }
+        public long SumTimeElapsedMs(long ms) => TimeElapsedMs = ms + TimeElapsedMs;
 
         //time elapsed in cpu ticks
-        public long timeElapsedTicks;
-        public long SumTimeElapsedTicks(long ticks) => timeElapsedTicks = ticks + timeElapsedTicks;
-        public long TimeElapsedTicks() => timeElapsedTicks;
+        public long TimeElapsedTicks { get; set; }
+        public long SumTimeElapsedTicks(long ticks) => TimeElapsedTicks = ticks + TimeElapsedTicks;
     }
 }

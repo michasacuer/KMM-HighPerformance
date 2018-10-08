@@ -11,7 +11,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
 {
     static class Binarization
     {
-        static public BitmapImage LowPerformance(Bitmap tempBmp, Bitmap newBmp, MeasureTime measure)
+        static public BitmapImage LowPerformance(Bitmap tempBmp, Bitmap resultBmp, MeasureTime measure)
         {
 
             int threshold = OtsuValue(tempBmp); //calculate threshold by otsu value
@@ -36,29 +36,29 @@ namespace KMM_HighPerformance.Functions.Algorithms
                     }
 
                     Color newColor = Color.FromArgb(pixelValue[x], pixelValue[x], pixelValue[x]);
-                    newBmp.SetPixel(x, y, newColor);
+                    resultBmp.SetPixel(x, y, newColor);
                 }
             }
 
-            measure.timeElapsedMs = stopwatch.ElapsedMilliseconds;
-            return BitmapConversion.Bitmap2BitmapImage(newBmp);
+            measure.TimeElapsedMs = stopwatch.ElapsedMilliseconds;
+            return BitmapConversion.Bitmap2BitmapImage(resultBmp);
         }
 
-        static public Bitmap HighPerformance(Bitmap tempBmp, MeasureTime measure)
+        static public Bitmap HighPerformance(Bitmap resultBmp, MeasureTime measure)
         {
-            int threshold = OtsuValue(tempBmp);
+            int threshold = OtsuValue(resultBmp);
             var stopwatch = Stopwatch.StartNew();
 
-            int pixelBPP = Image.GetPixelFormatSize(tempBmp.PixelFormat) / 8;
+            int pixelBPP = Image.GetPixelFormatSize(resultBmp.PixelFormat) / 8;
 
             unsafe
             {
-                BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), ImageLockMode.ReadWrite, tempBmp.PixelFormat);
+                BitmapData bmpData = resultBmp.LockBits(new Rectangle(0, 0, resultBmp.Width, resultBmp.Height), ImageLockMode.ReadWrite, resultBmp.PixelFormat);
 
                 byte* ptr = (byte*)bmpData.Scan0; //addres of first line
 
-                int height = tempBmp.Height;
-                int width = tempBmp.Width * pixelBPP;
+                int height = resultBmp.Height;
+                int width = resultBmp.Width * pixelBPP;
 
                 Parallel.For(0, height, y =>
                 {
@@ -77,13 +77,13 @@ namespace KMM_HighPerformance.Functions.Algorithms
                     }
                 });
 
-                tempBmp.UnlockBits(bmpData);
+                resultBmp.UnlockBits(bmpData);
             }
 
             stopwatch.Stop();
-            measure.timeElapsedMs    = stopwatch.ElapsedMilliseconds;
-            measure.timeElapsedTicks = stopwatch.ElapsedTicks;
-            return tempBmp;
+            measure.TimeElapsedMs    = stopwatch.ElapsedMilliseconds;
+            measure.TimeElapsedTicks = stopwatch.ElapsedTicks;
+            return resultBmp;
         }
 
         static private int OtsuValue(Bitmap tempBmp)

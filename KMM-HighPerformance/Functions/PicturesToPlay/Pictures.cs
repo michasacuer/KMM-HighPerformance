@@ -46,6 +46,5 @@ namespace KMM_HighPerformance.Functions.PicturesToPlay
                 }
             }
         }
-
     }
 }
