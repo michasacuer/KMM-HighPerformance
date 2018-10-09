@@ -44,8 +44,8 @@ namespace KMM_HighPerformance.ViewModels
 
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
-                MeasureTime measureLP = new MeasureTime();
-                Bitmaps.BinarizeLPImage = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
+                MeasureTime measureLP    = new MeasureTime();
+                Bitmaps.BinarizeLPImage  = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
                 DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath),
                                                                                             Bitmaps.BinarizeLPImage, 
                                                                                             measureLP
@@ -59,12 +59,12 @@ namespace KMM_HighPerformance.ViewModels
             
             async Task InitializeHP() //initialize methods with lockbits, marshall copy
             {
-                MeasureTime measureHP = new MeasureTime();
+                MeasureTime measureHP   = new MeasureTime();
                 Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath),
                                                                                             measureHP)
                                                                                             );
 
-                DisplayedBinarizeHPImage = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
+                DisplayedBinarizeHPImage      = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
                 DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage,
                                                                                                                                      measureHP)
                                                                                                                                      ));          
@@ -95,6 +95,11 @@ namespace KMM_HighPerformance.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public string CpuName
+        {
+            get => GetHardwareInfo.GetCPUName(); 
+        }
+
         public string DisplayedImage //displaying image given as input
         {
             get => Bitmaps.Filepath; 
@@ -103,11 +108,6 @@ namespace KMM_HighPerformance.ViewModels
                 Bitmaps.Filepath = value;
                 NotifyPropertyChanged(nameof(DisplayedImage));
             }
-        }
-
-        public string CpuName
-        {
-            get => GetHardwareInfo.GetCPUName(); 
         }
 
         public BitmapImage DisplayedBinarizeLPImage //displaying image from filepath after binarization with Get/Set pixel
