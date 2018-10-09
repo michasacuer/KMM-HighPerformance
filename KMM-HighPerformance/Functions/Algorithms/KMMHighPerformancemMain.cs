@@ -10,7 +10,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
 {
     class KMMHighPerformanceMain
     {
-        static public unsafe Bitmap Init(Bitmap resultBmp, MeasureTime measure)
+        public static unsafe Bitmap Init(Bitmap resultBmp, MeasureTime measure)
         {
             var stopwatch = Stopwatch.StartNew();
 

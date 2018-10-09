@@ -9,7 +9,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
 {
     static class KMMLowPerformanceMain
     {
-        static public BitmapImage Init(Bitmap resultBmp, MeasureTime measure)
+        public static BitmapImage Init(Bitmap resultBmp, MeasureTime measure)
         {
             var stopwatch = Stopwatch.StartNew();
             int[,] pixelArray = new int[resultBmp.Height, resultBmp.Width]; // one record on this array = one pixel
