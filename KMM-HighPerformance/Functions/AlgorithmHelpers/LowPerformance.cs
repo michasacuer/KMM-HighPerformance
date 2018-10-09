@@ -5,7 +5,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
     class LowPerformance
     {
 
-        static public int[,] SetOneZero(Bitmap newImage, int[,] pixelArray)
+        public static int[,] SetOneZero(Bitmap newImage, int[,] pixelArray)
         {
             for (int y = 1; y < newImage.Height; y++)
             {
@@ -21,7 +21,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
             return pixelArray;
         }
-        static public int[,] SetOneTwoThree(Bitmap newImage, int[,] pixelArray)
+        public static int[,] SetOneTwoThree(Bitmap newImage, int[,] pixelArray)
         {
             int yArray, xArray, maskY, maskX;
             int checkStick = 0;
@@ -67,7 +67,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return pixelArray;
         }
         
-        static public (int, int[,]) FindAndDeleteFour(Bitmap newImage, int[,] pixelArray)
+        public static (int, int[,]) FindAndDeleteFour(Bitmap newImage, int[,] pixelArray)
         {
             int deletion = 0;
             int yArray, xArray, maskY, maskX;
@@ -117,7 +117,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return (deletion, pixelArray);
         }
         
-        static public (int, int[,]) DeletingTwoThree(Bitmap newImage, int[,] pixelArray)
+        public static (int, int[,]) DeletingTwoThree(Bitmap newImage, int[,] pixelArray)
         {
             int deletion = 0;
             int yArray, xArray, maskY, maskX;
@@ -163,7 +163,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return (deletion, pixelArray);
         }
 
-        static public Bitmap SetImageAfterKMM(Bitmap newImage, int[,] pixelArray)
+        public static Bitmap SetImageAfterKMM(Bitmap newImage, int[,] pixelArray)
         {
             for (int y = 0; y < newImage.Height - 1; y++)
             {
@@ -179,6 +179,6 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return newImage;
         }
 
-        static private int compareSize = 3;
+        private static int compareSize = 3;
     }
 }

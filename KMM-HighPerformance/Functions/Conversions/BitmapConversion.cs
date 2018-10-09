@@ -50,6 +50,5 @@ namespace KMM_HighPerformance.Functions.Conversions
 
             return newBmp;
         }
-
     }
 }

@@ -10,21 +10,22 @@ namespace KMM_HighPerformance.Functions.Algorithms
 {
     class KMMHighPerformanceMain
     {
-        static public unsafe Bitmap Init(Bitmap tempBmp, MeasureTime measure)
+        static public unsafe Bitmap Init(Bitmap resultBmp, MeasureTime measure)
         {
             var stopwatch = Stopwatch.StartNew();
-            tempBmp = BitmapConversion.Create8bppGreyscaleImage(tempBmp);
-            BitmapData bmpData = tempBmp.LockBits(new Rectangle(0, 0, tempBmp.Width, tempBmp.Height), 
-                                                  ImageLockMode.ReadWrite, 
-                                                  tempBmp.PixelFormat
-                                                  );
+
+            resultBmp = BitmapConversion.Create8bppGreyscaleImage(resultBmp);
+            BitmapData bmpData = resultBmp.LockBits(new Rectangle(0, 0, resultBmp.Width, resultBmp.Height), 
+                                                    ImageLockMode.ReadWrite, 
+                                                    resultBmp.PixelFormat
+                                                    );
             
-            int bytes = bmpData.Stride * tempBmp.Height;
+            int bytes = bmpData.Stride * resultBmp.Height;
             byte[] pixels = new byte[bytes];
 
             Marshal.Copy(bmpData.Scan0, pixels, 0, bytes);
-            int height = tempBmp.Height;
-            int width = tempBmp.Width;
+            int height = resultBmp.Height;
+            int width  = resultBmp.Width;
 
             int deletion = 1;
             int deletionFirst, deletionSecond;
@@ -33,20 +34,20 @@ namespace KMM_HighPerformance.Functions.Algorithms
             {
                 deletion = 0;
 
-                pixels                   = HighPerformance.SetOneTwoThree(pixels, bmpData, height, width);
-                (deletionFirst, pixels)  = HighPerformance.FindAndDeleteFour(pixels, bmpData, height, width, deletion);
-                (deletionSecond, pixels) = HighPerformance.DeletingTwoThree(pixels, bmpData, height, width, deletion);
+                pixels                   = HighPerformance.SetOneTwoThree(pixels, bmpData.Stride, height, width);
+                (deletionFirst, pixels)  = HighPerformance.FindAndDeleteFour(pixels, bmpData.Stride, height, width, deletion);
+                (deletionSecond, pixels) = HighPerformance.DeletingTwoThree(pixels, bmpData.Stride, height, width, deletion);
 
                 deletion = deletionFirst > deletionSecond ? deletionFirst : deletionSecond;
             }
 
             Marshal.Copy(pixels, 0, bmpData.Scan0, bytes);
-            tempBmp.UnlockBits(bmpData);
+            resultBmp.UnlockBits(bmpData);
 
             stopwatch.Stop();
             measure.SumTimeElapsedMs(stopwatch.ElapsedMilliseconds);
             measure.SumTimeElapsedTicks(stopwatch.ElapsedTicks);
-            return tempBmp;
+            return resultBmp;
         }
     }
 }

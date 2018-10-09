@@ -11,7 +11,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
 {
     static class Binarization
     {
-        static public BitmapImage LowPerformance(Bitmap tempBmp, Bitmap resultBmp, MeasureTime measure)
+        public static BitmapImage LowPerformance(Bitmap tempBmp, Bitmap resultBmp, MeasureTime measure)
         {
 
             int threshold = OtsuValue(tempBmp); //calculate threshold by otsu value
@@ -44,7 +44,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
             return BitmapConversion.Bitmap2BitmapImage(resultBmp);
         }
 
-        static public Bitmap HighPerformance(Bitmap resultBmp, MeasureTime measure)
+        public static Bitmap HighPerformance(Bitmap resultBmp, MeasureTime measure)
         {
             int threshold = OtsuValue(resultBmp);
             var stopwatch = Stopwatch.StartNew();
@@ -86,7 +86,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
             return resultBmp;
         }
 
-        static private int OtsuValue(Bitmap tempBmp)
+        private static int OtsuValue(Bitmap tempBmp)
         {
             int x;
             int y;

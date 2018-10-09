@@ -3,7 +3,6 @@ using KMM_HighPerformance.ViewModels;
 
 namespace KMM_HighPerformance.View
 {
-    
     public partial class WindowView : Window
     {
         public WindowView()
@@ -12,7 +11,7 @@ namespace KMM_HighPerformance.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

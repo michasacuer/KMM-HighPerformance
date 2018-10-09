@@ -11,7 +11,7 @@ namespace KMM_HighPerformance.Functions.PicturesToPlay
 {
     static class Pictures
     {
-        static public string GetNewImageFilepath()
+        public static string GetNewImageFilepath()
         {
             OpenFileDialog openPicture = new OpenFileDialog()
             {
@@ -24,7 +24,7 @@ namespace KMM_HighPerformance.Functions.PicturesToPlay
             return openPicture.ShowDialog() == true ? openPicture.FileName : String.Empty;
         }
 
-        static public void SaveImageToFile(BitmapImage image)
+        public static void SaveImageToFile(BitmapImage image)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {

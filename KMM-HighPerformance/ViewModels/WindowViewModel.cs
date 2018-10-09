@@ -35,7 +35,7 @@ namespace KMM_HighPerformance.ViewModels
             get => applyKMMCommand ?? (applyKMMCommand = new Commands.CommandHandler(() => ApplyKMMToNewImage(), canExecute));          
         }
 
-        public void SaveImageToFile() => Pictures.SaveImageToFile(Bitmaps.KMMHP);
+        public void SaveImageToFile()  => Pictures.SaveImageToFile(Bitmaps.KMMHP);
         public void GetImageFilepath() => DisplayedImage = Pictures.GetNewImageFilepath();
 
         public void ApplyKMMToNewImage()
@@ -180,10 +180,9 @@ namespace KMM_HighPerformance.ViewModels
             }
         }
 
-        private bool canExecute;
+        private bool     canExecute;
         private ICommand newImageCommand;
         private ICommand saveImageCommand;
         private ICommand applyKMMCommand;
-
     }
 }

@@ -44,7 +44,7 @@
         <Label Content="{Binding DisplayedHPTime}" Grid.Column="6" HorizontalAlignment="Left" Margin="107,123,-36,0" Grid.Row="3" VerticalAlignment="Top" Width="154" Height="28" Grid.ColumnSpan="2"/>
         <Label Content="{Binding DisplayedHPTimeInTicks}" Grid.Column="6" HorizontalAlignment="Left" Margin="107,139,-36,0" Grid.Row="3" VerticalAlignment="Top" Width="154" Height="28" Grid.ColumnSpan="2"/>
         <Label Content="High Performance (lockbits)&#xA;Time Elapsed (ms): &#xD;&#xA;                    (ticks): " Grid.Column="6" HorizontalAlignment="Left" Margin="0,106,0,0" Grid.Row="3" VerticalAlignment="Top" Width="185" Height="61"/>
-        <Button Content="Close" Grid.Column="6" HorizontalAlignment="Left" Margin="91,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Click="Button_Click"/>
+        <Button Content="Close" Grid.Column="6" HorizontalAlignment="Left" Margin="91,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Click="CloseButton_Click"/>
         <Button Command="{Binding NewImageCommand}" Content="New image" Grid.Column="5" HorizontalAlignment="Left" Margin="241,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Grid.ColumnSpan="2"/>
         <Button Command="{Binding SaveImageCommand}" Content="Save image" Grid.Column="5" HorizontalAlignment="Left" Margin="106,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46"/>
         <Button Command="{Binding ApplyKMMCommand}" Content="Apply KMM" Grid.Column="4" HorizontalAlignment="Left" Margin="101,109,0,0" Grid.Row="5" VerticalAlignment="Top" Width="104" Height="46" Grid.ColumnSpan="2"/>

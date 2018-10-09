@@ -9,7 +9,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
 {
     class ApplyKMM
     {
-        public static void Init()
+        /* public static void Init()
         {
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
@@ -47,6 +47,6 @@ namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
                     System.Windows.MessageBox.Show("There is no image to Apply KMM");
                 }
             }
-        }
-    }
+        } */
+    } 
 }

@@ -9,12 +9,12 @@ namespace KMM_HighPerformance.Functions.Algorithms
 {
     static class KMMLowPerformanceMain
     {
-        static public BitmapImage Init(Bitmap newImage, MeasureTime measure)
+        static public BitmapImage Init(Bitmap resultBmp, MeasureTime measure)
         {
             var stopwatch = Stopwatch.StartNew();
-            int[,] pixelArray = new int[newImage.Height, newImage.Width]; // one record on this array = one pixel
+            int[,] pixelArray = new int[resultBmp.Height, resultBmp.Width]; // one record on this array = one pixel
 
-            pixelArray = LowPerformance.SetOneZero(newImage, pixelArray);
+            pixelArray = LowPerformance.SetOneZero(resultBmp, pixelArray);
 
             deletion = 1;
             int deletionFirst, deletionSecond;
@@ -23,19 +23,19 @@ namespace KMM_HighPerformance.Functions.Algorithms
             {
                 deletion = 0;
 
-                pixelArray                   = LowPerformance.SetOneTwoThree(newImage, pixelArray);
-                (deletionFirst, pixelArray)  = LowPerformance.FindAndDeleteFour(newImage, pixelArray);
-                (deletionSecond, pixelArray) = LowPerformance.DeletingTwoThree(newImage, pixelArray);
+                pixelArray                   = LowPerformance.SetOneTwoThree(resultBmp, pixelArray);
+                (deletionFirst, pixelArray)  = LowPerformance.FindAndDeleteFour(resultBmp, pixelArray);
+                (deletionSecond, pixelArray) = LowPerformance.DeletingTwoThree(resultBmp, pixelArray);
 
                 deletion = deletionFirst > deletionSecond ? deletionFirst : deletionSecond;
             }
 
-            newImage = LowPerformance.SetImageAfterKMM(newImage, pixelArray);
+            resultBmp = LowPerformance.SetImageAfterKMM(resultBmp, pixelArray);
 
             measure.SumTimeElapsedMs(stopwatch.ElapsedMilliseconds);
-            return BitmapConversion.Bitmap2BitmapImage(newImage);
+            return BitmapConversion.Bitmap2BitmapImage(resultBmp);
         }
 
-        static private int deletion = 1;       
+        private static int deletion = 1;       
     }
 }

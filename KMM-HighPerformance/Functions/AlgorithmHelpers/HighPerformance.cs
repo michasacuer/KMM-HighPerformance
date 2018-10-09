@@ -6,11 +6,11 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 {
     class HighPerformance
     {
-        public static byte[] SetOneTwoThree(byte[] pixels, BitmapData bmpData, int height, int width)
+        public static byte[] SetOneTwoThree(byte[] pixels, int stride, int height, int width)
         {
             Parallel.For(0, height - 1, y => //seting 2s and 3s
             {
-                int offset = y * bmpData.Stride; //row
+                int offset = y * stride; //row
                 for (int x = 0; x < width - 1; x++)
                 {
                     int positionOfPixel = x + offset;
@@ -20,16 +20,14 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                         bool checkStick;                                  //Stick =    zeros to corners          0
                         bool checkClose;                                  //Close=     zeros looking like = 0 : pix : 0
                                                                           //                                     0
-                        List<byte> stickPixels = Lists.StickToPixel(pixels, positionOfPixel, bmpData.Stride);
-                        List<byte> closePixels = Lists.CloseToPixel(pixels, positionOfPixel, bmpData.Stride);
+                        List<byte> stickPixels = Lists.StickToPixel(pixels, positionOfPixel, stride);
+                        List<byte> closePixels = Lists.CloseToPixel(pixels, positionOfPixel, stride);
 
                         checkClose = CheckCloseZeros(closePixels);
                         checkStick = CheckStickZeros(stickPixels);
 
-                        pixels[positionOfPixel] = checkStick == true && checkClose == false ? three :
-                                                  checkStick == false && checkClose == false ? one : two;
-
-                        
+                        pixels[positionOfPixel] = checkStick == true  && checkClose == false ? three :
+                                                  checkStick == false && checkClose == false ? one : two;                        
                     }
                 }
             });
@@ -37,11 +35,11 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return pixels;
         }
 
-        public static (int, byte[]) FindAndDeleteFour(byte[] pixels, BitmapData bmpData, int height, int width, int deletion)
+        public static (int, byte[]) FindAndDeleteFour(byte[] pixels, int stride, int height, int width, int deletion)
         {
             Parallel.For(0, height, y => //looking for 4s and deleting all
             {
-                int offset = y * bmpData.Stride; //set row
+                int offset = y * stride; //set row
                 for (int x = 0; x < width; x++)
                 {
                     int positionOfPixel = x + offset;
@@ -51,7 +49,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                         int counter = 0;
                         int summary = 0;
 
-                        List<byte> stickPixels = Lists.PixelsAround(pixels, positionOfPixel, bmpData.Stride);
+                        List<byte> stickPixels = Lists.PixelsAround(pixels, positionOfPixel, stride);
 
                         for (int i = 0; i < stickPixels.Count; i++)
                         {
@@ -77,7 +75,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return (deletion, pixels);
         }
 
-        public static (int, byte[]) DeletingTwoThree(byte[] pixels, BitmapData bmpData, int height, int width, int deletion)
+        public static (int, byte[]) DeletingTwoThree(byte[] pixels, int stride, int height, int width, int deletion)
         {
             int N = 2;
             while (N <= 3) //deleting 2 and 3s
@@ -86,7 +84,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
                 Parallel.For(0, height, y =>
                 {
-                    int offset = y * bmpData.Stride; //set row
+                    int offset = y * stride; //set row
                     for (int x = 0; x < width; x++)
                     {
                         int positionOfPixel = x + offset;
@@ -94,7 +92,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                         {
                             int summary = 0;
 
-                            List<byte> stickPixels = Lists.PixelsAround(pixels, positionOfPixel, bmpData.Stride);
+                            List<byte> stickPixels = Lists.PixelsAround(pixels, positionOfPixel, stride);
 
                             for (int i = 0; i < stickPixels.Count; i++)
                             {

@@ -5,7 +5,6 @@ namespace KMM_HighPerformance.Models
 {
     static class Bitmaps
     {
-
         static public string Filepath { get; set; }
                
         static public Bitmap BinarizeLPImage { get; set; }
