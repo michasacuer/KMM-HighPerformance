@@ -10,6 +10,7 @@ using KMM_HighPerformance.Functions.Conversions;
 using KMM_HighPerformance.Functions.HardwareInformation;
 using KMM_HighPerformance.Functions.PicturesToPlay;
 using KMM_HighPerformance.Models;
+using KMM_HighPerformance.Functions.AlgorithmsHelpers;
 
 namespace KMM_HighPerformance.ViewModels 
 {
@@ -18,7 +19,9 @@ namespace KMM_HighPerformance.ViewModels
         public WindowViewModel()
         {
             canExecute = true;
+            Bitmaps = new Bitmaps();
         }
+
 
         public ICommand NewImageCommand //command for button click
         {
@@ -50,7 +53,7 @@ namespace KMM_HighPerformance.ViewModels
                                                                                             Bitmaps.BinarizeLPImage, 
                                                                                             measureLP
                                                                                             )); 
-
+            
                 DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformanceMain.Init(Bitmaps.BinarizeLPImage,
                                                                                                measureLP
                                                                                                ));      
@@ -63,7 +66,7 @@ namespace KMM_HighPerformance.ViewModels
                 Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath),
                                                                                             measureHP)
                                                                                             );
-
+            
                 DisplayedBinarizeHPImage      = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
                 DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage,
                                                                                                                                      measureHP)
@@ -180,6 +183,7 @@ namespace KMM_HighPerformance.ViewModels
             }
         }
 
+        private Bitmaps  Bitmaps;
         private bool     canExecute;
         private ICommand newImageCommand;
         private ICommand saveImageCommand;

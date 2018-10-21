@@ -3,21 +3,21 @@ using System.Windows.Media.Imaging;
 
 namespace KMM_HighPerformance.Models 
 {
-    static class Bitmaps
+    public class Bitmaps
     {
-        static public string Filepath { get; set; }
-               
-        static public Bitmap BinarizeLPImage { get; set; }
-        static public Bitmap BinarizeHPImage { get; set; }
-               
-        static public BitmapImage BinarizeLPImageView { get; set; }
-        static public BitmapImage BinarizeHPImageView { get; set; }
-               
-        static public BitmapImage KMMLP { get; set; }
-        static public BitmapImage KMMHP { get; set; }
-               
-        static public long TimeElapsedLP { get; set; }
-        static public long TimeElapsedHP { get; set; }
-        static public long TimeElapsedHPTicks { get; set; }
+        public string Filepath { get; set; }
+        
+        public Bitmap BinarizeLPImage { get; set; }
+        public Bitmap BinarizeHPImage { get; set; }
+        
+        public BitmapImage BinarizeLPImageView { get; set; }
+        public BitmapImage BinarizeHPImageView { get; set; }
+        
+        public BitmapImage KMMLP { get; set; }
+        public BitmapImage KMMHP { get; set; }
+        
+        public long TimeElapsedLP { get; set; }
+        public long TimeElapsedHP { get; set; }
+        public long TimeElapsedHPTicks { get; set; }
     }
 }
