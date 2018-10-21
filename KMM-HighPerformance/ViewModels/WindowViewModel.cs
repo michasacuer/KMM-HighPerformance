@@ -19,9 +19,9 @@ namespace KMM_HighPerformance.ViewModels
         public WindowViewModel()
         {
             canExecute = true;
-            Bitmaps = new Bitmaps();
+            Bitmaps    = new Bitmaps();
+            ApplyKMM   = new ApplyKMM(Bitmaps);
         }
-
 
         public ICommand NewImageCommand //command for button click
         {
@@ -40,55 +40,16 @@ namespace KMM_HighPerformance.ViewModels
 
         public void SaveImageToFile()  => Pictures.SaveImageToFile(Bitmaps.KMMHP);
         public void GetImageFilepath() => DisplayedImage = Pictures.GetNewImageFilepath();
-
         public void ApplyKMMToNewImage()
         {
-            //ApplyKMM.Init();
-
-            async Task InitializeLP() //initialize methods that use Get/Set Pixel
-            {
-                MeasureTime measureLP    = new MeasureTime();
-                Bitmaps.BinarizeLPImage  = BitmapConversion.CreateNonIndexedImage(new Bitmap(Bitmaps.Filepath));
-                DisplayedBinarizeLPImage = await Task.Run(() => Binarization.LowPerformance(new Bitmap(Bitmaps.Filepath),
-                                                                                            Bitmaps.BinarizeLPImage, 
-                                                                                            measureLP
-                                                                                            )); 
-            
-                DisplayedLowPerformanceImage = await Task.Run(() => KMMLowPerformanceMain.Init(Bitmaps.BinarizeLPImage,
-                                                                                               measureLP
-                                                                                               ));      
-                DisplayedLPTime = measureLP.TimeElapsedMs;
-            }
-            
-            async Task InitializeHP() //initialize methods with lockbits, marshall copy
-            {
-                MeasureTime measureHP   = new MeasureTime();
-                Bitmaps.BinarizeHPImage = await Task.Run(() => Binarization.HighPerformance(new Bitmap(Bitmaps.Filepath),
-                                                                                            measureHP)
-                                                                                            );
-            
-                DisplayedBinarizeHPImage      = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
-                DisplayedHighPerformanceImage = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage,
-                                                                                                                                     measureHP)
-                                                                                                                                     ));          
-                DisplayedHPTime        = measureHP.TimeElapsedMs;
-                DisplayedHPTimeInTicks = measureHP.TimeElapsedTicks;
-            }
-            
-            try
-            {
-                Task task1 = Task.Run(() => InitializeLP());
-                Task task2 = Task.Run(() => InitializeHP());
-                Task.WaitAll(task1, task2);
-            }
-            
-            catch (Exception ex)
-            {
-                if (ex is ArgumentNullException || ex is AggregateException)
-                {
-                    MessageBox.Show("There is no image to Apply KMM");
-                }
-            }
+            Bitmaps = ApplyKMM.Result();
+            DisplayedBinarizeLPImage      = Bitmaps.BinarizeLPImageView;
+            DisplayedLowPerformanceImage  = Bitmaps.KMMLP;
+            DisplayedBinarizeHPImage      = Bitmaps.BinarizeHPImageView;
+            DisplayedHighPerformanceImage = Bitmaps.KMMHP;
+            DisplayedLPTime               = Bitmaps.TimeElapsedLP;
+            DisplayedHPTime               = Bitmaps.TimeElapsedHP;
+            DisplayedHPTimeInTicks        = Bitmaps.TimeElapsedHPTicks;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -184,6 +145,7 @@ namespace KMM_HighPerformance.ViewModels
         }
 
         private Bitmaps  Bitmaps;
+        private ApplyKMM ApplyKMM;
         private bool     canExecute;
         private ICommand newImageCommand;
         private ICommand saveImageCommand;

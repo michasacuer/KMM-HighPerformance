@@ -9,7 +9,19 @@ namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
 {
     class ApplyKMM
     {
-        /* public static void Init()
+
+        public ApplyKMM(Bitmaps passedBitmaps)
+        {
+            Bitmaps = passedBitmaps;     
+        }
+
+        public Bitmaps Result()
+        {
+            Execute();
+            return Bitmaps;
+        }
+        
+        private void Execute()
         {
             async Task InitializeLP() //initialize methods that use Get/Set Pixel
             {
@@ -30,7 +42,8 @@ namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
                 Bitmaps.BinarizeHPImageView = BitmapConversion.Bitmap2BitmapImage(Bitmaps.BinarizeHPImage);
                 Bitmaps.KMMHP = await Task.Run(() => BitmapConversion.Bitmap2BitmapImage(KMMHighPerformanceMain.Init(Bitmaps.BinarizeHPImage, measureHP)));
 
-                Bitmaps.TimeElapsedHP = measureHP.TimeElapsedMs;
+                Bitmaps.TimeElapsedHP      = measureHP.TimeElapsedMs;
+                Bitmaps.TimeElapsedHPTicks = measureHP.TimeElapsedTicks;
             }
 
             try
@@ -47,6 +60,8 @@ namespace KMM_HighPerformance.Functions.AlgorithmsHelpers
                     System.Windows.MessageBox.Show("There is no image to Apply KMM");
                 }
             }
-        } */
+        }
+
+        private Bitmaps Bitmaps;
     } 
 }
