@@ -32,7 +32,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             pixels[positionOfPixel - stride]
         };
 
-        public static List<int> deleteList = new List<int>(){
+        public static readonly List<int> deleteList = new List<int>(){
 
             3, 5, 7, 12, 13, 14, 15, 20,
             21, 22, 23, 28, 29, 30, 31, 48,
@@ -52,7 +52,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
                                             };
 
-        public static List<int> compareList = new List<int>(){
+        public static readonly List<int> compareList = new List<int>(){
 
                          128, 1,  2,
                          64,  4,     // i deleted middle 0, we dont need this
@@ -60,7 +60,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                          
                                    };
 
-        public static int[,] compareTable = {
+        public static readonly int[,] compareTable = {
 
                        { 128, 1, 2 },
                        { 64, 0, 4 }, // 0 is a middle pixel, the rest are weights for the neighbourhood

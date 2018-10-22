@@ -1,12 +1,6 @@
-﻿using System;
-using System.Windows;
-using System.ComponentModel;
-using System.Drawing;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using KMM_HighPerformance.Functions.Algorithms;
-using KMM_HighPerformance.Functions.Conversions;
 using KMM_HighPerformance.Functions.HardwareInformation;
 using KMM_HighPerformance.Functions.PicturesToPlay;
 using KMM_HighPerformance.Models;
@@ -40,9 +34,11 @@ namespace KMM_HighPerformance.ViewModels
 
         public void SaveImageToFile()  => Pictures.SaveImageToFile(Bitmaps.KMMHP);
         public void GetImageFilepath() => DisplayedImage = Pictures.GetNewImageFilepath();
+
         public void ApplyKMMToNewImage()
         {
             Bitmaps = ApplyKMM.Result();
+
             DisplayedBinarizeLPImage      = Bitmaps.BinarizeLPImageView;
             DisplayedLowPerformanceImage  = Bitmaps.KMMLP;
             DisplayedBinarizeHPImage      = Bitmaps.BinarizeHPImageView;

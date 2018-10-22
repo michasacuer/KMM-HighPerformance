@@ -179,6 +179,6 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             return newImage;
         }
 
-        private static int compareSize = 3;
+        private static readonly int compareSize = 3;
     }
 }
