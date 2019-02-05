@@ -10,7 +10,7 @@ namespace KMM_HighPerformance.Functions.Conversions
     {
         static public Bitmap Create8bppGreyscaleImage(Bitmap bitmap) => Grayscale.CommonAlgorithms.BT709.Apply(bitmap);
 
-        static public BitmapImage Bitmap2BitmapImage(Bitmap bitmap)
+        static public BitmapImage Bitmap2BitmapImage(this Bitmap bitmap)
         {
             using (var memory = new MemoryStream())
             {
@@ -26,14 +26,14 @@ namespace KMM_HighPerformance.Functions.Conversions
             }
         }
 
-        static public Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
+        static public Bitmap BitmapImage2Bitmap(this BitmapImage bitmapImage)
         {
-            using (MemoryStream outStream = new MemoryStream())
+            using (var memory = new MemoryStream())
             {
                 BitmapEncoder enc = new BmpBitmapEncoder();
                 enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-                enc.Save(outStream);
-                Bitmap bitmap = new Bitmap(outStream);
+                enc.Save(memory);
+                Bitmap bitmap = new Bitmap(memory);
 
                 return new Bitmap(bitmap);
             }

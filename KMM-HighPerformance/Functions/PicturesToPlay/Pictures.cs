@@ -36,8 +36,8 @@ namespace KMM_HighPerformance.Functions.PicturesToPlay
                 try
                 {
                     Bitmap bmp = BitmapConversion.BitmapImage2Bitmap(image);
-                    Image toSave = bmp;
-                    toSave.Save(saveFileDialog.FileName, ImageFormat.Png);
+                    //Image toSave = bmp;
+                    bmp.Save("dupa.png", ImageFormat.Png);
                 }
 
                 catch(ArgumentNullException ex)
