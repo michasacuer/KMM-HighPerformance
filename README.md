@@ -1,6 +1,12 @@
 # KMM-HighPerformance
 Implementation of KMM alghoritm - thining images. Main functionality works perfect on 32bpp images. Check TODO list!
 
+# Whats next?
+
+This project will be completly rebuilded for my BSc Thesis. A lot of refactor need to be done here
+
+![My image](https://github.com/michasacuer/KMM-HighPerformance/blob/master/KMM-HighPerformance/ExampleImages/thesis.PNG)
+
 # Presentation
 
 ### State of 23.09.2018 - much improvement (look at elapsed time!)
