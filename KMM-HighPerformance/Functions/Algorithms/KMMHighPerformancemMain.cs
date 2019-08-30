@@ -30,16 +30,8 @@ namespace KMM_HighPerformance.Functions.Algorithms
             int deletion = 1;
             int deletionFirst, deletionSecond;
 
-            while (deletion != 0)
-            {
-                deletion = 0;
-
-                pixels                   = HighPerformance.SetOneTwoThree(pixels, bmpData.Stride, height, width);
-                (deletionFirst, pixels)  = HighPerformance.FindAndDeleteFour(pixels, bmpData.Stride, height, width, deletion);
-                (deletionSecond, pixels) = HighPerformance.DeletingTwoThree(pixels, bmpData.Stride, height, width, deletion);
-
-                deletion = deletionFirst > deletionSecond ? deletionFirst : deletionSecond;
-            }
+            pixels = HighPerformance.Execute(pixels, bmpData.Stride, height, width);
+            
 
             Marshal.Copy(pixels, 0, bmpData.Scan0, bytes);
             resultBmp.UnlockBits(bmpData);
