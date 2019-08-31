@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
@@ -143,9 +144,16 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
         {
             bool deletion = true;
 
+            var temp = new byte[pixels.Length];
+            var result = new byte[pixels.Length];
+
             while (deletion)
             {
+                Array.Copy(pixels, temp, pixels.Length); //copying pixels to temp
+
                 deletion = false;
+
+                //step 1
 
                 Parallel.For(0, height - 1, y =>
                 {
@@ -157,49 +165,84 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
                         if (pixels[positionOfPixel] == one)
                         {
-                            int step = 1;
-                            while (step <= 2) //setting step
-                            {
-                                int p2 = pixels[positionOfPixel - stride];
-                                int p3 = pixels[positionOfPixel - stride + 1];
-                                int p4 = pixels[positionOfPixel + 1];
-                                int p5 = pixels[positionOfPixel + stride + 1];
-                                int p6 = pixels[positionOfPixel + stride];
-                                int p7 = pixels[positionOfPixel + stride - 1];
-                                int p8 = pixels[positionOfPixel - 1];
-                                int p9 = pixels[positionOfPixel - stride - 1];
-                                
-                                int neighbours = p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9;
-                                
-                                if (neighbours >= 2 * 255 && neighbours <= 6 * 255)
-                                {
-                                    int transitionsToBlack = (~p2 & p3) + (~p3 & p4) + (~p4 & p5) + (~p5 & p6) + (~p6 & p7) + (~p7 & p8) + (~p8 & p9) + (~p9 & p2);
+                            int p2 = temp[positionOfPixel - stride];
+                            int p3 = temp[positionOfPixel - stride + 1];
+                            int p4 = temp[positionOfPixel + 1];        
+                            int p5 = temp[positionOfPixel + stride + 1];
+                            int p6 = temp[positionOfPixel + stride];   
+                            int p7 = temp[positionOfPixel + stride - 1];
+                            int p8 = temp[positionOfPixel - 1];        
+                            int p9 = temp[positionOfPixel - stride - 1];
 
-                                    if (transitionsToBlack == 255) //theres need do be exactly one transition from white to black
+                            int neighbours = p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9;
+
+                            if (neighbours >= 510 && neighbours <= 1530)
+                            {
+                                int transitionsToBlack 
+                                    = (p2 & ~p3) + (p3 & ~p4) + (p4 & ~p5) + (p5 & ~p6) + (p6 & ~p7) + (p7 & ~p8) + (p8 & ~p9) + (p9 & ~p2);
+
+                                if (transitionsToBlack == 255) //theres need do be exactly one transition from white to black
+                                {
+                                    if ((~p2 & ~p4 & ~p8) != -1 && (~p2 & ~p6 & ~p8) != -1) //last conditions from step 1
                                     {
-                                        if (step == 1)
-                                        {
-                                            if ((p2 & p4 & p8) == 0 && (p2 & p6 & p8) == 0) //last conditions from step 1
-                                            {
-                                                pixels[positionOfPixel] = zero;
-                                                deletion = true;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if ((p2 & p4 & p6) == 0 && (p4 & p6 & p8) == 0) //last conditions from step 2
-                                            {
-                                                pixels[positionOfPixel] = zero;
-                                                deletion = true;
-                                            }
-                                        }
+                                        pixels[positionOfPixel] = zero;
+                                        deletion = true;
                                     }
                                 }
-                                step++;
                             }
                         }
                     }
                 });
+
+                if (!deletion)
+                {
+                    break;
+                }
+
+                Array.Copy(pixels, temp, pixels.Length); //copying pixels to temp
+
+                //step 2
+
+                Parallel.For(0, height - 1, y =>
+                {
+                    int offset = y * stride; //row
+                    for (int x = 0; x < width - 1; x++)
+                    {
+
+                        int positionOfPixel = x + offset;
+
+                        if (pixels[positionOfPixel] == one)
+                        {
+
+                            int p2 = temp[positionOfPixel - stride];
+                            int p3 = temp[positionOfPixel - stride + 1];
+                            int p4 = temp[positionOfPixel + 1];        
+                            int p5 = temp[positionOfPixel + stride + 1];
+                            int p6 = temp[positionOfPixel + stride];   
+                            int p7 = temp[positionOfPixel + stride - 1];
+                            int p8 = temp[positionOfPixel - 1];        
+                            int p9 = temp[positionOfPixel - stride - 1];
+
+                            int neighbours = p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9;
+
+                            if (neighbours >= 510 && neighbours <= 1530)
+                            {
+                                int transitionsToBlack
+                                    = (p2 & ~p3) + (p3 & ~p4) + (p4 & ~p5) + (p5 & ~p6) + (p6 & ~p7) + (p7 & ~p8) + (p8 & ~p9) + (p9 & ~p2);
+
+                                if (transitionsToBlack == 255) //theres need do be exactly one transition from white to black
+                                {
+                                    if ((~p2 & ~p4 & ~p6) != -1 && (~p4 & ~p6 & ~p8) != -1) //last conditions from step 2
+                                    {
+                                        pixels[positionOfPixel] = zero;
+                                        deletion = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                Array.Copy(pixels, temp, pixels.Length); //copying pixels to temp
             }
 
             return pixels;
