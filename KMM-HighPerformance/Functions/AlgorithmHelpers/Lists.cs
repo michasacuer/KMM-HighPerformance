@@ -75,5 +75,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                        { 32, 16, 8 } // of this pixel
                        
                                    };
+
+        public static readonly HashSet<int> Fours = new HashSet<int>(new int[] { 3, 6, 12, 24, 48, 96, 192, 129, 7, 14, 28, 56, 112, 224, 193, 131, 15, 30, 60, 120, 240, 225, 195, 135 });
     }
 }

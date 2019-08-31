@@ -66,21 +66,18 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
                             for (int i = 0; i < stickPixels.Length; i++)
                             {
-                                if (stickPixels[i] == one || stickPixels[i] == two || stickPixels[i] == three)
+                                if (stickPixels[i] != zero)
                                 {
                                     counter++;
                                     summary += Lists.CompareList[i];
                                 }
                             }
-
-                            if (counter == 2 || counter == 3 || counter == 4)
-                            {
-                                if (Lists.deleteList.Contains(summary))
+                                if (Lists.Fours.Contains(summary))
                                 {
                                     pixels[positionOfPixel] = zero;
                                     deletion++;
                                 }
-                            }
+
                         }
                     }
                 });
@@ -140,6 +137,72 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
             }
             return pixels;
 
+        }
+
+        public static byte[] ZhangSuen(byte[] pixels, int stride, int height, int width)
+        {
+            bool deletion = true;
+
+            while (deletion)
+            {
+                deletion = false;
+
+                Parallel.For(0, height - 1, y =>
+                {
+                    int offset = y * stride; //row
+                    for (int x = 0; x < width - 1; x++)
+                    {
+
+                        int positionOfPixel = x + offset;
+
+                        if (pixels[positionOfPixel] == one)
+                        {
+                            int step = 1;
+                            while (step <= 2) //setting step
+                            {
+                                int p2 = pixels[positionOfPixel - stride];
+                                int p3 = pixels[positionOfPixel - stride + 1];
+                                int p4 = pixels[positionOfPixel + 1];
+                                int p5 = pixels[positionOfPixel + stride + 1];
+                                int p6 = pixels[positionOfPixel + stride];
+                                int p7 = pixels[positionOfPixel + stride - 1];
+                                int p8 = pixels[positionOfPixel - 1];
+                                int p9 = pixels[positionOfPixel - stride - 1];
+                                
+                                int neighbours = p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9;
+                                
+                                if (neighbours >= 2 * 255 && neighbours <= 6 * 255)
+                                {
+                                    int transitionsToBlack = (~p2 & p3) + (~p3 & p4) + (~p4 & p5) + (~p5 & p6) + (~p6 & p7) + (~p7 & p8) + (~p8 & p9) + (~p9 & p2);
+
+                                    if (transitionsToBlack == 255) //theres need do be exactly one transition from white to black
+                                    {
+                                        if (step == 1)
+                                        {
+                                            if ((p2 & p4 & p8) == 0 && (p2 & p6 & p8) == 0) //last conditions from step 1
+                                            {
+                                                pixels[positionOfPixel] = zero;
+                                                deletion = true;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if ((p2 & p4 & p6) == 0 && (p4 & p6 & p8) == 0) //last conditions from step 2
+                                            {
+                                                pixels[positionOfPixel] = zero;
+                                                deletion = true;
+                                            }
+                                        }
+                                    }
+                                }
+                                step++;
+                            }
+                        }
+                    }
+                });
+            }
+
+            return pixels;
         }
 
         public static byte[] SetOneTwoThree(byte[] pixels, int stride, int height, int width)

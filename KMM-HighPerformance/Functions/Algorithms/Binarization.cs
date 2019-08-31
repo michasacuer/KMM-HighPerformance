@@ -81,8 +81,8 @@ namespace KMM_HighPerformance.Functions.Algorithms
             }
 
             stopwatch.Stop();
-            measure.TimeElapsedMs    = stopwatch.ElapsedMilliseconds;
-            measure.TimeElapsedTicks = stopwatch.ElapsedTicks;
+            measure.TimeElapsedMs    = 0;
+            measure.TimeElapsedTicks = 0;
             return resultBmp;
         }
 
