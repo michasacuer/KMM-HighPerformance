@@ -9,6 +9,151 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
     class HighPerformance
     {
+
+        public static byte[] K3M(byte[] pixels, int stride, int height, int width)
+        {
+            bool deletion = true;
+
+            var temp = new byte[pixels.Length];
+            var result = new byte[pixels.Length];
+            Buffer.BlockCopy(pixels, 0, temp, 0, pixels.Length); //copying pixels to temp
+
+            while (deletion)
+            {
+                deletion = false;
+
+                Parallel.For(0, height - 1, y => //seting 2s and 3s
+                {
+                    int offset = y * stride; //row
+
+                    for (int x = 0; x < width - 1; x++)
+                    {
+                        int positionOfPixel = x + offset;
+                        if (pixels[positionOfPixel] == one)
+                        {
+                            int summary = 0;
+
+                            var stickPixels = new int[8]
+                            {
+                                temp[positionOfPixel - stride - 1],
+                                temp[positionOfPixel - stride],
+                                temp[positionOfPixel - stride + 1],
+                                temp[positionOfPixel - 1],
+                                temp[positionOfPixel + 1],
+                                temp[positionOfPixel + stride - 1],
+                                temp[positionOfPixel + stride],
+                                temp[positionOfPixel + stride + 1],
+                            };
+
+                            for (int i = 0; i < stickPixels.Length; i++)
+                            {
+                                if (stickPixels[i] == one)
+                                {
+                                    summary += Lists.CompareList[i];
+                                }
+                            }
+
+                            if (Lists.A0.Contains(summary))
+                            {
+                                pixels[positionOfPixel] = two;
+                            }
+                        }
+                    }
+                });
+
+                Buffer.BlockCopy(pixels, 0, temp, 0, pixels.Length); //copying pixels to temp
+
+                for (int i = 1; i < Lists.A.Length; i++)
+                {
+                    Parallel.For(0, height - 1, y => //seting 2s and 3s
+                    {
+                        int offset = y * stride; //row
+
+                        for (int x = 0; x < width - 1; x++)
+                        {
+                            int positionOfPixel = x + offset;
+                            if (pixels[positionOfPixel] == two)
+                            {
+                                int summary = 0;
+
+                                var stickPixels = new int[8]
+                                {
+                                    temp[positionOfPixel - stride - 1],
+                                    temp[positionOfPixel - stride],
+                                    temp[positionOfPixel - stride + 1],
+                                    temp[positionOfPixel - 1],
+                                    temp[positionOfPixel + 1],
+                                    temp[positionOfPixel + stride - 1],
+                                    temp[positionOfPixel + stride],
+                                    temp[positionOfPixel + stride + 1],
+                                };
+
+                                for (int j = 0; j < stickPixels.Length; j++)
+                                {
+                                    if (stickPixels[j] != zero)
+                                    {
+                                        summary += Lists.CompareList[j];
+                                    }
+                                }
+
+                                if (Lists.A[i].Contains(summary))
+                                {
+                                    pixels[positionOfPixel] = zero;
+                                    deletion = true;
+                                }
+                            }
+                        }
+                    });
+
+                    Buffer.BlockCopy(pixels, 0, temp, 0, pixels.Length); //copying pixels to temp
+                }
+
+                for(int y = 1; y < height - 1; y++) //seting 2s and 3s
+                {
+                    int offset = y * stride; //row
+
+                    for (int x = 0; x < width - 1; x++)
+                    {
+                        int positionOfPixel = x + offset;
+                        if (pixels[positionOfPixel] != zero)
+                        {
+                            int summary = 0;
+
+                            var stickPixels = new int[8]
+                            {
+                                        temp[positionOfPixel - stride - 1],
+                                        temp[positionOfPixel - stride],
+                                        temp[positionOfPixel - stride + 1],
+                                        temp[positionOfPixel - 1],
+                                        temp[positionOfPixel + 1],
+                                        temp[positionOfPixel + stride - 1],
+                                        temp[positionOfPixel + stride],
+                                        temp[positionOfPixel + stride + 1],
+                            };
+
+                            for (int i = 0; i < stickPixels.Length; i++)
+                            {
+                                if (stickPixels[i] != zero)
+                                {
+                                    summary += Lists.CompareList[i];
+                                }
+                            }
+
+                            if (Lists.A0pix.Contains(summary))
+                            {
+                                pixels[positionOfPixel] = zero;
+                                deletion = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            Buffer.BlockCopy(pixels, 0, temp, 0, pixels.Length); //copying pixels to temp
+
+            return pixels;
+        }
         
         public static byte[] Execute(byte[] pixels, int stride, int height, int width)
         {
@@ -73,11 +218,11 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                                     summary += Lists.CompareList[i];
                                 }
                             }
-                                if (Lists.Fours.Contains(summary))
-                                {
-                                    pixels[positionOfPixel] = zero;
-                                    deletion++;
-                                }
+                            if (Lists.Fours.Contains(summary))
+                            {
+                                pixels[positionOfPixel] = zero;
+                                deletion++;
+                            }
 
                         }
                     }
@@ -146,10 +291,10 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
 
             var temp = new byte[pixels.Length];
             var result = new byte[pixels.Length];
+            Buffer.BlockCopy(pixels, 0, temp, 0, pixels.Length); //copying pixels to temp
 
             while (deletion)
             {
-                Array.Copy(pixels, temp, pixels.Length); //copying pixels to temp
 
                 deletion = false;
 
@@ -181,9 +326,9 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                                 int transitionsToBlack 
                                     = (p2 & ~p3) + (p3 & ~p4) + (p4 & ~p5) + (p5 & ~p6) + (p6 & ~p7) + (p7 & ~p8) + (p8 & ~p9) + (p9 & ~p2);
 
-                                if (transitionsToBlack == 255) //theres need do be exactly one transition from white to black
+                                if (transitionsToBlack == 255) 
                                 {
-                                    if ((~p2 & ~p4 & ~p8) != -1 && (~p2 & ~p6 & ~p8) != -1) //last conditions from step 1
+                                    if ((~p2 & ~p4 & ~p8) != -1 && (~p2 & ~p6 & ~p8) != -1) 
                                     {
                                         pixels[positionOfPixel] = zero;
                                         deletion = true;
@@ -199,7 +344,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                     break;
                 }
 
-                Array.Copy(pixels, temp, pixels.Length); //copying pixels to temp
+                Buffer.BlockCopy(pixels, 0, temp, 0, pixels.Length); //copying pixels to temp
 
                 //step 2
 
@@ -242,7 +387,7 @@ namespace KMM_HighPerformance.Functions.AlgorithmHelpers
                         }
                     }
                 });
-                Array.Copy(pixels, temp, pixels.Length); //copying pixels to temp
+                Buffer.BlockCopy(pixels, 0, temp, 0, pixels.Length); //copying pixels to temp
             }
 
             return pixels;

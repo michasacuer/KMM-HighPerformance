@@ -30,7 +30,7 @@ namespace KMM_HighPerformance.Functions.Algorithms
             int deletion = 1;
             int deletionFirst, deletionSecond;
 
-            pixels = HighPerformance.ZhangSuen(pixels, bmpData.Stride, height, width);
+            pixels = HighPerformance.K3M(pixels, bmpData.Stride, height, width);
             
 
             Marshal.Copy(pixels, 0, bmpData.Scan0, bytes);
